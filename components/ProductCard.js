@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function ProductCard({ post }) {
 	return (
 		<>
-			<div className="bg-white shadow-lg rounded-2xl">
+			<div className="bg-white shadow-lg rounded-xl">
 				{/* Remove py-8 */}
 				<div className="mx-auto container">
 					<div className="flex flex-wrap items-center lg:justify-between justify-center">

@@ -2,20 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import HeroImage from "../public/hero.png";
 import HeadNav from "../components/HeadNav";
-import {
-	MapIcon,
-	TrendingUpIcon,
-	ShoppingCartIcon,
-	BookmarkIcon,
-	CubeTransparentIcon,
-} from "@heroicons/react/solid";
 import FootNav from "../components/FootNav";
+import ReviewCard from "../components/ReviewCard";
+import ProductCard from "../components/ProductCard";
 
-const menus = [
-	{ name: "Explore", icon: MapIcon, link: "/explore" },
-	{ name: "Category", icon: TrendingUpIcon, link: "/category" },
-	{ name: "About Us", icon: CubeTransparentIcon, link: "/about" },
-];
 const connections = [
 	{
 		img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80",
@@ -31,7 +21,18 @@ const connections = [
 	},
 ];
 
-export default function index() {
+export async function getStaticProps() {
+	const res = await fetch("https://snapwork.herokuapp.com/api/posts");
+	const getPost = await res.json();
+	const posts = getPost.data.data;
+	return {
+		props: {
+			posts,
+		},
+	};
+}
+
+export default function index({ posts }) {
 	return (
 		<>
 			<div className="w-full bg-gradient-to-br from-white to-gray-200 text-gray-900">
@@ -94,7 +95,7 @@ export default function index() {
 					</div>
 				</section>
 				<section className="mx-auto flex max-w-screen-xl items-center justify-between py-28 px-8">
-					<div className="aspect-square w-64 bg-slate-500"></div>
+					<ProductCard post={posts[2]} />
 					<div className="flex flex-col items-start space-y-4">
 						<h1 className="rounded-xl bg-orange-500 px-6 py-3 text-white shadow-lg">
 							#OurAdvantage
@@ -116,11 +117,12 @@ export default function index() {
 						lorem vulputate luctus.
 					</p>
 					<div className="mt-20 flex w-full justify-between gap-8">
-						{/* <!-- <postcard />
-
-                <postcard className="-translate-y-12 transform" />
-
-                <postcard /> --> */}
+						<ReviewCard />
+						<div className="mb-40">
+							<ReviewCard />
+						</div>
+						<ReviewCard />
+						{/* className="-translate-y-12 transform" */}
 					</div>
 				</section>
 				<section className="mx-auto flex max-w-screen-xl flex-1 flex-col items-center justify-center space-y-8 py-28 px-8">
