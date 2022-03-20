@@ -59,12 +59,12 @@ const solutions = [
 
 export default function HeadNav() {
 	return (
-		<nav className="bg-gray-100 w-full ">
+		<nav className="w-full bg-gray-100 ">
 			<div className="mx-auto flex max-w-screen-xl items-center justify-between p-8">
 				<Link href="/">
 					<a className="text-xl font-medium tracking-wide">SnapWork</a>
 				</Link>
-				<ul className="flex items-center space-x-4 justify-between">
+				<ul className="flex items-center justify-between space-x-4">
 					<div className="w-full">
 						<input
 							id="search"
@@ -91,7 +91,7 @@ export default function HeadNav() {
 					</div>
 					<li className="group flex items-center gap-x-2">
 						<Link href="/explore">
-							<a className="flex text-md font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold">
+							<a className="text-md flex font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold">
 								<MapIcon className="mr-2 h-6 w-6 scale-0 rounded-lg bg-orange-500 fill-white p-1 transition duration-150 group-hover:scale-100" />
 								Explore
 							</a>
@@ -104,13 +104,15 @@ export default function HeadNav() {
 									<Popover.Button
 										className={`
                 ${open ? "" : "text-opacity-90"}
-                flex items-center text-md font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold`}
+                text-md flex items-center font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold`}
 									>
 										<TrendingUpIcon className=" mr-2 h-6 w-6 scale-0 rounded-lg bg-orange-500 fill-white p-1 transition duration-150 group-hover:scale-100" />
 										<span>Category</span>
 										<ChevronDownIcon
-											className={`${open ? "" : "text-opacity-70"}
-                  ml-1 h-5 w-5 text-black group-hover:text-opacity-80 transition ease-in-out duration-150 group-hover:text-orange-500`}
+											className={`${
+												open ? "-rotate-180 transform" : "text-opacity-70"
+											}
+                  ml-1 h-5 w-5 text-black transition duration-150 ease-in-out group-hover:text-orange-500 group-hover:text-opacity-80`}
 											aria-hidden="true"
 										/>
 									</Popover.Button>
@@ -123,16 +125,16 @@ export default function HeadNav() {
 										leaveFrom="opacity-100 translate-y-0"
 										leaveTo="opacity-0 translate-y-1"
 									>
-										<Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl">
+										<Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
 											<div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
 												<div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
 													{solutions.map((item) => (
 														<a
 															key={item.name}
 															href={item.href}
-															className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+															className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
 														>
-															<div className="flex items-center justify-center flex-shrink-0 w-10 h-10 text-white sm:h-12 sm:w-12">
+															<div className="flex h-10 w-10 flex-shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
 																{/* <item.icon aria-hidden="true" /> */}
 																<Image
 																	src={item.image}
@@ -152,10 +154,10 @@ export default function HeadNav() {
 														</a>
 													))}
 												</div>
-												<div className="p-4 bg-gray-50">
+												<div className="bg-gray-50 p-4">
 													<a
 														href="##"
-														className="flow-root px-2 py-2 transition duration-150 ease-in-out rounded-md hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+														className="flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
 													>
 														<span className="flex items-center">
 															<span className="text-sm font-medium text-gray-900">
@@ -176,7 +178,7 @@ export default function HeadNav() {
 					</li>
 					<li className="group flex items-center gap-x-2">
 						<Link href="/about">
-							<a className="flex text-md font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold">
+							<a className="text-md flex font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold">
 								<CubeTransparentIcon className="mr-2 h-6 w-6 scale-0 rounded-lg bg-orange-500 fill-white p-1 transition duration-150 group-hover:scale-100" />
 								About
 							</a>

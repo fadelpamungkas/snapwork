@@ -37,7 +37,7 @@ export default function index({ posts }) {
 		<>
 			<div className="w-full text-gray-900">
 				<HeadNav />
-				<div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full">
+				<div className="w-full bg-gradient-to-b from-gray-100 to-gray-200">
 					<section className="mx-auto flex max-w-screen-xl justify-between py-28 px-8">
 						<div className="max-w-2xl">
 							<h1 className="text-6xl font-bold leading-tight">

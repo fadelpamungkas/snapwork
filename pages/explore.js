@@ -20,7 +20,7 @@ export default function Explore({ posts }) {
 		<>
 			<div className="w-full bg-gradient-to-br from-white to-gray-200 text-gray-900">
 				<HeadNav />
-				<div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full">
+				<div className="w-full bg-gradient-to-b from-gray-100 to-gray-200">
 					<section className="mx-auto flex max-w-screen-xl justify-between py-28 px-8">
 						<div className="max-w-2xl">
 							<div className="flex">
@@ -50,15 +50,19 @@ export default function Explore({ posts }) {
 						<div className="flex items-baseline justify-between">
 							<h1 className=" text-4xl font-bold">Top trending in 3 days</h1>
 							<Link href="/explore/all">
-								<a className="text-lg text-gray-500 hover:text-gray-900 transition duration-150">
+								<a className="text-lg text-gray-500 transition duration-150 hover:text-gray-900">
 									View Collections
 								</a>
 							</Link>
 						</div>
-						<div className="container mx-auto grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pt-6 gap-8">
+						<div className="container mx-auto grid gap-8 pt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 							{posts.map((post) => (
-								<div key={post.id}>
-									<ProductCard post={post} />
+								<div key={post._id}>
+									<Link href={`/product/${post._id}`}>
+										<a>
+											<ProductCard post={post} />
+										</a>
+									</Link>
 								</div>
 							))}
 						</div>
@@ -70,12 +74,12 @@ export default function Explore({ posts }) {
 								Recommended based on your interests
 							</h1>
 							<Link href="/explore/all">
-								<a className="text-lg text-gray-500 hover:text-gray-900 transition duration-150">
+								<a className="text-lg text-gray-500 transition duration-150 hover:text-gray-900">
 									View Collections
 								</a>
 							</Link>
 						</div>
-						<div className="container mx-auto grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pt-6 gap-8">
+						<div className="container mx-auto grid gap-8 pt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 							{posts.map((post) => (
 								<div key={post.id}>
 									<ProductCard post={post} />
