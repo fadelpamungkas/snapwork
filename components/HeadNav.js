@@ -18,6 +18,7 @@ import DataScienceIcon from "../public/DataScience.svg";
 import SystemAnalystIcon from "../public/SystemAnalyst.svg";
 import ITConsultantIcon from "../public/ITConsultant.svg";
 import CybersecurityIcon from "../public/Cybersecurity.svg";
+import ProfileMenu from "./ProfileMenu";
 
 const solutions = [
 	{
@@ -192,7 +193,7 @@ export default function HeadNav() {
 				<div className="space-x-6">
 					{/* {`${user?.isLoggedIn ? user.userData.name : "guest"}`} */}
 					{user?.isLoggedIn ? (
-						user.userData.name
+						<ProfileMenu user={user} />
 					) : (
 						<>
 							<Link href="/login">
