@@ -1,35 +1,35 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const handleSubmit = async (event) => {
-	event.preventDefault();
-	const response = await fetch("https://snapwork.herokuapp.com/login", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			email: event.target.email.value,
-			password: event.target.pass.value,
-		}),
-	});
-	const data = await response.json();
-	console.log(data);
-
-	if (data.status === 200) {
-		const getUsers = await fetch("https://snapwork.herokuapp.com/api/users", {
-			method: "GET",
-			headers: {
-				"x-token": data.data.data,
-			},
-		});
-	} else {
-		alert(data.message);
-	}
-};
-
 export default function Login() {
 	const [visible, setVisible] = useState(true);
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		const response = await fetch("https://snapwork.herokuapp.com/login", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				email: event.target.email.value,
+				password: event.target.pass.value,
+			}),
+		});
+		const data = await response.json();
+		console.log(data);
+
+		if (data.status === 200) {
+			const getUsers = await fetch("https://snapwork.herokuapp.com/api/users", {
+				method: "GET",
+				headers: {
+					"x-token": data.data.data,
+				},
+			});
+		} else {
+			alert(data.message);
+		}
+	};
 
 	return (
 		<body>
