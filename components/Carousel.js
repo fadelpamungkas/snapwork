@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import {
 	CarouselProvider,
@@ -12,8 +13,8 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 
 export default function Carousel() {
 	return (
-		<div className="2xl:mx-auto 2xl:container flex justify-center">
-			<div className="2xl:px-20 px-6 py-12 w-full lg:w-4/5">
+		<div className="flex justify-center 2xl:container 2xl:mx-auto">
+			<div className="w-full">
 				{/* Carousel for Small-Sized Screen */}
 				<CarouselProvider
 					className="relative block sm:hidden"
@@ -24,11 +25,11 @@ export default function Carousel() {
 					step={1}
 					infinite={true}
 				>
-					<div className="js-flickity flex justify-center items-center">
+					<div className="js-flickity flex items-center justify-center">
 						<ButtonBack
 							role="button"
 							aria-label="slide backward"
-							className="w-12 h-12 md:w-14 md:h-14 rounded-full flex justify-center items-center bg-white border border-gray-300 hover:bg-gray-400 absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer"
+							className="absolute left-0 z-30 ml-8 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-400 focus:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 md:h-14 md:w-14"
 							id="prev"
 						>
 							<svg
@@ -49,27 +50,27 @@ export default function Carousel() {
 						</ButtonBack>
 						<Slider>
 							<Slide index={0}>
-								<div className="gallery-cell lg:mr-7 mr-6 lg:w-1/2 sm:w-96 w-full h-full">
-									<div className="relative w-full h-full lg:block hidden">
+								<div className="gallery-cell mr-6 h-full w-full sm:w-96 lg:mr-7 lg:w-1/2">
+									<div className="relative hidden h-full w-full lg:block">
 										<img
 											src="https://i.ibb.co/VSsN4Jt/carousel-2.png"
 											alt="sitting area"
-											className="object-center object-cover w-full h-full"
+											className="h-full w-full object-cover object-center"
 										/>
-										<div className="pl-6 pb-6 lg:pl-8 lg:pb-8 absolute left-0 bottom-0">
-											<h1 className="text-xl leading-5 lg:text-2xl lg:leading-normal font-medium text-white">
+										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
 												Lounge Interior
 											</h1>
 										</div>
 									</div>
-									<div className="relative w-full h-full lg:hidden">
+									<div className="relative h-full w-full lg:hidden">
 										<img
 											src="https://i.ibb.co/tMB5CZW/behzad-ghaffarian-nh-Wg-ZNV85-LQ-unsplash-1-3-1.png"
 											alt="sitting area"
-											className="object-center object-cover w-full h-full"
+											className="h-full w-full object-cover object-center"
 										/>
-										<div className="pl-6 pb-6 lg:pl-8 lg:pb-8 absolute left-0 bottom-0">
-											<h1 className="text-xl leading-5 lg:text-2xl lg:leading-normal font-medium text-white">
+										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
 												Lounge Interior
 											</h1>
 										</div>
@@ -77,27 +78,27 @@ export default function Carousel() {
 								</div>
 							</Slide>
 							<Slide index={1}>
-								<div className="gallery-cell lg:mr-7 mr-6 lg:w-1/2 sm:w-96 w-full h-full">
-									<div className="relative w-full h-full lg:block hidden">
+								<div className="gallery-cell mr-6 h-full w-full sm:w-96 lg:mr-7 lg:w-1/2">
+									<div className="relative hidden h-full w-full lg:block">
 										<img
 											src="https://i.ibb.co/phw8yGZ/sven-brandsma-Qz6-Zx4-Rjd-D8-unsplash-1.png"
 											alt="chairs"
-											className="object-center object-cover w-full h-full"
+											className="h-full w-full object-cover object-center"
 										/>
-										<div className="pl-6 pb-6 lg:pl-8 lg:pb-8 absolute left-0 bottom-0">
-											<h1 className="text-xl leading-5 lg:text-2xl lg:leading-normal font-medium text-white">
+										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
 												Lounge Interior
 											</h1>
 										</div>
 									</div>
-									<div className="relative w-full h-full lg:hidden">
+									<div className="relative h-full w-full lg:hidden">
 										<img
 											src="https://i.ibb.co/g74VYR2/Group-46.png"
 											alt="chairs"
-											className="object-center object-cover w-full h-full"
+											className="h-full w-full object-cover object-center"
 										/>
-										<div className="pl-6 pb-6 lg:pl-8 lg:pb-8 absolute left-0 bottom-0">
-											<h1 className="text-xl leading-5 lg:text-2xl lg:leading-normal font-medium text-white">
+										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
 												Lounge Interior
 											</h1>
 										</div>
@@ -105,27 +106,27 @@ export default function Carousel() {
 								</div>
 							</Slide>
 							<Slide index={2}>
-								<div className="gallery-cell lg:mr-7 mr-6 lg:w-1/2 sm:w-96 w-full h-full">
-									<div className="relative w-full h-full lg:block hidden">
+								<div className="gallery-cell mr-6 h-full w-full sm:w-96 lg:mr-7 lg:w-1/2">
+									<div className="relative hidden h-full w-full lg:block">
 										<img
 											src="https://i.ibb.co/92ZYJyK/behzad-ghaffarian-nh-Wg-ZNV85-LQ-unsplash-1-1.png"
 											alt="chair"
-											className="object-center object-cover w-full h-full"
+											className="h-full w-full object-cover object-center"
 										/>
-										<div className="pl-6 pb-6 lg:pl-8 lg:pb-8 absolute left-0 bottom-0">
-											<h1 className="text-xl leading-5 lg:text-2xl lg:leading-normal font-medium text-white">
+										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
 												Lounge Interior
 											</h1>
 										</div>
 									</div>
-									<div className="relative w-full h-full lg:hidden">
+									<div className="relative h-full w-full lg:hidden">
 										<img
 											src="https://i.ibb.co/372ryYP/sven-brandsma-Qz6-Zx4-Rjd-D8-unsplash-3-1.png"
 											alt="chair"
-											className="object-center object-cover w-full h-full"
+											className="h-full w-full object-cover object-center"
 										/>
-										<div className="pl-6 pb-6 lg:pl-8 lg:pb-8 absolute left-0 bottom-0">
-											<h1 className="text-xl leading-5 lg:text-2xl lg:leading-normal font-medium text-white">
+										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
 												Lounge Interior
 											</h1>
 										</div>
@@ -136,7 +137,7 @@ export default function Carousel() {
 						<ButtonNext
 							role="button"
 							aria-label="slide forward"
-							className="w-12 h-12 md:w-14 md:h-14 rounded-full flex justify-center items-center bg-white border border-gray-300 hover:bg-gray-400 absolute z-30 right-0 mr-8 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+							className="absolute right-0 z-30 mr-8 flex h-12 w-12 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2 md:h-14 md:w-14"
 							id="next"
 						>
 							<svg
@@ -169,11 +170,11 @@ export default function Carousel() {
 					infinite={true}
 					currentSlide={1}
 				>
-					<div className="js-flickity flex justify-center items-center">
+					<div className="js-flickity flex items-center justify-center">
 						<ButtonBack
 							role="button"
 							aria-label="slide backward"
-							className="w-12 h-12 md:w-14 md:h-14 rounded-full flex justify-center items-center bg-white border border-gray-300 hover:bg-gray-400 absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer"
+							className="absolute left-0 z-30 ml-8 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-400 focus:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 md:h-14 md:w-14"
 							id="prev"
 						>
 							<svg
@@ -194,27 +195,27 @@ export default function Carousel() {
 						</ButtonBack>
 						<Slider className="carousel__sliderLarge">
 							<Slide className="carousel__inner-slideLarge" index={0}>
-								<div className="gallery-cell w-full h-full">
-									<div className="relative w-full h-full lg:block hidden">
+								<div className="gallery-cell h-full w-full">
+									<div className="relative hidden h-full w-full lg:block">
 										<img
 											src="https://i.ibb.co/VSsN4Jt/carousel-2.png"
 											alt="sitting area"
-											className="object-center object-cover w-full h-full"
+											className="h-full w-full object-cover object-center"
 										/>
-										<div className="pl-6 pb-6 lg:pl-8 lg:pb-8 absolute left-0 bottom-0">
-											<h1 className="text-xl leading-5 lg:text-2xl lg:leading-normal font-medium text-white">
+										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
 												Lounge Interior
 											</h1>
 										</div>
 									</div>
-									<div className="relative w-full h-full lg:hidden">
+									<div className="relative h-full w-full lg:hidden">
 										<img
 											src="https://i.ibb.co/tMB5CZW/behzad-ghaffarian-nh-Wg-ZNV85-LQ-unsplash-1-3-1.png"
 											alt="sitting area"
-											className="object-center object-cover w-full h-full"
+											className="h-full w-full object-cover object-center"
 										/>
-										<div className="pl-6 pb-6 lg:pl-8 lg:pb-8 absolute left-0 bottom-0">
-											<h1 className="text-xl leading-5 lg:text-2xl lg:leading-normal font-medium text-white">
+										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
 												Lounge Interior
 											</h1>
 										</div>
@@ -222,27 +223,27 @@ export default function Carousel() {
 								</div>
 							</Slide>
 							<Slide className="carousel__inner-slideLarge" index={1}>
-								<div className="gallery-cell w-full h-full">
-									<div className="relative w-full h-full lg:block hidden">
+								<div className="gallery-cell h-full w-full">
+									<div className="relative hidden h-full w-full lg:block">
 										<img
 											src="https://i.ibb.co/phw8yGZ/sven-brandsma-Qz6-Zx4-Rjd-D8-unsplash-1.png"
 											alt="chairs"
-											className="object-center object-cover w-full h-full"
+											className="h-full w-full object-cover object-center"
 										/>
-										<div className="pl-6 pb-6 lg:pl-8 lg:pb-8 absolute left-0 bottom-0">
-											<h1 className="text-xl leading-5 lg:text-2xl lg:leading-normal font-medium text-white">
+										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
 												Lounge Interior
 											</h1>
 										</div>
 									</div>
-									<div className="relative w-full h-full lg:hidden">
+									<div className="relative h-full w-full lg:hidden">
 										<img
 											src="https://i.ibb.co/g74VYR2/Group-46.png"
 											alt="chairs"
-											className="object-center object-cover w-full h-full"
+											className="h-full w-full object-cover object-center"
 										/>
-										<div className="pl-6 pb-6 lg:pl-8 lg:pb-8 absolute left-0 bottom-0">
-											<h1 className="text-xl leading-5 lg:text-2xl lg:leading-normal font-medium text-white">
+										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
 												Lounge Interior
 											</h1>
 										</div>
@@ -250,27 +251,27 @@ export default function Carousel() {
 								</div>
 							</Slide>
 							<Slide className="carousel__inner-slideLarge" index={2}>
-								<div className="gallery-cell w-full h-full">
-									<div className="relative w-full h-full lg:block hidden">
+								<div className="gallery-cell h-full w-full">
+									<div className="relative hidden h-full w-full lg:block">
 										<img
 											src="https://i.ibb.co/92ZYJyK/behzad-ghaffarian-nh-Wg-ZNV85-LQ-unsplash-1-1.png"
 											alt="chair"
-											className="object-center object-cover w-full h-full"
+											className="h-full w-full object-cover object-center"
 										/>
-										<div className="pl-6 pb-6 lg:pl-8 lg:pb-8 absolute left-0 bottom-0">
-											<h1 className="text-xl leading-5 lg:text-2xl lg:leading-normal font-medium text-white">
+										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
 												Lounge Interior
 											</h1>
 										</div>
 									</div>
-									<div className="relative w-full h-full lg:hidden">
+									<div className="relative h-full w-full lg:hidden">
 										<img
 											src="https://i.ibb.co/372ryYP/sven-brandsma-Qz6-Zx4-Rjd-D8-unsplash-3-1.png"
 											alt="chair"
-											className="object-center object-cover w-full h-full"
+											className="h-full w-full object-cover object-center"
 										/>
-										<div className="pl-6 pb-6 lg:pl-8 lg:pb-8 absolute left-0 bottom-0">
-											<h1 className="text-xl leading-5 lg:text-2xl lg:leading-normal font-medium text-white">
+										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
 												Lounge Interior
 											</h1>
 										</div>
@@ -281,7 +282,7 @@ export default function Carousel() {
 						<ButtonNext
 							role="button"
 							aria-label="slide forward"
-							className="w-12 h-12 md:w-14 md:h-14 rounded-full flex justify-center items-center bg-white border border-gray-300 hover:bg-gray-400 absolute z-30 right-0 mr-8 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+							className="absolute right-0 z-30 mr-8 flex h-12 w-12 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2 md:h-14 md:w-14"
 							id="next"
 						>
 							<svg
