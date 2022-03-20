@@ -32,7 +32,7 @@ export async function getStaticProps() {
 	};
 }
 
-export default function index({ posts }) {
+export default function Index({ posts }) {
 	return (
 		<>
 			<div className="w-full text-gray-900">

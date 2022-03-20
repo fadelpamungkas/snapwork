@@ -1,4 +1,5 @@
 import Link from "next/link";
+import useUser from "../lib/useUser";
 import {
 	MapIcon,
 	TrendingUpIcon,
@@ -58,6 +59,9 @@ const solutions = [
 ];
 
 export default function HeadNav() {
+	const { user } = useUser();
+
+	console.log(user);
 	return (
 		<nav className="w-full bg-gray-100 ">
 			<div className="mx-auto flex max-w-screen-xl items-center justify-between p-8">
@@ -186,16 +190,23 @@ export default function HeadNav() {
 					</li>
 				</ul>
 				<div className="space-x-6">
-					<Link href="/login">
-						<a className="rounded-2xl px-6 py-3 font-medium text-orange-500 transition duration-150 hover:text-orange-600">
-							Sign In
-						</a>
-					</Link>
-					<Link href="/signup">
-						<a className="rounded-2xl bg-orange-500 px-6 py-3 font-medium text-white transition duration-150 hover:bg-orange-600">
-							Sign Up
-						</a>
-					</Link>
+					{/* {`${user?.isLoggedIn ? user.userData.name : "guest"}`} */}
+					{user?.isLoggedIn ? (
+						user.userData.name
+					) : (
+						<>
+							<Link href="/login">
+								<a className="rounded-2xl px-6 py-3 font-medium text-orange-500 transition duration-150 hover:text-orange-600">
+									Sign In
+								</a>
+							</Link>
+							<Link href="/signup">
+								<a className="rounded-2xl bg-orange-500 px-6 py-3 font-medium text-white transition duration-150 hover:bg-orange-600">
+									Sign Up
+								</a>
+							</Link>
+						</>
+					)}
 				</div>
 			</div>
 		</nav>

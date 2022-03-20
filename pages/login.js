@@ -1,8 +1,15 @@
 import Link from "next/link";
+import useUser from "../lib/useUser";
 import { useState } from "react";
+import fetchJson, { FetchError } from "../lib/fetchJson";
 
 export default function Login() {
 	const [visible, setVisible] = useState(true);
+	// here we just check if user is already logged in and redirect to profile
+	const { mutateUser } = useUser({
+		redirectTo: "/",
+		redirectIfFound: true,
+	});
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -26,6 +33,23 @@ export default function Login() {
 					"x-token": data.data.data,
 				},
 			});
+			const userData = await getUsers.json();
+
+			try {
+				mutateUser(
+					await fetchJson("/api/login", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(userData.data.data),
+					})
+				);
+			} catch (error) {
+				if (error instanceof FetchError) {
+					setErrorMsg(error.data.message);
+				} else {
+					console.error("An unexpected error happened:", error);
+				}
+			}
 		} else {
 			alert(data.message);
 		}
