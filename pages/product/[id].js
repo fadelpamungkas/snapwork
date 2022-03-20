@@ -4,15 +4,15 @@ import { useState } from "react";
 import FootNav from "../../components/FootNav";
 import HeadNav from "../../components/HeadNav";
 
-export async function getStaticPaths() {
-	return {
-		paths: [{ params: { id: "1" } }],
-		fallback: true, // false or 'blocking'
-	};
-}
+// export async function getStaticPaths() {
+// 	return {
+// 		paths: [{ params: { id: "1" } }],
+// 		fallback: true, // false or 'blocking'
+// 	};
+// }
 
-export async function getStaticProps({ params }) {
-	const id = params.id;
+export async function getServerSideProps(context) {
+	const id = context.query.id;
 	const res = await fetch("https://snapwork.herokuapp.com/api/post/" + id);
 	const getProduct = await res.json();
 	const product = getProduct.data.data;
