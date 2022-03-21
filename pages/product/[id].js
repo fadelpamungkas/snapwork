@@ -18,6 +18,7 @@ export async function getServerSideProps(context) {
 	const res = await fetch("https://snapwork.herokuapp.com/api/post/" + id);
 	const getProduct = await res.json();
 	const product = getProduct.data.data;
+	console.log("getServerSideProps" + id);
 	return {
 		props: {
 			product,
@@ -27,6 +28,7 @@ export async function getServerSideProps(context) {
 export default function Product({ product }) {
 	const router = useRouter();
 	const { id } = router.query;
+	console.log("router.query" + id);
 
 	console.log(product);
 
