@@ -1,14 +1,35 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import { useRouter } from "next/router";
+import useUser from "../lib/useUser";
+import fetchJson from "../lib/fetchJson";
+import {
+	CogIcon,
+	LogoutIcon,
+	UserIcon,
+	ChartBarIcon,
+	SwitchHorizontalIcon,
+} from "@heroicons/react/solid";
 
 export default function ProfileMenu({ user }) {
+	const { mutateUser } = useUser({
+		redirectTo: "/",
+		redirectIfFound: true,
+	});
+	const router = useRouter();
+	const handleLogout = async (event) => {
+		event.preventDefault();
+		mutateUser(await fetchJson("/api/logout", { method: "POST" }), false);
+		router.push("/");
+	};
+
 	return (
 		<div className="w-full">
 			<Menu as="div" className="inline-block text-left">
 				{({ open }) => (
 					<>
-						<Menu.Button className="group inline-flex w-full justify-center rounded-3xl bg-rose-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-rose-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+						<Menu.Button className="group inline-flex w-full justify-center rounded-3xl bg-red-500 px-6 py-3 text-sm font-medium text-white transition duration-150 hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
 							{user.userData.name}
 							<ChevronDownIcon
 								className={`${
@@ -27,26 +48,16 @@ export default function ProfileMenu({ user }) {
 							leaveFrom="transform opacity-100 scale-100"
 							leaveTo="transform opacity-0 scale-95"
 						>
-							<Menu.Items className="absolute z-10 mt-2 w-52 divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+							<Menu.Items className="absolute z-10 mt-2 w-52 divide-y divide-red-400 rounded-xl bg-red-500 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 								<div className="px-1 py-1 ">
 									<Menu.Item>
 										{({ active }) => (
 											<button
 												className={`${
-													active ? "bg-violet-500 text-white" : "text-gray-900"
-												} group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+													active ? "bg-red-600 text-white" : "text-red-100"
+												} group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150`}
 											>
-												{active ? (
-													<EditActiveIcon
-														className="mr-2 h-5 w-5"
-														aria-hidden="true"
-													/>
-												) : (
-													<EditInactiveIcon
-														className="mr-2 h-5 w-5"
-														aria-hidden="true"
-													/>
-												)}
+												<UserIcon className="mr-2 h-5 w-5" />
 												Profile
 											</button>
 										)}
@@ -55,20 +66,10 @@ export default function ProfileMenu({ user }) {
 										{({ active }) => (
 											<button
 												className={`${
-													active ? "bg-violet-500 text-white" : "text-gray-900"
-												} group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+													active ? "bg-red-600 text-white" : "text-red-100"
+												} group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150`}
 											>
-												{active ? (
-													<DuplicateActiveIcon
-														className="mr-2 h-5 w-5"
-														aria-hidden="true"
-													/>
-												) : (
-													<DuplicateInactiveIcon
-														className="mr-2 h-5 w-5"
-														aria-hidden="true"
-													/>
-												)}
+												<SwitchHorizontalIcon className="mr-2 h-5 w-5" />
 												Transaction
 											</button>
 										)}
@@ -79,20 +80,10 @@ export default function ProfileMenu({ user }) {
 										{({ active }) => (
 											<button
 												className={`${
-													active ? "bg-violet-500 text-white" : "text-gray-900"
-												} group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+													active ? "bg-red-600 text-white" : "text-red-100"
+												} group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150`}
 											>
-												{active ? (
-													<ArchiveActiveIcon
-														className="mr-2 h-5 w-5"
-														aria-hidden="true"
-													/>
-												) : (
-													<ArchiveInactiveIcon
-														className="mr-2 h-5 w-5"
-														aria-hidden="true"
-													/>
-												)}
+												<ChartBarIcon className="mr-2 h-5 w-5" />
 												Dashboard
 											</button>
 										)}
@@ -101,20 +92,10 @@ export default function ProfileMenu({ user }) {
 										{({ active }) => (
 											<button
 												className={`${
-													active ? "bg-violet-500 text-white" : "text-gray-900"
-												} group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+													active ? "bg-red-600 text-white" : "text-red-100"
+												} group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150`}
 											>
-												{active ? (
-													<MoveActiveIcon
-														className="mr-2 h-5 w-5"
-														aria-hidden="true"
-													/>
-												) : (
-													<MoveInactiveIcon
-														className="mr-2 h-5 w-5"
-														aria-hidden="true"
-													/>
-												)}
+												<CogIcon className="mr-2 h-5 w-5" />
 												Settings
 											</button>
 										)}
@@ -124,21 +105,12 @@ export default function ProfileMenu({ user }) {
 									<Menu.Item>
 										{({ active }) => (
 											<button
+												onClick={handleLogout}
 												className={`${
-													active ? "bg-violet-500 text-white" : "text-gray-900"
-												} group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+													active ? "bg-red-600 text-white" : "text-red-100"
+												} group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150`}
 											>
-												{active ? (
-													<DeleteActiveIcon
-														className="mr-2 h-5 w-5 text-violet-400"
-														aria-hidden="true"
-													/>
-												) : (
-													<DeleteInactiveIcon
-														className="mr-2 h-5 w-5 text-violet-400"
-														aria-hidden="true"
-													/>
-												)}
+												<LogoutIcon className="mr-2 h-5 w-5" />
 												Logout
 											</button>
 										)}
