@@ -1,11 +1,29 @@
 import React from "react";
 import { useState } from "react";
 
-export default function Payment() {
+export async function getServerSideProps(context) {
+	const id = context.query.id;
+	const tierName = context.query.tier;
+	const res = await fetch("https://snapwork.herokuapp.com/api/post/" + id);
+	const getProduct = await res.json();
+	const product = getProduct.data.data;
+	const tierData = product.tier[tierName];
+	console.log("getServerSideProps" + id + tierName);
+	return {
+		props: {
+			product,
+			tierName,
+			tierData,
+		},
+	};
+}
+
+export default function Payment({ product, tierName, tierData }) {
 	const [step, setStep] = useState(0);
 	step > 3 && setStep(3);
 	step < 0 && setStep(0);
 	console.log(step);
+	console.log(product);
 	return (
 		<>
 			<div className="mx-auto max-w-screen-xl p-20">
@@ -155,64 +173,38 @@ export default function Payment() {
 								<h1 className="mb-4 text-xl font-medium">Summary</h1>
 								<div>
 									<p className="my-4 flex justify-between text-base text-gray-600">
-										<span className="">Gold Tier</span>
-										<span className="">Rp650000</span>
+										<span className="">{tierName}</span>
+										<span className="">Rp{tierData.price}</span>
+									</p>
+									<p className="my-4 flex justify-between text-base text-gray-600">
+										{tierData.description}
 									</p>
 									<ul className=" flex flex-col">
-										<li className="mb-2.5 flex items-center">
-											<img
-												src="https://cdn.tuk.dev/assets/templates/weCare/checkMark.png"
-												className="mr-4"
-												alt="check-mark"
-											/>
+										{tierData.offer.map((offer) => (
+											<li key={offer.id} className="mb-2.5 flex items-center">
+												<img
+													src="https://cdn.tuk.dev/assets/templates/weCare/checkMark.png"
+													className="mr-4"
+													alt="check-mark"
+												/>
 
-											<p className="text-base font-normal text-gray-600">
-												Specialists appoinments
-											</p>
-										</li>
-										<li className="mb-2.5 flex items-center">
-											<img
-												src="https://cdn.tuk.dev/assets/templates/weCare/checkMark.png"
-												className="mr-4"
-												alt="check-mark"
-											/>
-
-											<p className="text-base font-normal text-gray-600">
-												Specialists appoinments
-											</p>
-										</li>
-										<li className="mb-2.5 flex items-center">
-											<img
-												src="https://cdn.tuk.dev/assets/templates/weCare/checkMark.png"
-												className="mr-4"
-												alt="check-mark"
-											/>
-
-											<p className="text-base font-normal text-gray-600">
-												Specialists appoinments
-											</p>
-										</li>
-										<li className="mb-2.5 flex items-center">
-											<img
-												src="https://cdn.tuk.dev/assets/templates/weCare/checkMark.png"
-												className="mr-4"
-												alt="check-mark"
-											/>
-
-											<p className="text-base font-normal text-gray-600">
-												Specialists appoinments
-											</p>
-										</li>
+												<p className="text-base font-normal text-gray-600">
+													{offer}
+												</p>
+											</li>
+										))}
 									</ul>
 									<p className="my-4 flex justify-between text-base text-black">
 										<span className="text-gray-600">Services Fee</span>
-										<span className="text-gray-600">Rp20000</span>
+										<span className="text-gray-600">Rp4000</span>
 									</p>
 								</div>
 								<div className="">
 									<p className="mt-4 flex justify-between text-base text-black">
 										<span className="text-base font-semibold">Total</span>
-										<span className="text-base font-semibold">Rp20000</span>
+										<span className="text-base font-semibold">
+											Rp{tierData.price + 4000}
+										</span>
 									</p>
 									<button className="mt-5 w-full rounded-xl bg-red-900/20 px-8 py-3 text-base font-semibold text-red-500 transition duration-150 ease-in-out hover:bg-red-900/30 hover:text-red-600 focus:outline-none">
 										Choose
