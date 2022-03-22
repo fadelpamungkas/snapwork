@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Carousel from "../../components/Carousel";
-import FootNav from "../../components/FootNav";
-import HeadNav from "../../components/HeadNav";
-import TierCard from "../../components/TierCard";
+import Carousel from "../../../components/Carousel";
+import FootNav from "../../../components/FootNav";
+import HeadNav from "../../../components/HeadNav";
+import TierCard from "../../../components/TierCard";
 
 // export async function getStaticPaths() {
 // 	return {
@@ -65,7 +65,7 @@ export default function Product({ product }) {
                             - Free support for error or bugs`}</h1>
 						</div>
 						<div className="colspan-1">
-							<TierCard />
+							<TierCard product={product} />
 						</div>
 					</section>
 				</div>

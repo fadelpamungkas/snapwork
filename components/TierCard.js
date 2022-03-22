@@ -1,14 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
+import Link from "next/link";
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
 }
 
-export default function TierCard() {
+export default function TierCard({ product }) {
 	let [categories] = useState({
-		Bronze: {
+		Silver: {
 			about:
 				"Custom & unique homepage design. In Figma, Sketch, XD or PSD (Desktop + Mobile)",
 			price: 100,
@@ -103,9 +104,11 @@ export default function TierCard() {
 									<span className="text-xl font-light">Rp</span>
 									<span className="text-2xl font-semibold">{tier.price}</span>
 								</p>
-								<button className="mt-5 w-full rounded-xl bg-red-900/20 px-8 py-3 text-base font-semibold text-red-500 transition duration-150 ease-in-out hover:bg-red-900/30 hover:text-red-600 focus:outline-none">
-									Choose
-								</button>
+								<Link href={`/product/${product._id}/${tier.price}`} passHref>
+									<button className="mt-5 w-full rounded-xl bg-red-900/20 px-8 py-3 text-base font-semibold text-red-500 transition duration-150 ease-in-out hover:bg-red-900/30 hover:text-red-600 focus:outline-none">
+										Choose
+									</button>
+								</Link>
 							</div>
 						</Tab.Panel>
 					))}
