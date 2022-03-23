@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
 export default function Payment({ product, tierName, tierData }) {
 	const [step, setStep] = useState(0);
 	step > 3 && setStep(3);
-	step < 0 && setStep(0);
+	step < 1 && setStep(1);
 	console.log(step);
 	console.log(product);
 	return (
@@ -206,29 +206,26 @@ export default function Payment({ product, tierName, tierData }) {
 											Rp{tierData.price + 4000}
 										</span>
 									</p>
-									<button className="mt-5 w-full rounded-xl bg-red-900/20 px-8 py-3 text-base font-semibold text-red-500 transition duration-150 ease-in-out hover:bg-red-900/30 hover:text-red-600 focus:outline-none">
-										Choose
+									<button
+										onClick={() => {
+											setStep(step + 1);
+										}}
+										className="mt-5 w-full rounded-xl bg-red-900/20 px-8 py-3 text-base font-semibold text-red-500 transition duration-150 ease-in-out hover:bg-red-900/30 hover:text-red-600 focus:outline-none"
+									>
+										Continue
 									</button>
 								</div>
 							</div>
 						</div>
+						<button
+							className="rounded-lg bg-green-300 p-3"
+							onClick={() => {
+								setStep(step - 1);
+							}}
+						>
+							previous
+						</button>
 					</div>
-				</div>
-				<div className="flex flex-wrap space-x-10 p-20">
-					<button
-						onClick={() => {
-							setStep(step - 1);
-						}}
-					>
-						previous
-					</button>
-					<button
-						onClick={() => {
-							setStep(step + 1);
-						}}
-					>
-						next
-					</button>
 				</div>
 			</div>
 		</>
