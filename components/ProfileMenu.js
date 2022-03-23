@@ -13,10 +13,7 @@ import {
 } from "@heroicons/react/solid";
 
 export default function ProfileMenu({ user }) {
-	const { mutateUser } = useUser({
-		redirectTo: "/",
-		redirectIfFound: true,
-	});
+	const { mutateUser } = useUser();
 	const router = useRouter();
 	const handleLogout = async (event) => {
 		event.preventDefault();

@@ -212,7 +212,7 @@ export default function Payment({ product, tierName, tierData }) {
 										}}
 										className="mt-5 w-full rounded-xl bg-red-900/20 px-8 py-3 text-base font-semibold text-red-500 transition duration-150 ease-in-out hover:bg-red-900/30 hover:text-red-600 focus:outline-none"
 									>
-										Continue
+										{step === 1 ? "Continue" : "Pay Now"}
 									</button>
 								</div>
 							</div>
