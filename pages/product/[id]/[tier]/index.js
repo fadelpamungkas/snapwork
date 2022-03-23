@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import useUser from "../../../../lib/useUser";
 
 export async function getServerSideProps(context) {
 	const id = context.query.id;
@@ -19,11 +20,13 @@ export async function getServerSideProps(context) {
 }
 
 export default function Payment({ product, tierName, tierData }) {
+	const { user } = useUser({
+		redirectTo: "/login",
+	});
 	const [step, setStep] = useState(0);
 	step > 3 && setStep(3);
 	step < 1 && setStep(1);
 	console.log(step);
-	console.log(product);
 	return (
 		<>
 			<div className="mx-auto max-w-screen-xl p-20">
@@ -41,7 +44,7 @@ export default function Payment({ product, tierName, tierData }) {
 						>
 							Step 1
 						</h1>
-						<h1 className="">Summary</h1>
+						<h1 className="">Summary {user?.userData?.name}</h1>
 					</div>
 					<div className="w-full">
 						<div
