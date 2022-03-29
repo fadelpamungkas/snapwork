@@ -11,6 +11,7 @@ import {
 	ChartBarIcon,
 	SwitchHorizontalIcon,
 } from "@heroicons/react/solid";
+import Link from "next/link";
 
 export default function ProfileMenu({ user }) {
 	const { mutateUser } = useUser();
@@ -49,14 +50,16 @@ export default function ProfileMenu({ user }) {
 								<div className="px-1 py-1 ">
 									<Menu.Item>
 										{({ active }) => (
-											<button
-												className={`${
-													active ? "bg-red-600 text-white" : "text-red-100"
-												} group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150`}
-											>
-												<UserIcon className="mr-2 h-5 w-5" />
-												Profile
-											</button>
+											<Link href="/profile">
+												<a
+													className={`${
+														active ? "bg-red-600 text-white" : "text-red-100"
+													} group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150`}
+												>
+													<UserIcon className="mr-2 h-5 w-5" />
+													Profile
+												</a>
+											</Link>
 										)}
 									</Menu.Item>
 									<Menu.Item>
