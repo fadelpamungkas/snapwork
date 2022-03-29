@@ -2,6 +2,7 @@ import HeadNav from "../components/HeadNav";
 import FootNav from "../components/FootNav";
 import useUser from "../lib/useUser";
 import useSWR from "swr";
+import ProductCard from "../components/ProductCard";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -9,10 +10,9 @@ export default function Profile() {
 	const { user } = useUser({
 		redirectTo: "/login",
 	});
-	const userData = user?.userData;
 
 	const { data, error } = useSWR(
-		"https://snapwork.herokuapp.com/api/posts/user/" + userData.id,
+		"https://snapwork.herokuapp.com/api/posts/user/" + user?.userData.id,
 		fetcher
 	);
 	console.log(data);
@@ -79,7 +79,7 @@ export default function Profile() {
 											<a className=" text-gray-800  focus:outline-none focus:outline-none dark:text-gray-100">
 												{" "}
 												<h2 className="mb-3 text-2xl font-medium tracking-normal  xl:mb-0 xl:mr-4">
-													{userData.name}
+													{user?.userData.name}
 												</h2>
 											</a>
 											<p className="rounded-full bg-indigo-700 px-5 py-1 text-sm font-normal text-white focus:outline-none dark:bg-indigo-600">
@@ -128,7 +128,7 @@ export default function Profile() {
 									<div className="flex w-full flex-col justify-center md:flex-row md:pl-6 xl:w-2/3 xl:justify-end">
 										<div className="mt-1 mb-5 flex items-center justify-center md:mt-0 md:mb-0 xl:justify-start">
 											<div className="flex items-center justify-center rounded-full bg-gray-100 px-6 py-2 text-sm text-gray-700 focus:outline-none dark:text-gray-400">
-												{data.data.data[0].title}
+												Freelance
 											</div>
 											<div className="ml-5 flex items-center justify-center rounded-full bg-green-100 px-6 py-2 text-sm text-green-700 focus:outline-none">
 												Available
@@ -139,19 +139,23 @@ export default function Profile() {
 										</button>
 									</div>
 								</div>
-								<div className="my-10 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+								<h1 className="mt-14 text-lg font-medium">My Products</h1>
+								<div className="my-6 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 									{data.data.data.map((post, index) => (
-										<>
-											<div
-												key={index}
-												className="rounded-lg border-2 border-dashed border-gray-200 bg-white p-10 dark:border-gray-600 dark:bg-gray-800"
-											>
-												<h1>{post.title}</h1>
-											</div>
-										</>
+										// <>
+										// 	<div
+										// 		key={index}
+										// 		className="rounded-lg border-2 border-dashed border-gray-200 bg-white p-10 dark:border-gray-600 dark:bg-gray-800"
+										// 	>
+										// 		<h1>{post.title}</h1>
+										// 	</div>
+										// </>
+										<div key={index}>
+											<ProductCard post={post} />
+										</div>
 									))}
-									<div className="flex items-center justify-center rounded-lg border-2 border-dashed border-gray-200 bg-white p-10 dark:border-gray-600 dark:bg-gray-800">
-										<div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white transition duration-150 hover:bg-red-600">
+									<div className="group flex items-center justify-center rounded-lg border-2 border-dashed border-gray-200 bg-white p-10 transition duration-300 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800">
+										<div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white transition duration-150 group-hover:bg-red-600">
 											+
 										</div>
 									</div>
