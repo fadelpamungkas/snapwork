@@ -1,4 +1,4 @@
-export default function ProductForm() {
+export default function ProductFormEdit() {
 	return (
 		<>
 			<section className="bg-blueGray-100 overflow-hidden pt-12 pb-24">

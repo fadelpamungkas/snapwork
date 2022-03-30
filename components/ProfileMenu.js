@@ -49,18 +49,12 @@ export default function ProfileMenu({ user }) {
 							<Menu.Items className="absolute z-10 mt-2 w-52 divide-y divide-red-400 rounded-xl bg-red-500 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 								<div className="px-1 py-1 ">
 									<Menu.Item>
-										{({ active }) => (
-											<Link href="/profile">
-												<a
-													className={`${
-														active ? "bg-red-600 text-white" : "text-red-100"
-													} group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150`}
-												>
-													<UserIcon className="mr-2 h-5 w-5" />
-													Profile
-												</a>
-											</Link>
-										)}
+										<Link href="/profile" passHref>
+											<a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-red-100 transition duration-150 hover:bg-red-600 hover:text-white">
+												<UserIcon className="mr-2 h-5 w-5" />
+												Profile
+											</a>
+										</Link>
 									</Menu.Item>
 									<Menu.Item>
 										{({ active }) => (
