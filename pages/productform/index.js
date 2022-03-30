@@ -1,14 +1,17 @@
 import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
+import { useRouter } from "next/router";
 import useUser from "../../lib/useUser";
 import Image from "next/image";
+import HeadNav from "../../components/HeadNav";
+import FootNav from "../../components/FootNav";
 
 const categories = [
 	{ id: 1, name: "Software Development", unavailable: false },
 	{ id: 2, name: "Website Development", unavailable: false },
 	{ id: 3, name: "Game Development", unavailable: false },
-	{ id: 4, name: "Mobile Apps Development", unavailable: true },
+	{ id: 4, name: "Mobile Apps Development", unavailable: false },
 	{ id: 5, name: "IT Consultant", unavailable: false },
 	{ id: 6, name: "Cybersecurity", unavailable: false },
 	{ id: 7, name: "Data Science", unavailable: false },
@@ -17,6 +20,7 @@ const categories = [
 ];
 
 export default function ProductForm() {
+	const router = useRouter();
 	const { user } = useUser({
 		redirectTo: "/login",
 	});
@@ -72,6 +76,7 @@ export default function ProductForm() {
 
 		if (data.status === 201) {
 			alert("Post Created Successfully");
+			router.push("/profile");
 		} else {
 			alert(data.message);
 		}
@@ -80,6 +85,7 @@ export default function ProductForm() {
 	return (
 		<>
 			<div className=" bg-gray-50">
+				<HeadNav />
 				<div className="mx-auto min-h-screen w-full max-w-screen-xl">
 					<div className="mx-auto flex w-full justify-center p-8">
 						<form id="formCreatePost" onSubmit={handleSubmit} className="w-1/3">
@@ -244,6 +250,7 @@ export default function ProductForm() {
 						</form>
 					</div>
 				</div>
+				<FootNav />
 			</div>
 		</>
 	);
