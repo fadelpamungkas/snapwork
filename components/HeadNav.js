@@ -73,7 +73,8 @@ export default function HeadNav() {
 					<div className="w-full">
 						<input
 							id="search"
-							type="text"
+							type="search"
+							name="q"
 							className=" w-full rounded-lg py-3.5 px-4 text-sm font-medium leading-none text-gray-800 placeholder-gray-400 shadow-sm transition duration-150 hover:shadow-md focus:border-0 focus:outline-none"
 							placeholder="Search for a service"
 						/>

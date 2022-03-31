@@ -16,7 +16,7 @@ const categories = [
 	{ id: 6, name: "Cybersecurity", unavailable: false },
 	{ id: 7, name: "Data Science", unavailable: false },
 	{ id: 8, name: "UI/UX Design", unavailable: false },
-	{ id: 8, name: "System Analyst", unavailable: false },
+	{ id: 9, name: "System Analyst", unavailable: false },
 ];
 
 export default function ProductForm() {
@@ -39,47 +39,63 @@ export default function ProductForm() {
 		}
 	};
 
-	const handleSubmit = async (event) => {
-		event.preventDefault();
-		const response = await fetch("https://snapwork.herokuapp.com/api/posts", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				title: event.target.title.value,
-				content: event.target.description.value,
-				category: selected.name,
-				authorId: user?.userData.id,
-				authorName: user?.userData.name,
-				tier: {
-					Silver: {
-						description: "silvertier",
-						price: event.target.price.valueAsNumber,
-						offer: ["dmasdka", "dmasodsa", "daiodans"],
-					},
-					Gold: {
-						description: "goldtier",
-						price: event.target.price.valueAsNumber,
-						offer: ["aaa", "dmasodsa", "daiodans"],
-					},
-					platinum: {
-						description: "platinumtier",
-						price: event.target.price.valueAsNumber,
-						offer: ["ccc", "dmasodsa", "daiodans"],
-					},
-				},
-			}),
-		});
-		const data = await response.json();
-		console.log(data);
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		const form = e.currentTarget;
 
-		if (data.status === 201) {
-			alert("Post Created Successfully");
-			router.push("/profile");
-		} else {
-			alert(data.message);
+		try {
+			const formData = new FormData(form);
+			formData.append("authorId", user?.userData.id);
+			formData.append("authorName", user?.userData.name);
+			formData.append("category", selected.name);
+
+			const response = await fetch("http://snapwork.herokuapp.com/api/posts", {
+				method: "POST",
+				body: formData,
+			});
+			console.log(response);
+			const data = await response.json();
+			console.log(data);
+
+			if (data.status === 201) {
+				alert("Post Created Successfully");
+				router.push("/profile");
+			} else {
+				alert(data.message);
+			}
+		} catch (error) {
+			console.error(error);
 		}
+		// const response = await fetch("https://snapwork.herokuapp.com/api/posts", {
+		// 	method: "POST",
+		// 	headers: {
+		// 		"Content-Type": "multipart/form-data;",
+		// 	},
+		// 	body: JSON.stringify({
+		// 		title: event.target.title.value,
+		// 		content: event.target.description.value,
+		// 		category: selected.name,
+		// 		authorId: user?.userData.id,
+		// 		authorName: user?.userData.name,
+		// 		tier: {
+		// 			Silver: {
+		// 				description: "silvertier",
+		// 				price: event.target.price.valueAsNumber,
+		// 				offer: ["dmasdka", "dmasodsa", "daiodans"],
+		// 			},
+		// 			Gold: {
+		// 				description: "goldtier",
+		// 				price: event.target.price.valueAsNumber,
+		// 				offer: ["aaa", "dmasodsa", "daiodans"],
+		// 			},
+		// 			platinum: {
+		// 				description: "platinumtier",
+		// 				price: event.target.price.valueAsNumber,
+		// 				offer: ["ccc", "dmasodsa", "daiodans"],
+		// 			},
+		// 		},
+		// 	}),
+		// });
 	};
 
 	return (
@@ -88,7 +104,33 @@ export default function ProductForm() {
 				<HeadNav />
 				<div className="mx-auto min-h-screen w-full max-w-screen-xl">
 					<div className="mx-auto flex w-full justify-center p-8">
-						<form id="formCreatePost" onSubmit={handleSubmit} className="w-1/3">
+						<form
+							id="formCreatePost"
+							onSubmit={handleSubmit}
+							encType="multipart/form-data"
+							className="w-1/3"
+						>
+							{/* <input
+								id="authorId"
+								name="authorId"
+								type="hidden"
+								className="mt-2 w-full rounded-lg bg-white py-3 px-3 text-sm leading-none text-gray-800 placeholder-gray-400 shadow-sm transition duration-150 hover:shadow-md"
+								value={user?.userData.id}
+							/>
+							<input
+								id="authorName"
+								name="authorName"
+								type="hidden"
+								className="mt-2 w-full rounded-lg bg-white py-3 px-3 text-sm leading-none text-gray-800 placeholder-gray-400 shadow-sm transition duration-150 hover:shadow-md"
+								value={user?.userData.name}
+							/>
+							<input
+								id="category"
+								name="category"
+								type="text"
+								className="mt-2 w-full rounded-lg bg-white py-3 px-3 text-sm leading-none text-gray-800 placeholder-gray-400 shadow-sm transition duration-150 hover:shadow-md"
+								defaultValue="Web Development"
+							/> */}
 							<div>
 								<label
 									htmlFor="title"
@@ -190,14 +232,14 @@ export default function ProductForm() {
 							</div>
 							<div className="mt-6 w-full">
 								<label
-									htmlFor="image"
+									htmlFor="images"
 									className="text-sm font-medium leading-none text-gray-800"
 								>
 									Image
 								</label>
 								<input
-									id="image"
-									name="image"
+									id="images"
+									name="images"
 									type="file"
 									accept="image/*"
 									onChange={handleImage}
@@ -225,14 +267,14 @@ export default function ProductForm() {
 							</div>
 							<div className="mt-6 w-full">
 								<label
-									htmlFor="description"
+									htmlFor="content"
 									className="text-sm font-medium leading-none text-gray-800"
 								>
 									Description
 								</label>
 								<textarea
-									id="description"
-									name="description"
+									id="content"
+									name="content"
 									rows={10}
 									className="mt-2 w-full rounded-lg bg-white py-3 px-3 text-sm leading-none text-gray-800 placeholder-gray-400 shadow-sm transition duration-150 hover:shadow-md"
 									required

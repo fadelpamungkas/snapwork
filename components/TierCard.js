@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
 import Link from "next/link";
+import toRupiah from "../lib/currency";
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
@@ -65,8 +66,9 @@ export default function TierCard({ product }) {
 									</li> */}
 								</ul>
 								<p className="relative pl-3 text-base text-red-500">
-									<span className="text-xl font-light">Rp</span>
-									<span className="text-2xl font-semibold">{tier.price}</span>
+									<span className="text-2xl font-semibold">
+										{toRupiah(tier.price)}
+									</span>
 								</p>
 								<Link
 									href={`/product/${product._id}/${Object.keys(product.tier).at(

@@ -16,7 +16,7 @@ const categories = [
 	{ id: 6, name: "Cybersecurity", unavailable: false },
 	{ id: 7, name: "Data Science", unavailable: false },
 	{ id: 8, name: "UI/UX Design", unavailable: false },
-	{ id: 8, name: "System Analyst", unavailable: false },
+	{ id: 9, name: "System Analyst", unavailable: false },
 ];
 
 // This function gets called at build time
