@@ -25,14 +25,16 @@ export default function Login() {
 		});
 		const data = await response.json();
 		console.log(data);
-
 		if (data.status === 200) {
-			const getUsers = await fetch("https://snapwork.herokuapp.com/api/users", {
-				method: "GET",
-				headers: {
-					"x-token": data.data.data,
-				},
-			});
+			const getUsers = await fetch(
+				"https://snapwork.herokuapp.com/api/authuser",
+				{
+					method: "GET",
+					headers: {
+						"x-token": data.data.data,
+					},
+				}
+			);
 			const userData = await getUsers.json();
 
 			try {

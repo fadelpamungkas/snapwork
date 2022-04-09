@@ -73,47 +73,44 @@ export default function ProductFormEdit({ post }) {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		const response = await fetch(
-			`https://snapwork.herokuapp.com/api/post/${post._id}`,
-			{
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					title: event.target.title.value,
-					content: event.target.description.value,
-					category: selected.name,
-					authorId: user?.userData.id,
-					authorName: user?.userData.name,
-					tier: {
-						Silver: {
-							description: "silvertier",
-							price: event.target.price.valueAsNumber,
-							offer: ["dmasdka", "dmasodsa", "daiodans"],
-						},
-						Gold: {
-							description: "goldtier",
-							price: event.target.price.valueAsNumber,
-							offer: ["aaa", "dmasodsa", "daiodans"],
-						},
-						platinum: {
-							description: "platinumtier",
-							price: event.target.price.valueAsNumber,
-							offer: ["ccc", "dmasodsa", "daiodans"],
-						},
-					},
-				}),
-			}
-		);
-		const data = await response.json();
-		console.log(data);
+		const response = await fetch("https://snapwork.herokuapp.com/api/post", {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				_id: post._id,
+				title: event.target.title.value,
+				content: event.target.description.value,
+				category: selected.name,
+				price: event.target.price.valueAsNumber,
+				// tier: {
+				// 	Silver: {
+				// 		description: "silvertier",
+				// 		price: event.target.price.valueAsNumber,
+				// 		offer: ["dmasdka", "dmasodsa", "daiodans"],
+				// 	},
+				// 	Gold: {
+				// 		description: "goldtier",
+				// 		price: event.target.price.valueAsNumber,
+				// 		offer: ["aaa", "dmasodsa", "daiodans"],
+				// 	},
+				// 	platinum: {
+				// 		description: "platinumtier",
+				// 		price: event.target.price.valueAsNumber,
+				// 		offer: ["ccc", "dmasodsa", "daiodans"],
+				// 	},
+				// },
+			}),
+		});
+		const status = await response.json();
+		console.log(status);
 
-		if (data.status === 200) {
+		if (status === 200) {
 			alert("Post Updated Successfully");
 			router.push("/profile");
 		} else {
-			alert(data.message);
+			alert("Post Update Failed");
 		}
 	};
 
@@ -128,14 +125,14 @@ export default function ProductFormEdit({ post }) {
 				},
 			}
 		);
-		const data = await response.json();
-		console.log(data);
+		const status = await response.json();
+		console.log(status);
 
-		if (data.status === 200) {
+		if (status === 200) {
 			alert("Post Deleted Successfully");
 			router.push("/profile");
 		} else {
-			alert(data.message);
+			alert("Post Delete Failed");
 		}
 	};
 
@@ -243,7 +240,7 @@ export default function ProductFormEdit({ post }) {
 										type="number"
 										min={1000}
 										step={1000}
-										defaultValue={post.tier.silver.price}
+										defaultValue={post.price}
 										className="mt-2 w-full rounded-lg bg-white py-3 px-3 pl-8 text-sm leading-none text-gray-800 placeholder-gray-400 shadow-sm transition duration-150 hover:shadow-md"
 										required
 									/>
@@ -257,28 +254,14 @@ export default function ProductFormEdit({ post }) {
 									htmlFor="image"
 									className="text-sm font-medium leading-none text-gray-800"
 								>
-									Image
+									Image (Cant be changed)
 								</label>
-								<input
-									id="image"
-									name="image"
-									type="file"
-									accept="image/*"
-									onChange={handleImage}
-									className="mt-2 w-full rounded-lg bg-white py-3 px-3 text-sm leading-none text-gray-800 placeholder-gray-400 shadow-sm transition duration-150 
-									file:mr-4 file:rounded-full file:border-0 
-									file:bg-violet-50 file:py-2 file:px-4 file:text-sm
-									file:font-semibold file:text-violet-700
-									file:transition file:duration-150 hover:shadow-md hover:file:bg-violet-100"
-									multiple
-									required
-								/>
-								{images.length > 0 && (
+								{post.images.length > 0 && (
 									<div className="my-4 grid w-full grid-cols-3 gap-4 rounded-xl bg-blue-50 p-4">
-										{images.map((image, key) => (
+										{post.images.map((image, key) => (
 											<Image
 												key={key}
-												src={URL.createObjectURL(image)}
+												src={image.url}
 												alt={image.name}
 												height={100}
 												width={100}

@@ -49,15 +49,14 @@ export default function ProductForm() {
 			formData.append("authorName", user?.userData.name);
 			formData.append("category", selected.name);
 
-			const response = await fetch("http://snapwork.herokuapp.com/api/posts", {
+			const response = await fetch("https://snapwork.herokuapp.com/api/post", {
 				method: "POST",
 				body: formData,
 			});
 			console.log(response);
 			const data = await response.json();
-			console.log(data);
 
-			if (data.status === 201) {
+			if (data === 201) {
 				alert("Post Created Successfully");
 				router.push("/profile");
 			} else {
@@ -66,7 +65,7 @@ export default function ProductForm() {
 		} catch (error) {
 			console.error(error);
 		}
-		// const response = await fetch("https://snapwork.herokuapp.com/api/posts", {
+		// const response = await fetch("https://snapwork.herokuapp.com/api/post", {
 		// 	method: "POST",
 		// 	headers: {
 		// 		"Content-Type": "multipart/form-data;",

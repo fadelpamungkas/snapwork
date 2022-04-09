@@ -8,7 +8,7 @@ export default function Signup() {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		const response = await fetch("https://snapwork.herokuapp.com/api/users", {
+		const response = await fetch("https://snapwork.herokuapp.com/api/user", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

@@ -10,7 +10,11 @@ const securityHeaders = [
 module.exports = {
 	reactStrictMode: true,
 	images: {
-		domains: ["images.unsplash.com", "cdn.tuk.dev"],
+		domains: [
+			"images.unsplash.com",
+			"cdn.tuk.dev",
+			"snapworkupload.s3.ap-southeast-1.amazonaws.com",
+		],
 	},
 	async headers() {
 		return [

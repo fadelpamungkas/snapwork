@@ -102,7 +102,9 @@ export default function Profile() {
 										</div> */}
 										<div className="mr-6 xl:mr-10">
 											<h2 className="mb-2 text-center text-xl font-bold leading-6 text-gray-600 focus:outline-none  xl:text-2xl">
-												{data.data.data.length}
+												{data.data.data != null && (
+													<h1>{data.data.data.length}</h1>
+												)}
 											</h2>
 											<a className=" text-gray-800 focus:outline-none">
 												{" "}
@@ -128,13 +130,17 @@ export default function Profile() {
 								</div>
 								<h1 className="mt-14 text-lg font-medium">My Products</h1>
 								<div className="my-6 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-									{data.data.data.map((post, index) => (
-										<Link href={`/productform/${post._id}`} key={index}>
-											<a>
-												<ProductCard post={post} />
-											</a>
-										</Link>
-									))}
+									{data.data.data != null && (
+										<>
+											{data.data.data.map((post, index) => (
+												<Link href={`/productform/${post._id}`} key={index}>
+													<a>
+														<ProductCard post={post} />
+													</a>
+												</Link>
+											))}
+										</>
+									)}
 									<Link href="/productform">
 										<a className="group flex items-center justify-center rounded-lg border-2 border-dashed border-gray-200 bg-white p-10 transition duration-300 hover:border-gray-300 hover:bg-gray-50 ">
 											<div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white transition duration-150 group-hover:bg-red-600">
