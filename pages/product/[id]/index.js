@@ -6,9 +6,6 @@ import FootNav from "../../../components/FootNav";
 import HeadNav from "../../../components/HeadNav";
 import TierCard from "../../../components/TierCard";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-
 // export async function getStaticPaths() {
 // 	return {
 // 		paths: [{ params: { id: "1" } }],
@@ -36,17 +33,19 @@ export default function Product({ product }) {
 	console.log(product);
 
 	return (
-		<body className="w-full text-gray-900">
+		<body className="w-full py-8 text-gray-900">
 			<HeadNav />
 			<div className="w-full bg-gradient-to-b from-gray-100 to-gray-200">
-				<div className="mx-auto max-w-screen-xl py-8 px-8">
+				<div className="mx-auto max-w-screen-xl py-16 px-8">
 					<section className="border-b-2 border-gray-300 ">
-						<h1 className=" text-4xl font-semibold">{product.title}</h1>
+						<h1 className="text-4xl font-semibold first:capitalize ">
+							{product.title}
+						</h1>
 						<div className="flex items-center justify-start py-4">
-							<h1 className="whitespace-pre text-lg font-medium">
+							<h1 className="whitespace-pre text-lg font-medium first:capitalize">
 								{product.authorName},{" "}
 							</h1>
-							<h1 className="text-lg font-medium text-gray-500">
+							<h1 className="text-lg font-medium text-gray-500 first:capitalize">
 								{product.category}
 							</h1>
 						</div>
@@ -54,19 +53,6 @@ export default function Product({ product }) {
 					<section className="grid grid-cols-3 gap-8 border-b-2 border-gray-300 py-8">
 						<div className="col-span-2">
 							<Carousel images={product.images} />
-
-							<Swiper
-								spaceBetween={50}
-								slidesPerView={3}
-								onSlideChange={() => console.log("slide change")}
-								onSwiper={(swiper) => console.log(swiper)}
-							>
-								<SwiperSlide>Slide 1</SwiperSlide>
-								<SwiperSlide>Slide 2</SwiperSlide>
-								<SwiperSlide>Slide 3</SwiperSlide>
-								<SwiperSlide>Slide 4</SwiperSlide>
-								...
-							</Swiper>
 
 							<h1 className="mt-12 text-2xl font-semibold">Gig Description</h1>
 							<h1 className="whitespace-pre-line py-4 text-base font-normal">{`{product.content} = ${product.content}

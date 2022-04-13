@@ -3,10 +3,10 @@ import Image from "next/image";
 export default function ProductCard({ post }) {
 	return (
 		<>
-			<div className="bg-white shadow-lg rounded-xl">
+			<div className="rounded-xl bg-white shadow-lg">
 				{/* Remove py-8 */}
-				<div className="mx-auto container">
-					<div className="flex flex-wrap items-center lg:justify-between justify-center">
+				<div className="container mx-auto">
+					<div className="flex flex-wrap items-center justify-center lg:justify-between">
 						{/* Card 1 */}
 						<div className="m-2 w-72">
 							<div>
@@ -24,7 +24,7 @@ export default function ProductCard({ post }) {
 										{post.category}
 									</h1>
 									<h1 className="text-lg font-bold"> {post.title}</h1>
-									<p className="text-sm text-gray-400 mt-2 font-medium">
+									<p className="mt-2 text-sm font-medium text-gray-400">
 										by {post.authorName}
 									</p>
 								</div>
