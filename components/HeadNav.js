@@ -64,8 +64,8 @@ export default function HeadNav() {
 
 	console.log(user);
 	return (
-		<nav className="w-full bg-gray-100 ">
-			<div className="mx-auto flex max-w-screen-xl items-center justify-between p-8">
+		<nav className="fixed top-0 z-10 w-full bg-gray-100">
+			<div className="mx-auto flex max-w-screen-xl items-center justify-between py-4 px-8">
 				<Link href="/">
 					<a className="text-xl font-medium tracking-wide">SnapWork</a>
 				</Link>

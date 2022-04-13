@@ -6,6 +6,9 @@ import FootNav from "../../../components/FootNav";
 import HeadNav from "../../../components/HeadNav";
 import TierCard from "../../../components/TierCard";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+
 // export async function getStaticPaths() {
 // 	return {
 // 		paths: [{ params: { id: "1" } }],
@@ -50,7 +53,21 @@ export default function Product({ product }) {
 					</section>
 					<section className="grid grid-cols-3 gap-8 border-b-2 border-gray-300 py-8">
 						<div className="col-span-2">
-							<Carousel />
+							<Carousel images={product.images} />
+
+							<Swiper
+								spaceBetween={50}
+								slidesPerView={3}
+								onSlideChange={() => console.log("slide change")}
+								onSwiper={(swiper) => console.log(swiper)}
+							>
+								<SwiperSlide>Slide 1</SwiperSlide>
+								<SwiperSlide>Slide 2</SwiperSlide>
+								<SwiperSlide>Slide 3</SwiperSlide>
+								<SwiperSlide>Slide 4</SwiperSlide>
+								...
+							</Swiper>
+
 							<h1 className="mt-12 text-2xl font-semibold">Gig Description</h1>
 							<h1 className="whitespace-pre-line py-4 text-base font-normal">{`{product.content} = ${product.content}
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam id blandit eget nunc, in tempus tempor. Euismod ipsum ut nisi ac aliquet senectus sagittis vel semper. Egestas integer integer enim duis. Sit augue nisi interdum malesuada ornare in ultrices amet pellentesque. Rhoncus proin hac ipsum sagittis cras senectus vitae ultrices id. Pharetra diam auctor malesuada et sit nulla tempor nunc id. Tellus aliquet lectus quisque volutpat sollicitudin eget pharetra gravida tristique. Pharetra montes, rhoncus, mauris lectus quis purus enim interdum auctor. Adipiscing tellus faucibus ante ut neque. Integer tincidunt vivamus neque eu, lectus sed scelerisque sagittis, fermentum. Blandit in praesent arcu scelerisque aliquam mauris vestibulum gravida sed. Rutrum duis habitant hendrerit sed.

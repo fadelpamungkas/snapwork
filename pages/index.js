@@ -35,7 +35,7 @@ export async function getStaticProps() {
 export default function Index({ posts }) {
 	return (
 		<>
-			<div className="w-full text-gray-900">
+			<div className="w-full py-8 text-gray-900">
 				<HeadNav />
 				<div className="w-full bg-gradient-to-b from-gray-100 to-gray-200">
 					<section className="mx-auto flex max-w-screen-xl justify-between py-28 px-8">

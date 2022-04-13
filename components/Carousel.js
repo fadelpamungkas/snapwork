@@ -11,7 +11,7 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 
 /* Install pure-react-carousel using -> npm i pure-react-carousel */
 
-export default function Carousel() {
+export default function Carousel({ images }) {
 	return (
 		<div className="flex justify-center 2xl:container 2xl:mx-auto">
 			<div className="w-full">
@@ -53,81 +53,25 @@ export default function Carousel() {
 								<div className="gallery-cell mr-6 h-full w-full sm:w-96 lg:mr-7 lg:w-1/2">
 									<div className="relative hidden h-full w-full lg:block">
 										<img
-											src="https://i.ibb.co/VSsN4Jt/carousel-2.png"
+											src={images[0].url}
 											alt="sitting area"
 											className="h-full w-full object-cover object-center"
 										/>
 										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
 											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
-												Lounge Interior
+												{images[0].name}
 											</h1>
 										</div>
 									</div>
 									<div className="relative h-full w-full lg:hidden">
 										<img
-											src="https://i.ibb.co/tMB5CZW/behzad-ghaffarian-nh-Wg-ZNV85-LQ-unsplash-1-3-1.png"
+											src={images[0].url}
 											alt="sitting area"
 											className="h-full w-full object-cover object-center"
 										/>
 										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
 											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
-												Lounge Interior
-											</h1>
-										</div>
-									</div>
-								</div>
-							</Slide>
-							<Slide index={1}>
-								<div className="gallery-cell mr-6 h-full w-full sm:w-96 lg:mr-7 lg:w-1/2">
-									<div className="relative hidden h-full w-full lg:block">
-										<img
-											src="https://i.ibb.co/phw8yGZ/sven-brandsma-Qz6-Zx4-Rjd-D8-unsplash-1.png"
-											alt="chairs"
-											className="h-full w-full object-cover object-center"
-										/>
-										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
-											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
-												Lounge Interior
-											</h1>
-										</div>
-									</div>
-									<div className="relative h-full w-full lg:hidden">
-										<img
-											src="https://i.ibb.co/g74VYR2/Group-46.png"
-											alt="chairs"
-											className="h-full w-full object-cover object-center"
-										/>
-										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
-											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
-												Lounge Interior
-											</h1>
-										</div>
-									</div>
-								</div>
-							</Slide>
-							<Slide index={2}>
-								<div className="gallery-cell mr-6 h-full w-full sm:w-96 lg:mr-7 lg:w-1/2">
-									<div className="relative hidden h-full w-full lg:block">
-										<img
-											src="https://i.ibb.co/92ZYJyK/behzad-ghaffarian-nh-Wg-ZNV85-LQ-unsplash-1-1.png"
-											alt="chair"
-											className="h-full w-full object-cover object-center"
-										/>
-										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
-											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
-												Lounge Interior
-											</h1>
-										</div>
-									</div>
-									<div className="relative h-full w-full lg:hidden">
-										<img
-											src="https://i.ibb.co/372ryYP/sven-brandsma-Qz6-Zx4-Rjd-D8-unsplash-3-1.png"
-											alt="chair"
-											className="h-full w-full object-cover object-center"
-										/>
-										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
-											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
-												Lounge Interior
+												{images[0].name}
 											</h1>
 										</div>
 									</div>
@@ -194,90 +138,38 @@ export default function Carousel() {
 							</svg>
 						</ButtonBack>
 						<Slider className="carousel__sliderLarge">
-							<Slide className="carousel__inner-slideLarge" index={0}>
-								<div className="gallery-cell h-full w-full">
-									<div className="relative hidden h-full w-full lg:block">
-										<img
-											src="https://i.ibb.co/VSsN4Jt/carousel-2.png"
-											alt="sitting area"
-											className="h-full w-full object-cover object-center"
-										/>
-										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
-											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
-												Lounge Interior
-											</h1>
+							{images.map((image, index) => (
+								<>
+									<Slide className="carousel__inner-slideLarge" index={index}>
+										<div className="gallery-cell mr-6 h-full w-full sm:w-96 lg:mr-7 lg:w-1/2">
+											<div className="relative hidden h-full w-full lg:block">
+												<img
+													src={image.url}
+													alt="sitting area"
+													className="h-full w-full object-cover object-center"
+												/>
+												<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+													<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
+														{image.name}
+													</h1>
+												</div>
+											</div>
+											<div className="relative h-full w-full lg:hidden">
+												<img
+													src={image.url}
+													alt="sitting area"
+													className="h-full w-full object-cover object-center"
+												/>
+												<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
+													<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
+														{image.name}
+													</h1>
+												</div>
+											</div>
 										</div>
-									</div>
-									<div className="relative h-full w-full lg:hidden">
-										<img
-											src="https://i.ibb.co/tMB5CZW/behzad-ghaffarian-nh-Wg-ZNV85-LQ-unsplash-1-3-1.png"
-											alt="sitting area"
-											className="h-full w-full object-cover object-center"
-										/>
-										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
-											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
-												Lounge Interior
-											</h1>
-										</div>
-									</div>
-								</div>
-							</Slide>
-							<Slide className="carousel__inner-slideLarge" index={1}>
-								<div className="gallery-cell h-full w-full">
-									<div className="relative hidden h-full w-full lg:block">
-										<img
-											src="https://i.ibb.co/phw8yGZ/sven-brandsma-Qz6-Zx4-Rjd-D8-unsplash-1.png"
-											alt="chairs"
-											className="h-full w-full object-cover object-center"
-										/>
-										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
-											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
-												Lounge Interior
-											</h1>
-										</div>
-									</div>
-									<div className="relative h-full w-full lg:hidden">
-										<img
-											src="https://i.ibb.co/g74VYR2/Group-46.png"
-											alt="chairs"
-											className="h-full w-full object-cover object-center"
-										/>
-										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
-											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
-												Lounge Interior
-											</h1>
-										</div>
-									</div>
-								</div>
-							</Slide>
-							<Slide className="carousel__inner-slideLarge" index={2}>
-								<div className="gallery-cell h-full w-full">
-									<div className="relative hidden h-full w-full lg:block">
-										<img
-											src="https://i.ibb.co/92ZYJyK/behzad-ghaffarian-nh-Wg-ZNV85-LQ-unsplash-1-1.png"
-											alt="chair"
-											className="h-full w-full object-cover object-center"
-										/>
-										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
-											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
-												Lounge Interior
-											</h1>
-										</div>
-									</div>
-									<div className="relative h-full w-full lg:hidden">
-										<img
-											src="https://i.ibb.co/372ryYP/sven-brandsma-Qz6-Zx4-Rjd-D8-unsplash-3-1.png"
-											alt="chair"
-											className="h-full w-full object-cover object-center"
-										/>
-										<div className="absolute left-0 bottom-0 pl-6 pb-6 lg:pl-8 lg:pb-8">
-											<h1 className="text-xl font-medium leading-5 text-white lg:text-2xl lg:leading-normal">
-												Lounge Interior
-											</h1>
-										</div>
-									</div>
-								</div>
-							</Slide>
+									</Slide>
+								</>
+							))}
 						</Slider>
 						<ButtonNext
 							role="button"
