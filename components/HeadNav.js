@@ -88,14 +88,14 @@ export default function HeadNav() {
             </Link>
           </li>
           <li className="group flex items-center gap-x-2">
-            <Link href="/">
+            <Link href="/about">
               <a className="text-md flex font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold">
                 <MapIcon className="mr-2 h-6 w-6 scale-0 rounded-lg bg-blue-500 fill-white p-1 transition duration-150 group-hover:scale-100" />
                 Tentang Kami
               </a>
             </Link>
           </li>
-          <li className="group flex items-center gap-x-2">
+          {/* <li className="group flex items-center gap-x-2">
             <Popover className="relative">
               {({ open }) => (
                 <>
@@ -132,7 +132,7 @@ export default function HeadNav() {
                               className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-50"
                             >
                               <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
-                                {/* <item.icon aria-hidden="true" /> */}
+                                {/* <item.icon aria-hidden="true" />
                                 <Image
                                   src={item.image}
                                   width={35}
@@ -172,7 +172,7 @@ export default function HeadNav() {
                 </>
               )}
             </Popover>
-          </li>
+          </li> */}
           <li className="group flex items-center gap-x-2">
             <Link href="/about">
               <a className="text-md flex font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold">
