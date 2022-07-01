@@ -2,6 +2,7 @@ import Image from "next/image";
 import FootNav from "../../components/FootNav";
 import HeadNav from "../../components/HeadNav";
 import TokopediaAvatar from "../../public/avtokopedia.png";
+import { BookmarkIcon } from "@heroicons/react/outline";
 export default function Company() {
   return (
     <>
@@ -34,8 +35,14 @@ export default function Company() {
                   Jakarta Selatan, Indonesia
                 </h1>
                 <div className="absolute bottom-0 right-0 py-8 px-8 space-x-4">
-                  <button type="submit" className="rounded-2xl px-6 py-2">Simpan</button>
-                  <button type="submit" className="rounded-2xl px-6 py-2 bg-blue-500 text-white">Lamar</button>
+                  <button type="submit" className="rounded-2xl space-x-2 px-6 py-2 inline-flex items-center">
+                    <BookmarkIcon
+                      className="h-4 w-5"
+                      aria-hidden="true"
+                    />
+                    <span>Simpan</span>
+                  </button>
+                  <button type="submit" className="rounded-2xl px-6 py-2 bg-blue-500 text-white inline-flex items-center">Lamar</button>
                 </div>
               </div>
             </section>
