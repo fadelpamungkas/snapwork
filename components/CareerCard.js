@@ -20,7 +20,7 @@ export default function CareerCard() {
             </div>
           </div>
           <div className="flex items-center justify-start mb-4 space-x-4">
-            <div className="rounded-2xl bg-yellow-200 py-1 px-4">
+            <div className="rounded-xl bg-yellow-200 py-1 px-4">
               <h1 className="text-sm text-yellow-900">Photoshop</h1>
             </div>
             <div className="rounded-xl bg-purple-200 py-1 px-4">

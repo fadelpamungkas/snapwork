@@ -9,7 +9,7 @@ export default function Index({ }) {
     <>
       <div className="w-full py-8 text-gray-900">
         <HeadNav />
-        <div className="w-full bg-gray-100">
+        <div className="w-full bg-gray-50">
           {/* <section className="mx-auto flex max-w-screen-xl items-center justify-between py-28 px-8"> */}
           <section className="mx-auto max-w-screen-xl py-28 px-8 grid grid-cols-4 gap-8 border-b-2 border-gray-300">
             <div className="col-span-1">
