@@ -1,6 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
-import { useState } from "react";
 import Carousel from "../../../components/Carousel";
 import FootNav from "../../../components/FootNav";
 import HeadNav from "../../../components/HeadNav";
@@ -37,7 +35,7 @@ export default function Product({ product }) {
 			<HeadNav />
 			<div className="w-full bg-gradient-to-b from-gray-100 to-gray-200">
 				<div className="mx-auto max-w-screen-xl py-16 px-8">
-					<section className="border-b-2 border-gray-300 ">
+					<section className="border-b-2 border-gray-300">
 						<h1 className="text-4xl font-semibold first:capitalize ">
 							{product.title}
 						</h1>

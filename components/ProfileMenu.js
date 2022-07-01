@@ -27,7 +27,7 @@ export default function ProfileMenu({ user }) {
 			<Menu as="div" className="inline-block text-left">
 				{({ open }) => (
 					<>
-						<Menu.Button className="group inline-flex w-full justify-center rounded-3xl bg-red-500 px-6 py-3 text-sm font-medium text-white transition duration-150 hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+						<Menu.Button className="group inline-flex w-full justify-center rounded-3xl bg-blue-500 px-6 py-3 text-sm font-medium text-white transition duration-150 hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
 							{user.userData.name}
 							<ChevronDownIcon
 								className={`${
@@ -46,11 +46,11 @@ export default function ProfileMenu({ user }) {
 							leaveFrom="transform opacity-100 scale-100"
 							leaveTo="transform opacity-0 scale-95"
 						>
-							<Menu.Items className="absolute z-10 mt-2 w-52 divide-y divide-red-400 rounded-xl bg-red-500 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+							<Menu.Items className="absolute z-10 mt-2 w-52 divide-y divide-blue-400 rounded-xl bg-blue-500 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 								<div className="px-1 py-1 ">
 									<Menu.Item>
 										<Link href="/profile" passHref>
-											<a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-red-100 transition duration-150 hover:bg-red-600 hover:text-white">
+											<a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-blue-100 transition duration-150 hover:bg-blue-600 hover:text-white">
 												<UserIcon className="mr-2 h-5 w-5" />
 												Profile
 											</a>
@@ -60,7 +60,7 @@ export default function ProfileMenu({ user }) {
 										{({ active }) => (
 											<button
 												className={`${
-													active ? "bg-red-600 text-white" : "text-red-100"
+													active ? "bg-blue-600 text-white" : "text-blue-100"
 												} group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150`}
 											>
 												<SwitchHorizontalIcon className="mr-2 h-5 w-5" />
@@ -74,7 +74,7 @@ export default function ProfileMenu({ user }) {
 										{({ active }) => (
 											<button
 												className={`${
-													active ? "bg-red-600 text-white" : "text-red-100"
+													active ? "bg-blue-600 text-white" : "text-blue-100"
 												} group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150`}
 											>
 												<ChartBarIcon className="mr-2 h-5 w-5" />
@@ -86,7 +86,7 @@ export default function ProfileMenu({ user }) {
 										{({ active }) => (
 											<button
 												className={`${
-													active ? "bg-red-600 text-white" : "text-red-100"
+													active ? "bg-blue-600 text-white" : "text-blue-100"
 												} group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150`}
 											>
 												<CogIcon className="mr-2 h-5 w-5" />
@@ -101,7 +101,7 @@ export default function ProfileMenu({ user }) {
 											<button
 												onClick={handleLogout}
 												className={`${
-													active ? "bg-red-600 text-white" : "text-red-100"
+													active ? "bg-blue-600 text-white" : "text-blue-100"
 												} group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150`}
 											>
 												<LogoutIcon className="mr-2 h-5 w-5" />
