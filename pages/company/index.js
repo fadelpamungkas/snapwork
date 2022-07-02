@@ -35,14 +35,14 @@ export default function Company() {
                   Jakarta Selatan, Indonesia
                 </h1>
                 <div className="absolute bottom-0 right-0 py-8 px-8 space-x-4">
-                  <button type="submit" className="rounded-2xl space-x-2 px-6 py-2 inline-flex items-center">
+                  <button type="submit" className="rounded-lg space-x-2 px-8 py-2 inline-flex items-center">
                     <BookmarkIcon
                       className="h-4 w-5"
                       aria-hidden="true"
                     />
                     <span>Simpan</span>
                   </button>
-                  <button type="submit" className="rounded-2xl px-6 py-2 bg-blue-500 text-white inline-flex items-center">Lamar</button>
+                  <button type="submit" className="rounded-lg px-8 py-2 bg-blue-500 text-white inline-flex items-center">Lamar</button>
                 </div>
               </div>
             </section>
@@ -118,7 +118,7 @@ export default function Company() {
                 <div className="border rounded-xl border-gray-300 p-8 space-y-4">
                   <div>
                     <h1 className="text-sm text-gray-500">Nama Posisi</h1>
-                    <h1 className="text-xl font-semibold text-blue-500">Application Designer</h1>
+                    <h1 className="text-xl font-bold text-blue-500">Application Designer</h1>
                   </div>
                   <div>
                     <h1 className="text-sm text-gray-500">Penempatan</h1>
