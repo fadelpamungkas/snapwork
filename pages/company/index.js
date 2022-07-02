@@ -10,7 +10,7 @@ export default function Company() {
         <HeadNav />
         <div className="w-full bg-gray-50">
           <div className="mx-auto max-w-screen-xl py-16 px-8">
-            <section className="relative border rounded-xl border-gray-300 ">
+            <section className="relative bg-white border rounded-xl border-gray-300 ">
               <div className="rounded-t-xl bg-blue-200 py-8 px-8">
                 <div className="p-10">
 
@@ -48,7 +48,7 @@ export default function Company() {
             </section>
             <section className="grid grid-cols-3 gap-8 py-8">
               <div className="col-span-2 space-y-8">
-                <div className="border rounded-xl border-gray-300 p-8">
+                <div className="bg-white border rounded-xl border-gray-300 p-8">
                   <h1 className="text-2xl font-semibold">Informasi Pekerjaan</h1>
                   <h1 className="whitespace-pre-line py-4 text-base font-normal">
                     {`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam id blandit eget nunc, in tempus tempor. Euismod ipsum ut nisi ac aliquet senectus sagittis vel semper. Egestas integer integer enim duis. Sit augue nisi interdum malesuada ornare in ultrices amet pellentesque. Rhoncus proin hac ipsum sagittis cras senectus vitae ultrices id. Pharetra diam auctor malesuada et sit nulla tempor nunc id. Tellus aliquet lectus quisque volutpat sollicitudin eget pharetra gravida tristique. Pharetra montes, rhoncus, mauris lectus quis purus enim interdum auctor. Adipiscing tellus faucibus ante ut neque. Integer tincidunt vivamus neque eu, lectus sed scelerisque sagittis, fermentum. Blandit in praesent arcu scelerisque aliquam mauris vestibulum gravida sed. Rutrum duis habitant hendrerit sed. `}
@@ -62,7 +62,7 @@ export default function Company() {
 5. Break any design problem down into viable actionable chucks and solve them with clarity and precision.`}
                   </h1>
                 </div>
-                <div className="border rounded-xl border-gray-300 p-8">
+                <div className="bg-white border rounded-xl border-gray-300 p-8">
                   <h1 className="text-2xl font-semibold">Persyaratan</h1>
                   <div className="grid grid-cols-3 gap-4 py-4">
                     <div className="col-span-1 flex items-start justify-between">
@@ -115,7 +115,7 @@ export default function Company() {
                 </div>
               </div>
               <div className="colspan-1 space-y-8">
-                <div className="border rounded-xl border-gray-300 p-8 space-y-4">
+                <div className="bg-white border rounded-xl border-gray-300 p-8 space-y-4">
                   <div>
                     <h1 className="text-sm text-gray-500">Nama Posisi</h1>
                     <h1 className="text-xl font-bold text-blue-500">Application Designer</h1>
@@ -148,7 +148,7 @@ export default function Company() {
                     </div>
                   </div>
                 </div>
-                <div className="border rounded-xl border-gray-300 p-8">
+                <div className="bg-white border rounded-xl border-gray-300 p-8">
                   <h1 className="text-xl font-semibold pb-2">Lowongan Terbaru</h1>
                   <div className="grid grid-cols-1 divide-y divide-gray-300">
                     <div className="py-2">
