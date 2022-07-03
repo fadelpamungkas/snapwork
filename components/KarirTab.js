@@ -41,7 +41,7 @@ export default function KarirTab() {
             </Tab>
           ))}
         </Tab.List>
-        <Tab.Panels className="col-span-4 border-t py-4 px-8">
+        <Tab.Panels className="col-span-4 border-t py-2 px-8">
           <Tab.Panel>
             <div>
               <div className="rounded-lg shadow-lg bg-white p-4">
