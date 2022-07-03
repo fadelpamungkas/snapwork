@@ -79,8 +79,7 @@ export default function Index({ }) {
       <div className="w-full py-8 text-gray-900">
         <HeadNav />
         <div className="w-full bg-gray-50">
-          {/* <section className="mx-auto flex max-w-screen-xl items-center justify-between py-28 px-8"> */}
-          <section className="mx-auto max-w-screen-xl py-28 px-8 grid grid-cols-4 gap-8 border-b-2 border-gray-300">
+          <section className="mx-auto max-w-screen-xl py-16 px-8 grid grid-cols-4 gap-8">
             <div className="col-span-1">
               <div className="w-full mx-auto flex-col justify-between items-center rounded-xl bg-white shadow-lg">
                 <div className="bg-blue-500 rounded-t-xl py-3 px-6">
@@ -228,11 +227,6 @@ export default function Index({ }) {
                       </div>
                     </Combobox>
                   </div>
-                  {/* <Link href={`/product`} passHref>
-                    <button className="mt-5 w-full rounded-xl bg-blue-900/20 px-8 py-3 text-base font-semibold text-blue-500 transition duration-150 ease-in-out hover:bg-blue-900/30 hover:text-blue-600 focus:outline-none">
-                      Apply
-                    </button>
-                  </Link> */}
                 </div>
               </div>
             </div>
@@ -250,12 +244,6 @@ export default function Index({ }) {
                 </Link>
               </div>
             </div>
-          </section>
-          <section className="mx-auto flex max-w-screen-xl flex-1 flex-col items-center justify-center py-28 px-8">
-            <h1>dasdksadnsakdnsakjnfaskfnsmadnsafkasjdnksjafnasdjnafnasfnbaskdjnadja</h1>
-          </section>
-          <section className="mx-auto flex max-w-screen-xl flex-1 flex-col items-center justify-center space-y-8 py-28 px-8">
-            <h1>dasdksadnsakdnsakjnfaskfnsmadnsafkasjdnksjafnasdjnafnasfnbaskdjnadja</h1>
           </section>
         </div>
         <FootNav />
