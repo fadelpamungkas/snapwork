@@ -189,12 +189,12 @@ export default function HeadNav() {
           ) : (
             <>
               <Link href="/login">
-                <a className="rounded-2xl px-6 py-3 font-medium text-blue-500 transition duration-150 hover:text-blue-600">
+                <a className="rounded-xl px-6 py-3 font-medium text-blue-500 transition duration-150 hover:text-blue-600">
                   Sign In
                 </a>
               </Link>
               <Link href="/signup">
-                <a className="rounded-2xl bg-blue-500 px-6 py-3 font-medium text-white transition duration-150 hover:bg-blue-600">
+                <a className="rounded-xl bg-blue-500 px-6 py-3 font-medium text-white transition duration-150 hover:bg-blue-600">
                   Sign Up
                 </a>
               </Link>
