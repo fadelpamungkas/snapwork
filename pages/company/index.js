@@ -46,6 +46,9 @@ export default function Company() {
                 <h1 className="whitespace-pre text-base font-medium first:capitalize">
                   Jakarta Selatan, Indonesia
                 </h1>
+                <h1 className="whitespace-pre text-base font-medium first:capitalize">
+                  www.tokopedia.com
+                </h1>
                 <div className="absolute bottom-0 right-0 py-8 px-8 space-x-4">
                   <button type="submit" className="rounded-lg space-x-2 px-8 py-2 inline-flex items-center">
                     <BookmarkIcon

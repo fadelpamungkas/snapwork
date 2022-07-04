@@ -1,9 +1,12 @@
 import { Tab } from '@headlessui/react'
+import useUser from "../lib/useUser";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 export default function CVTab() {
+  const { user } = useUser();
+
   const tabItem = [
     {
       id: 1,
@@ -60,7 +63,11 @@ export default function CVTab() {
                       <h1>:</h1>
                     </div>
                     <div className="col-span-2">
-                      <h1>Fadel Pamungkas</h1>
+                      {user?.isLoggedIn ? (
+                        <h1>{user.userData.name}</h1>
+                      ) : (
+                          <h1>Fadel Pamungkas</h1>
+                        )}
                     </div>
                   </div>
                   <div className="my-4 items-start justify-start space-x-2 grid grid-cols-3 text-sm text-gray-700">
@@ -117,7 +124,11 @@ export default function CVTab() {
                       <h1>:</h1>
                     </div>
                     <div className="col-span-2">
-                      <h1>fadelpamungkas3@gmail.com</h1>
+                      {user?.isLoggedIn ? (
+                        <h1>{ user.userData.email }</h1>
+                      ) : (
+                          <h1>fadelpamungkas3@gmail.com</h1>
+                        )}
                     </div>
                   </div>
                 </div>

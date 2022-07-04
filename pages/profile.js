@@ -8,10 +8,13 @@ import { Tab } from '@headlessui/react'
 import TokopediaAvatar from "../public/avtokopedia.png";
 import UserAvatar from "../public/avuser.png";
 import { CogIcon } from "@heroicons/react/outline";
+import useUser from "../lib/useUser";
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 export default function Profile() {
+  const { user } = useUser();
+
   const tabItem = [
     {
       id: 1,
@@ -54,8 +57,12 @@ export default function Profile() {
                         height={90}
                         className="rounded-full"
                       />
-                      <h1 className="text-xl font-semibold mt-4">Fadel Pamungkas</h1>
-                      <h1 className="text-sm">S1 Teknik Informatika</h1>
+                      {user?.isLoggedIn ? (
+                        <h1 className="text-xl font-semibold mt-4">{user.userData.name}</h1>
+                      ) : (
+                          <h1 className="text-xl font-semibold mt-4">Fadel Pamungkas</h1>
+                        )}
+                      < h1 className="text-sm">S1 Teknik Informatika</h1>
                       <h1 className="text-sm">Mahasiswa di Universitas Islam Indonesia</h1>
                       <h1 className="text-sm">Agustus 2018 - Sekarang</h1>
                     </div>
@@ -74,16 +81,29 @@ export default function Profile() {
 `}</h1>
                       </div>
                     </div>
-                    <div className="flex flex-col items-start justify-center py-4 space-y-4">
-                      <div className="space-y-2">
-                        <h1 className="text-sm text-gray-500">Instagram</h1>
-                        <h1 className="text-sm">instagram.com/MikaelaRimnara</h1>
+                    {user?.isLoggedIn ? (
+                      <div className="flex flex-col items-start justify-center py-4 space-y-4">
+                        <div className="space-y-2">
+                          <h1 className="text-sm text-gray-500">Instagram</h1>
+                          <h1 className="text-sm">instagram.com/{user.userData.name}</h1>
+                        </div>
+                        <div className="space-y-2">
+                          <h1 className="text-sm text-gray-500">Linkedin</h1>
+                          <h1 className="text-sm">linkedin.com/{user.userData.name}</h1>
+                        </div>
                       </div>
-                      <div className="space-y-2">
-                        <h1 className="text-sm text-gray-500">Linkedin</h1>
-                        <h1 className="text-sm">linkedin.com/Mikaela-Rimnara</h1>
-                      </div>
-                    </div>
+                    ) : (
+                        <div className="flex flex-col items-start justify-center py-4 space-y-4">
+                          <div className="space-y-2">
+                            <h1 className="text-sm text-gray-500">Instagram</h1>
+                            <h1 className="text-sm">instagram.com/MikaelaRimnara</h1>
+                          </div>
+                          <div className="space-y-2">
+                            <h1 className="text-sm text-gray-500">Linkedin</h1>
+                            <h1 className="text-sm">linkedin.com/Mikaela-Rimnara</h1>
+                          </div>
+                        </div>
+                      )}
                   </div>
                 </div>
                 <div className="col-span-7">
@@ -109,13 +129,13 @@ export default function Profile() {
                       </Tab.List>
                       <Tab.Panels className="mt-2">
                         <Tab.Panel>
-                          <ProfilTab/>
+                          <ProfilTab />
                         </Tab.Panel>
                         <Tab.Panel>
-                          <CVTab/>
+                          <CVTab />
                         </Tab.Panel>
                         <Tab.Panel>
-                          <KarirTab/>
+                          <KarirTab />
                         </Tab.Panel>
                       </Tab.Panels>
                     </Tab.Group>
