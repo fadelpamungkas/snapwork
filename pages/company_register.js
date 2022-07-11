@@ -21,7 +21,7 @@ export default function Company_Register() {
                   <p className="text-sm font-bold">Silakan isi data di bawah ini dengan lengkap untuk mendaftar sebagai member Employer (Perusahaan)</p>
                 </div>
               </div>
-              <div className="mx-auto w-full px-2 flex">
+              <div className="mx-auto w-full px-2">
                 <div className="rounded-xl px-8 py-4 space-y-4 border divide-y divide-gray-300">
                   <div className="py-2">
                     <h1 className="text-xl font-semibold pb-2">Informasi Perusahaan</h1>
