@@ -77,8 +77,7 @@ export default function Profile() {
                       </div>
                       <div className="space-y-2">
                         <h1 className="text-sm text-gray-500">Alamat</h1>
-                        <h1 className="text-sm">{`Jl. Padjajaran, Pogung Lor, Sinduadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55581
-`}</h1>
+                        <h1 className="text-sm">{`Jl. Padjajaran, Pogung Lor, Sinduadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55581`}</h1>
                       </div>
                     </div>
                     {user?.isLoggedIn ? (
@@ -116,7 +115,6 @@ export default function Profile() {
                             className={({ selected }) =>
                               classNames(
                                 'py-2.5 text-base font-medium leading-5 text-black',
-                                '',
                                 selected
                                   ? 'border-b-4 border-b-blue-300 '
                                   : 'text-black hover:border-b-4 border-b-blue-50'
