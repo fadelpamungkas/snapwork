@@ -64,12 +64,12 @@ export default function FAQ() {
                 Bagaimana saya tahu lowongan atau panggilan tes itu palsu?
               </h1>
               <h1 className="max-w-xl text-base font-normal text-center text-gray-500">
-                Butuh pekerjaan tidak harus membuatmu terlena. Berikut ini tips
-                untuk memastikan kebenaran sebuah lowongan kerja atau panggilan
-                tes, baik melalui website, email, maupun surat:
+                Berikut ini tips untuk memastikan kebenaran sebuah lowongan
+                kerja atau panggilan tes, baik melalui website, email, maupun
+                surat:
               </h1>
             </div>
-            <ul className="text-base list-decimal list-inside text-left">
+            <ul className="text-base list-decimal list-outside text-left">
               <li>
                 Perhatikan tata bahasa yang digunakan dan logo perusahaan yang
                 dipasang. Jika ada kejanggalan, seperti bahasa tidak baku,
