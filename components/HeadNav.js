@@ -174,7 +174,7 @@ export default function HeadNav() {
             </Popover>
           </li> */}
           <li className="group flex items-center gap-x-2">
-            <Link href="/about">
+            <Link href="/faq">
               <a className="text-md flex font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold">
                 <CubeTransparentIcon className="mr-2 h-6 w-6 scale-0 rounded-lg bg-blue-500 fill-white p-1 transition duration-150 group-hover:scale-100" />
                 FAQ
