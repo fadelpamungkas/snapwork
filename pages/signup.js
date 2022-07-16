@@ -22,11 +22,11 @@ export default function Signup() {
 		const data = await response.json();
 		console.log(data);
 
-		if (data.status === 201) {
+		if (data === 200) {
 			alert("Successfully registered");
 			router.push("/login");
 		} else {
-			alert(data.message);
+			alert("Fail to register, please contact for any problems");
 		}
 
 		// if (data.status === 200) {
@@ -233,7 +233,7 @@ export default function Signup() {
 									type="submit"
 									className="w-full rounded-lg bg-indigo-700 py-4 text-sm font-semibold leading-none text-white shadow-md transition duration-150 ease-in-out hover:bg-indigo-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-offset-2 active:shadow-none"
 								>
-									Sign In
+									Sign Up
 								</button>
 							</div>
 						</form>
