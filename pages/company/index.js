@@ -45,9 +45,12 @@ export default function Company() {
                 <h1 className="text-base font-medium whitespace-pre first:capitalize">
                   Jakarta Selatan, Indonesia
                 </h1>
-                <h1 className="text-base font-medium whitespace-pre first:capitalize">
+                <a
+                  href="https://www.tokopedia.com"
+                  className="text-base font-medium text-blue-500 whitespace-pre first:capitalize"
+                >
                   https://www.tokopedia.com
-                </h1>
+                </a>
                 <div className="absolute right-0 bottom-0 py-8 px-8 space-x-4">
                   <button
                     type="submit"
