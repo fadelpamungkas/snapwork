@@ -54,7 +54,7 @@ export default function Company() {
                 <div className="absolute right-0 bottom-0 py-8 px-8 space-x-4">
                   <button
                     type="submit"
-                    className="inline-flex items-center py-2 px-8 space-x-2 rounded-lg"
+                    className="inline-flex items-center py-2 px-8 space-x-2 rounded-lg hover:text-blue-500 transition duration-150"
                   >
                     <BookmarkIcon className="w-5 h-4" aria-hidden="true" />
                     <span>Simpan</span>
@@ -62,7 +62,7 @@ export default function Company() {
                   <button
                     type="button"
                     onClick={openModal}
-                    className="inline-flex items-center py-2 px-8 text-white bg-blue-500 rounded-lg"
+                    className="inline-flex items-center py-2 px-8 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transiiton duration-150"
                   >
                     Lamar
                   </button>
