@@ -60,7 +60,7 @@ export default function ProfileMenu({ user }) {
                 <div className="px-1 py-1 ">
                   <Menu.Item>
                     <Link href="/profile" passHref>
-                      <a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 transition duration-150 hover:bg-blue-600 group hover:text-white">
+                      <a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 transition duration-75 hover:bg-blue-600 group hover:text-white">
                         <UserIcon className="mr-2 h-5 w-5 text-red-500 group-hover:text-white" />
                         Profile
                       </a>
@@ -68,7 +68,7 @@ export default function ProfileMenu({ user }) {
                   </Menu.Item>
                   <Menu.Item>
                     <Link href="/company_register" passHref>
-                      <a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 transition duration-150 hover:bg-blue-600 group hover:text-white">
+                      <a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 transition duration-75 hover:bg-blue-600 group hover:text-white">
                         <IdentificationIcon className="mr-2 h-5 w-5 text-red-500 group-hover:text-white" />
                         Daftar Perusahaan
                       </a>
@@ -76,7 +76,7 @@ export default function ProfileMenu({ user }) {
                   </Menu.Item>
                   <Menu.Item>
                     <Link href="/profile" passHref>
-                      <a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 transition duration-150 hover:bg-blue-600 group hover:text-white">
+                      <a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 transition duration-75 hover:bg-blue-600 group hover:text-white">
                         <CogIcon className="mr-2 h-5 w-5 text-red-500 group-hover:text-white" />
                         Settings
                       </a>
@@ -84,7 +84,7 @@ export default function ProfileMenu({ user }) {
                   </Menu.Item>
                   <Menu.Item>
                     <Link href="/faq" passHref>
-                      <a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 transition duration-150 hover:bg-blue-600 group hover:text-white">
+                      <a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 transition duration-75 hover:bg-blue-600 group hover:text-white">
                         <AnnotationIcon className="mr-2 h-5 w-5 text-red-500 group-hover:text-white" />
                         FAQ
                       </a>
@@ -95,7 +95,7 @@ export default function ProfileMenu({ user }) {
                       <button
                         onClick={handleLogout}
                         className={`${active ? "bg-blue-600 text-white" : "text-gray-700"
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-150 group hover:text-white`}
+                          } group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-75 group hover:text-white`}
                       >
                         <LogoutIcon className="mr-2 h-5 w-5 text-red-500 group-hover:text-white" />
                         Logout
