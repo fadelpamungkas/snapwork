@@ -55,45 +55,45 @@ export default function about() {
 									<img
 										className="hidden md:block"
 										src="https://i.ibb.co/FYTKDG6/Rectangle-118-2.png"
-										alt="Alexa featured Image"
+										alt="Fadel featured Image"
 									/>
 									<img
 										className="block md:hidden"
 										src="https://i.ibb.co/zHjXqg4/Rectangle-118.png"
-										alt="Alexa featured Image"
+										alt="Fadel featured Image"
 									/>
 									<p className="mt-4 text-xl font-medium leading-5 text-gray-800">
-										Alexa
+                    Fadel
 									</p>
 								</div>
 								<div className="flex flex-col items-center justify-center p-4 pb-6">
 									<img
 										className="hidden md:block"
 										src="https://i.ibb.co/Pc6XVVC/Rectangle-120.png"
-										alt="Liam featued Image"
+										alt="Danu featued Image"
 									/>
 									<img
 										className="block md:hidden"
 										src="https://i.ibb.co/C5MMBcs/Rectangle-120.png"
-										alt="Liam featued Image"
+										alt="Danu featued Image"
 									/>
 									<p className="mt-4 text-xl font-medium leading-5 text-gray-800">
-										Liam
+                    Danu
 									</p>
 								</div>
 								<div className="flex flex-col items-center justify-center p-4 pb-6">
 									<img
 										className="hidden md:block"
 										src="https://i.ibb.co/7nSJPXQ/Rectangle-121.png"
-										alt="Elijah featured image"
+										alt="Haydar featured image"
 									/>
 									<img
 										className="block md:hidden"
 										src="https://i.ibb.co/ThZBWxH/Rectangle-121.png"
-										alt="Elijah featured image"
+										alt="Haydar featured image"
 									/>
 									<p className="mt-4 text-xl font-medium leading-5 text-gray-800">
-										Elijah
+                    Haydar
 									</p>
 								</div>
 							</div>
