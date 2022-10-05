@@ -63,7 +63,7 @@ export default function Profile() {
                   <div className="p-8 rounded-xl border divide-y divide-gray-300">
                     <div className="flex flex-col justify-center items-center py-4">
                       <Image
-                        src={UserAvatar}
+                        src={TokopediaAvatar}
                         alt=""
                         width={90}
                         height={90}
@@ -71,7 +71,7 @@ export default function Profile() {
                       />
                       {user?.isLoggedIn ? (
                         <h1 className="mt-4 text-xl font-semibold">
-                          {user.userData.name}
+                          PT Indonesia Epson Industry
                         </h1>
                       ) : (
                         <h1 className="mt-4 text-xl font-semibold">
