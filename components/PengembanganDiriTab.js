@@ -340,9 +340,11 @@ laporan lengkap`}</p>
                             1420 0008 6693 1
                           </h1>
                           <h1 className="text-lg font-medium">
-                            BCA {" "}
-                            <span className="font-normal text-base">atas nama</span>
-                            {" "}Fadel Pamungkas
+                            BCA{" "}
+                            <span className="text-base font-normal">
+                              atas nama
+                            </span>{" "}
+                            Fadel Pamungkas
                           </h1>
                         </div>
                       </div>
@@ -362,9 +364,11 @@ laporan lengkap`}</p>
                             1420 0008 6693 1
                           </h1>
                           <h1 className="text-lg font-medium">
-                            Mandiri {" "}
-                            <span className="font-normal text-base">atas nama</span>
-                            {" "}Fadel Pamungkas
+                            Mandiri{" "}
+                            <span className="text-base font-normal">
+                              atas nama
+                            </span>{" "}
+                            Fadel Pamungkas
                           </h1>
                         </div>
                       </div>
@@ -384,9 +388,11 @@ laporan lengkap`}</p>
                             1420 0008 6693 1
                           </h1>
                           <h1 className="text-lg font-medium">
-                            BNI {" "}
-                            <span className="font-normal text-base">atas nama</span>
-                            {" "}Haydar Maulana
+                            BNI{" "}
+                            <span className="text-base font-normal">
+                              atas nama
+                            </span>{" "}
+                            Haydar Maulana
                           </h1>
                         </div>
                       </div>
@@ -460,13 +466,9 @@ laporan lengkap`}</p>
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500 whitespace-pre-line">
-                      Anda berhasil mengisi lamaran pada{" "}
-                      <span className="font-bold">
-                        {" "}
-                        Application Designer - PT. Tokopedia Indonesia.{" "}
-                      </span>
-                      Anda dapat memantau proses rekrutmen melalui halaman{" "}
-                      <span className="text-blue-500"> Profil Saya.</span>
+                      Terimakasih telah memilih laporan asesmen sebagai salah
+                      satu referensi pengenalan pribadimu! Laporan asesmen dapat
+                      diunduh setelah pembayaran berhasil diverifikasi.
                     </p>
                   </div>
 
