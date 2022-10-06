@@ -3,6 +3,7 @@ import FootNav from "../components/FootNav";
 import HeadNav from "../components/HeadNav";
 import ProfilTab from "../components/ProfilTab";
 import CVTab from "../components/CVTab";
+import PengembanganDiriTab from "../components/PengembanganDiriTab";
 import KarirTab from "../components/KarirTab";
 import { Tab } from '@headlessui/react'
 import TokopediaAvatar from "../public/avtokopedia.png";
@@ -26,6 +27,10 @@ export default function Profile() {
     },
     {
       id: 3,
+      name: "Pengembangan Diri",
+    },
+    {
+      id: 4,
       name: "Karir Saya",
     },
   ];
@@ -131,6 +136,9 @@ export default function Profile() {
                         </Tab.Panel>
                         <Tab.Panel>
                           <CVTab />
+                        </Tab.Panel>
+                        <Tab.Panel>
+                          <PengembanganDiriTab />
                         </Tab.Panel>
                         <Tab.Panel>
                           <KarirTab />
