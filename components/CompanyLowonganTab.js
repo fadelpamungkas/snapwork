@@ -1,3 +1,4 @@
+import Link from "next/link";
 import EditableCareerCard from "../components/EditableCareerCard";
 import { Tab } from "@headlessui/react";
 import { CogIcon } from "@heroicons/react/outline";
@@ -49,8 +50,16 @@ export default function CompanyLowonganTab() {
     <>
       <div>
         <div className="p-8 space-y-8">
-          <EditableCareerCard />
-          <EditableCareerCard />
+          <Link href="/company/home" passHref>
+            <a className="flex">
+              <EditableCareerCard />
+            </a>
+          </Link>
+          <Link href="/company/home" passHref>
+            <a className="flex">
+              <EditableCareerCard />
+            </a>
+          </Link>
         </div>
       </div>
       <Transition appear show={isOpen} as={Fragment}>
