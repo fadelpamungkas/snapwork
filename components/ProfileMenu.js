@@ -29,7 +29,7 @@ export default function ProfileMenu({ user }) {
       <Menu as="div" className="inline-block text-left">
         {({ open }) => (
           <>
-            <Menu.Button className="group inline-flex w-full items-center justify-center pr-4 space-x-2 rounded-3xl bg-blue-500 p-1 text-sm font-medium text-white transition duration-150 hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            <Menu.Button className="inline-flex justify-center items-center p-1 pr-4 space-x-2 w-full text-sm font-medium text-white bg-blue-500 rounded-3xl transition duration-150 hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 group">
               <Image
                 src={UserAvatar}
                 alt=""
@@ -37,12 +37,14 @@ export default function ProfileMenu({ user }) {
                 height={30}
                 className="rounded-full"
               />
-              <span>
-                {user.userData.name}
-              </span>
+              <span>{user.userData.name}</span>
+              {user.userData.role == "admin" && (
+                <span className="uppercase">{user.userData.role}</span>
+              )}
               <ChevronDownIcon
-                className={`${open ? "-rotate-180 transform" : "text-opacity-100"
-                  }
+                className={`${
+                  open ? "-rotate-180 transform" : "text-opacity-100"
+                }
                   h-5 w-5 text-white transition duration-150 ease-in-out group-hover:text-rose-50 group-hover:text-opacity-80`}
                 aria-hidden="true"
               />
@@ -56,48 +58,66 @@ export default function ProfileMenu({ user }) {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute z-10 mt-2 w-52 red-500 rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="px-1 py-1 ">
-                  <Menu.Item>
-                    <Link href="/profile" passHref>
-                      <a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 transition duration-75 hover:bg-blue-600 group hover:text-white">
-                        <UserIcon className="mr-2 h-5 w-5 text-red-500 group-hover:text-white" />
-                        Profile
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item>
-                    <Link href="/company_register" passHref>
-                      <a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 transition duration-75 hover:bg-blue-600 group hover:text-white">
-                        <IdentificationIcon className="mr-2 h-5 w-5 text-red-500 group-hover:text-white" />
-                        Daftar Perusahaan
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item>
-                    <Link href="/profile" passHref>
-                      <a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 transition duration-75 hover:bg-blue-600 group hover:text-white">
-                        <CogIcon className="mr-2 h-5 w-5 text-red-500 group-hover:text-white" />
-                        Settings
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item>
-                    <Link href="/faq" passHref>
-                      <a className="flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 transition duration-75 hover:bg-blue-600 group hover:text-white">
-                        <AnnotationIcon className="mr-2 h-5 w-5 text-red-500 group-hover:text-white" />
-                        FAQ
-                      </a>
-                    </Link>
-                  </Menu.Item>
+              <Menu.Items className="absolute z-10 mt-2 w-52 bg-white rounded-xl ring-1 ring-black ring-opacity-5 shadow-lg focus:outline-none red-500">
+                <div className="py-1 px-1">
+                  {user.userData.role === "admin" ? (
+                    <>
+                      <Menu.Item>
+                        <Link href="/admin/dashboard" passHref>
+                          <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
+                            <UserIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
+                            Admin Dashboard
+                          </a>
+                        </Link>
+                      </Menu.Item>
+                    </>
+                  ) : (
+                    <>
+                      <Menu.Item>
+                        <Link href="/profile" passHref>
+                          <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
+                            <UserIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
+                            Profile
+                          </a>
+                        </Link>
+                      </Menu.Item>
+                      {user.userData.role !== "mitra" && (
+                        <Menu.Item>
+                          <Link href="/company_register" passHref>
+                            <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
+                              <IdentificationIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
+                              Daftar Perusahaan
+                            </a>
+                          </Link>
+                        </Menu.Item>
+                      )}
+                      <Menu.Item>
+                        <Link href="/profile" passHref>
+                          <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
+                            <CogIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
+                            Settings
+                          </a>
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <Link href="/faq" passHref>
+                          <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
+                            <AnnotationIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
+                            FAQ
+                          </a>
+                        </Link>
+                      </Menu.Item>
+                    </>
+                  )}
                   <Menu.Item>
                     {({ active }) => (
                       <button
                         onClick={handleLogout}
-                        className={`${active ? "bg-blue-600 text-white" : "text-gray-700"
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-75 group hover:text-white`}
+                        className={`${
+                          active ? "bg-blue-600 text-white" : "text-gray-700"
+                        } group group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-75 hover:text-white`}
                       >
-                        <LogoutIcon className="mr-2 h-5 w-5 text-red-500 group-hover:text-white" />
+                        <LogoutIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
                         Logout
                       </button>
                     )}

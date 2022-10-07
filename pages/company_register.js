@@ -1,8 +1,47 @@
 import FootNav from "../components/FootNav";
 import HeadNav from "../components/HeadNav";
 import { ClipboardListIcon } from "@heroicons/react/outline";
+import useUser from "../lib/useUser";
 
 export default function Company_Register() {
+  const { user } = useUser();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const response = await fetch("https://snapwork.herokuapp.com/api/company", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: user?.userData.id,
+        name: event.target.name.value,
+        industrytype: event.target.industry.value,
+        email: event.target.email.value,
+        website: event.target.website.value,
+        phone: event.target.phone.value,
+        description: event.target.description.value,
+        country: event.target.country.value,
+        province: event.target.province.value,
+        city: event.target.city.value,
+        address: event.target.address.value,
+        postalcode: event.target.postalcode.value,
+        officername: event.target.officername.value,
+        officeremail: event.target.officeremail.value,
+        officerphone: event.target.officerphone.value,
+        officermobile: event.target.officermobile.value,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+
+    if (data === 200) {
+      alert("Successfully registered");
+    } else {
+      alert("Fail to register, please contact for any problems");
+    }
+  };
+
   return (
     <>
       <body className="py-8 w-full text-gray-900">
@@ -28,193 +67,196 @@ export default function Company_Register() {
                 </div>
               </div>
               <div className="px-2 mx-auto w-full">
-                <div className="py-4 px-8 space-y-4 rounded-xl border divide-y divide-gray-300">
-                  <div className="py-2">
-                    <h1 className="pb-2 text-xl font-semibold">
-                      Informasi Perusahaan
-                    </h1>
-                    <p className="pb-2 text-sm">
-                      Silahkan isi data-data dibawah ini sesuai dengan kondisi
-                      perusahaan yang di wakili untuk memudahkan kami
-                      berkoordinasi dengan anda
-                    </p>
-                    <div className="grid grid-cols-2 space-y-4 text-sm divide-x">
-                      <div className="pr-12 mt-4 space-y-4">
+                <form id="formRegisterCompany" onSubmit={handleSubmit}>
+                  <div className="py-4 px-8 space-y-4 rounded-xl border divide-y divide-gray-300">
+                    <div className="py-2">
+                      <h1 className="pb-2 text-xl font-semibold">
+                        Informasi Perusahaan
+                      </h1>
+                      <p className="pb-2 text-sm">
+                        Silahkan isi data-data dibawah ini sesuai dengan kondisi
+                        perusahaan yang di wakili untuk memudahkan kami
+                        berkoordinasi dengan anda
+                      </p>
+                      <div className="grid grid-cols-2 space-y-4 text-sm divide-x">
+                        <div className="pr-12 mt-4 space-y-4">
+                          <div className="space-y-2">
+                            <h1>Company Name</h1>
+                            <input
+                              id="name"
+                              type="text"
+                              name="name"
+                              className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                              placeholder="Enter company name"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <h1>Type of Industry</h1>
+                            <input
+                              id="industry"
+                              type="text"
+                              name="industry"
+                              className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                              placeholder="Select type of industry"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <h1>Company Email</h1>
+                            <input
+                              id="email"
+                              type="email"
+                              name="email"
+                              className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                              placeholder="Enter company email"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <h1>Website</h1>
+                            <input
+                              id="website"
+                              type="text"
+                              name="website"
+                              className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                              placeholder="Enter website URL"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <h1>Company Phone Number</h1>
+                            <input
+                              id="phone"
+                              type="text"
+                              name="phone"
+                              className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                              placeholder="Enter phone number"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <h1>Company Description</h1>
+                            <textarea
+                              id="description"
+                              type="text"
+                              name="description"
+                              className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                              placeholder="Enter company description"
+                            />
+                          </div>
+                        </div>
+                        <div className="pl-12 space-y-4">
+                          <div className="space-y-2">
+                            <h1>Company Country</h1>
+                            <input
+                              id="country"
+                              type="text"
+                              name="country"
+                              className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                              placeholder="Enter company country"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <h1>Company Province</h1>
+                            <input
+                              id="province"
+                              type="text"
+                              name="province"
+                              className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                              placeholder="Enter company province"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <h1>Company City</h1>
+                            <input
+                              id="city"
+                              type="text"
+                              name="city"
+                              className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                              placeholder="Enter company city"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <h1>Company Address</h1>
+                            <input
+                              id="address"
+                              type="text"
+                              name="address"
+                              className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                              placeholder="Enter company address"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <h1>Postal Code</h1>
+                            <input
+                              id="postalcode"
+                              type="text"
+                              name="postalcode"
+                              className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                              placeholder="Enter postal code"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="pt-8">
+                      <h1 className="pb-2 text-xl font-semibold">
+                        Informasi Officer
+                      </h1>
+                      <p className="pb-2 text-sm">
+                        Anda akan bertanggung jawab untuk setiap informasi dan
+                        transaksi.
+                      </p>
+                      <div className="my-4 space-y-4 text-sm">
                         <div className="space-y-2">
-                          <h1>Company Name</h1>
+                          <h1>Officer Name</h1>
                           <input
-                            id="company_name"
+                            id="officername"
                             type="text"
-                            name="q"
+                            name="officername"
                             className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                            placeholder="Enter company name"
+                            placeholder="Enter officer name"
                           />
                         </div>
                         <div className="space-y-2">
-                          <h1>Type of Industry</h1>
+                          <h1>Officer Email</h1>
                           <input
-                            id="industry_type"
-                            type="text"
-                            name="q"
-                            className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                            placeholder="Select type of industry"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <h1>Company Email</h1>
-                          <input
-                            id="company_email"
+                            id="officeremail"
                             type="email"
-                            name="q"
+                            name="officeremail"
                             className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                            placeholder="Enter company email"
+                            placeholder="Enter officer email"
                           />
                         </div>
                         <div className="space-y-2">
-                          <h1>Website</h1>
+                          <h1>Officer Phone Number</h1>
                           <input
-                            id="company_website"
+                            id="officerphone"
                             type="text"
-                            name="q"
+                            name="officerphone"
                             className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                            placeholder="Enter website URL"
+                            placeholder="Enter officer phone number"
                           />
                         </div>
                         <div className="space-y-2">
-                          <h1>Company Phone Number</h1>
+                          <h1>Officer Mobile Number</h1>
                           <input
-                            id="company_phone"
+                            id="officermobile"
                             type="text"
-                            name="q"
+                            name="officermobile"
                             className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                            placeholder="Enter phone number"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <h1>Company Description</h1>
-                          <textarea
-                            id="company_description"
-                            type="text"
-                            name="q"
-                            className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                            placeholder="Enter company description"
+                            placeholder="Enter officer mobile number"
                           />
                         </div>
                       </div>
-                      <div className="pl-12 space-y-4">
-                        <div className="space-y-2">
-                          <h1>Company Country</h1>
-                          <input
-                            id="company_country"
-                            type="text"
-                            name="q"
-                            className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                            placeholder="Enter company country"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <h1>Company Province</h1>
-                          <input
-                            id="company_province"
-                            type="text"
-                            name="q"
-                            className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                            placeholder="Enter company province"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <h1>Company City</h1>
-                          <input
-                            id="company_city"
-                            type="text"
-                            name="q"
-                            className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                            placeholder="Enter company city"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <h1>Company Address</h1>
-                          <input
-                            id="company_address"
-                            type="text"
-                            name="q"
-                            className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                            placeholder="Enter company address"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <h1>Postal Code</h1>
-                          <input
-                            id="company_postal_code"
-                            type="text"
-                            name="q"
-                            className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                            placeholder="Enter postal code"
-                          />
-                        </div>
+                      <div className="flex justify-end items-end p-2">
+                        <button
+                          form="formRegisterCompany"
+                          type="submit"
+                          className="inline-flex items-center py-2 px-8 text-white bg-green-500 rounded-lg"
+                        >
+                          Apply
+                        </button>
                       </div>
                     </div>
                   </div>
-                  <div className="pt-8">
-                    <h1 className="pb-2 text-xl font-semibold">
-                      Informasi Officer
-                    </h1>
-                    <p className="pb-2 text-sm">
-                      Anda akan bertanggung jawab untuk setiap informasi dan
-                      transaksi.
-                    </p>
-                    <div className="my-4 space-y-4 text-sm">
-                      <div className="space-y-2">
-                        <h1>Officer Name</h1>
-                        <input
-                          id="officer_name"
-                          type="text"
-                          name="q"
-                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                          placeholder="Enter officer name"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <h1>Officer Email</h1>
-                        <input
-                          id="officer_email"
-                          type="text"
-                          name="q"
-                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                          placeholder="Enter officer email"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <h1>Officer Phone Number</h1>
-                        <input
-                          id="officer_phone"
-                          type="text"
-                          name="q"
-                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                          placeholder="Enter officer phone number"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <h1>Officer Mobile Number</h1>
-                        <input
-                          id="officer_mobile"
-                          type="text"
-                          name="q"
-                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                          placeholder="Enter officer mobile number"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex justify-end items-end p-2">
-                      <button
-                        type="button"
-                        className="inline-flex items-center py-2 px-8 text-white bg-green-500 rounded-lg"
-                      >
-                        Apply
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                </form>
               </div>
             </section>
           </div>

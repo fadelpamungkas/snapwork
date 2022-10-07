@@ -11,7 +11,19 @@ import useUser from "../../lib/useUser";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-export default function AdminDashboard() {
+
+export async function getStaticProps() {
+  const res = await fetch("https://snapwork.herokuapp.com/api/companies");
+  const getCompanies = await res.json();
+  const companies = getCompanies.data.data;
+  return {
+    props: {
+      companies,
+    },
+  };
+}
+
+export default function AdminDashboard({ companies }) {
   const { user } = useUser();
   const [edit, setEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -167,8 +179,11 @@ export default function AdminDashboard() {
                           Verifikasi Perusahaan
                         </h1>
                       </div>
-                      {companyVerificationData.map((item) => (
-                        <div className="grid grid-cols-8 justify-center items-center py-2 space-x-4">
+                      {companies.map((item) => (
+                        <div
+                          key={companies._id}
+                          className="grid grid-cols-8 justify-center items-center py-2 space-x-4"
+                        >
                           <div className="flex col-span-2 items-center space-x-4">
                             <Image
                               src={DefaultPicture}
@@ -180,15 +195,13 @@ export default function AdminDashboard() {
                             <h1 className="font-semibold">{item.name}</h1>
                           </div>
                           <h1 className="flex col-span-1 text-sm text-gray-500">
-                            {item.date}
+                            {item.created_at}
                           </h1>
                           <h1 className="flex col-span-2 text-sm font-semibold">
-                            {item.registrar}
+                            {item.officername}
                           </h1>
-                          <a
-                            className="flex col-span-2 text-sm text-blue-500"
-                          >
-                            {item.link}
+                          <a className="flex col-span-2 text-sm text-blue-500">
+                            {item.website}
                           </a>
                           <button
                             type="button"
