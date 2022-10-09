@@ -76,7 +76,7 @@ Membuat aplikasi atau situs yang mudah digunakan oleh pengguna, dan terlihat ker
                 className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
                 onClick={openModal}
               >
-                Detail
+                Ubah
               </button>
             </div>
           </div>

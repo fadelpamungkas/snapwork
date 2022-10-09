@@ -73,23 +73,34 @@ export default function ProfileMenu({ user }) {
                     </>
                   ) : (
                     <>
-                      <Menu.Item>
-                        <Link href="/profile" passHref>
-                          <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
-                            <UserIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
-                            Profile
-                          </a>
-                        </Link>
-                      </Menu.Item>
-                      {user.userData.role !== "mitra" && (
+                      {user.userData.role === "mitra" ? (
                         <Menu.Item>
-                          <Link href="/company_register" passHref>
+                          <Link href="/profileCompany" passHref>
                             <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
-                              <IdentificationIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
-                              Daftar Perusahaan
+                              <UserIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
+                              Profile
                             </a>
                           </Link>
                         </Menu.Item>
+                      ) : (
+                        <>
+                          <Menu.Item>
+                            <Link href="/profile" passHref>
+                              <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
+                                <UserIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
+                                Profile
+                              </a>
+                            </Link>
+                          </Menu.Item>
+                          <Menu.Item>
+                            <Link href="/company_register" passHref>
+                              <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
+                                <IdentificationIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
+                                Daftar Perusahaan
+                              </a>
+                            </Link>
+                          </Menu.Item>
+                        </>
                       )}
                       <Menu.Item>
                         <Link href="/profile" passHref>
