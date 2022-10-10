@@ -197,9 +197,20 @@ export default function AdminDashboard({ companies, orders }) {
                           <h1 className="flex col-span-1 justify-center text-sm font-semibold">
                             {item.method}
                           </h1>
-                          <h1 className="flex col-span-2 text-sm text-green-500">
+                          <h1 className="flex col-span-1 text-sm text-green-500">
                             {toRupiah(item.amount)}
                           </h1>
+                          <div className="flex col-span-1 justify-center">
+                            {item.status === "Verified" ? (
+                              <h1 className="py-2 px-4 text-sm text-green-900 bg-green-100 rounded-2xl">
+                                {item.status}
+                              </h1>
+                            ) : (
+                              <h1 className="py-2 px-4 text-sm text-yellow-900 bg-yellow-100 rounded-2xl">
+                                {item.status}
+                              </h1>
+                            )}
+                          </div>
                           <button
                             type="button"
                             className="inline-flex col-span-1 justify-center py-2 px-6 text-sm font-medium text-blue-900 bg-blue-100 rounded-2xl border border-transparent transition duration-150 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"

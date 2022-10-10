@@ -27,7 +27,7 @@ export default function CompanyProfileTab() {
   }
   return (
     <>
-      <div className="col-span-4 py-2 px-12 border-t">
+      <div className="col-span-4 py-2 px-12">
         <div className="grid grid-cols-1">
           <div className="flex justify-between items-center py-2">
             <h1 className="text-xl font-semibold">Tentang Perusahaan</h1>

@@ -108,7 +108,7 @@ export default function Profile() {
                       </Tab.List>
                       <Tab.Panels className="mt-2">
                         <Tab.Panel>
-                          <CompanyLowonganTab />
+                          <CompanyLowonganTab editable={false}/>
                         </Tab.Panel>
                         <Tab.Panel>
                           <CompanyProfileTab />

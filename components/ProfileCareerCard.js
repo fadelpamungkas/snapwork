@@ -4,7 +4,7 @@ import EditLowonganDialog from "../components/EditLowonganDialog";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import TokopediaAvatar from "../public/avtokopedia.png";
-export default function EditableCareerCard() {
+export default function ProfileCareerCard({ editable }) {
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -69,17 +69,19 @@ Membuat aplikasi atau situs yang mudah digunakan oleh pengguna, dan terlihat ker
               <h1 className="text-xl text-white">Lowongan</h1>
             </div>
           </div>
-          <div className="absolute right-0 bottom-0">
-            <div className="p-4">
-              <button
-                type="button"
-                className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                onClick={openModal}
-              >
-                Ubah
-              </button>
+          {editable && (
+            <div className="absolute right-0 bottom-0">
+              <div className="p-4">
+                <button
+                  type="button"
+                  className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                  onClick={openModal}
+                >
+                  Ubah
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <Transition appear show={isOpen} as={Fragment}>
