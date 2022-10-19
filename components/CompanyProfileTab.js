@@ -7,7 +7,7 @@ import useUser from "../lib/useUser";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-export default function CompanyProfileTab() {
+export default function CompanyProfileTab({ description }) {
   const { user } = useUser();
   const [edit, setEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +32,8 @@ export default function CompanyProfileTab() {
           <div className="flex justify-between items-center py-2">
             <h1 className="text-xl font-semibold">Tentang Perusahaan</h1>
           </div>
-          <h1 className="whitespace-pre-line text-gray-500">
+          <h1 className="text-gray-500 whitespace-pre-line">
+            {description}
             {`Indonesia Epson Industry (furthermore IEI), is a leading printer manufacturing company located in EJIP Industrial Park, Cikarang Selatan, Bekasi. In general, we produce two kinds of Epson printers: Ink-Jet dan SIDM (Serial Impact Dot Matrix) Printers, with its various models. Our production capacity is more than 10 million printers in a year ; most of all are for export market. During peak season more than 10,000 employees work in this factory.`}
           </h1>
         </div>

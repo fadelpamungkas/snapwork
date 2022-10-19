@@ -52,7 +52,22 @@ const cbItems = [
     value: "Game Developer",
   },
 ];
-export default function Index({}) {
+
+export async function getStaticProps() {
+  const resCompanies = await fetch(
+    "https://snapwork.herokuapp.com/api/companies"
+  );
+  const getCompanies = await resCompanies.json();
+  const companies = getCompanies.data.data;
+
+  return {
+    props: {
+      companies,
+    },
+  };
+}
+
+export default function Index({ companies }) {
   const [selectedEducation, setSelectedEducation] = useState(education[0]);
   const [selectedRegion, setSelectedRegion] = useState(region[0]);
   const [query, setQuery] = useState("");
@@ -80,7 +95,7 @@ export default function Index({}) {
       <div className="py-8 w-full text-gray-900">
         <HeadNav />
         <div className="w-full bg-gray-50">
-          <section className="pt-16 px-8 mx-auto max-w-screen-xl">
+          <section className="px-8 pt-16 mx-auto max-w-screen-xl">
             <Image
               className="object-fill max-w-lg rounded-2xl shadow-2xl"
               src={HomeBanner}
@@ -281,16 +296,13 @@ export default function Index({}) {
             </div>
             <div className="col-span-3">
               <div className="space-y-8">
-                <Link href="/company" passHref>
-                  <a className="flex">
-                    <CareerCard />
-                  </a>
-                </Link>
-                <Link href="/company" passHref>
-                  <a className="flex">
-                    <CareerCard />
-                  </a>
-                </Link>
+                {companies.map((item, index) => (
+                  <div key={index}>
+                    <a className="flex">
+                      {item.status === "Verified" && <CareerCard item={item} />}
+                    </a>
+                  </div>
+                ))}
               </div>
             </div>
           </section>

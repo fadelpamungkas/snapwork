@@ -1,13 +1,27 @@
 import Image from "next/image";
-import HeaderImage from "../../public/CompanyHeaderDefault.png";
-import FootNav from "../../components/FootNav";
-import HeadNav from "../../components/HeadNav";
-import TokopediaAvatar from "../../public/avtokopedia.png";
+import HeaderImage from "../../../../public/CompanyHeaderDefault.png";
+import FootNav from "../../../../components/FootNav";
+import HeadNav from "../../../../components/HeadNav";
+import TokopediaAvatar from "../../../../public/avtokopedia.png";
 import { BookmarkIcon } from "@heroicons/react/outline";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { useRouter } from "next/router";
+import useSWR from "swr";
 
-export default function Company() {
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+export default function Index() {
+  const router = useRouter();
+  const companyId = router.query.companyid;
+  const jobId = router.query.jobId;
+  console.log(companyId, jobId);
+
+  const { data, error } = useSWR(
+    `https://snapwork.herokuapp.com/api/company/${companyId}/${jobId}`,
+    fetcher
+  );
+
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -17,6 +31,11 @@ export default function Company() {
   function openModal() {
     setIsOpen(true);
   }
+
+  if (error) return <div>Failed to load</div>;
+  if (!data) return <div>Loading...</div>;
+
+  const job = data?.data.data;
 
   return (
     <>
@@ -30,7 +49,7 @@ export default function Company() {
           />
           <div className="py-16 px-8 mx-auto max-w-screen-xl">
             <div className="w-full -translate-y-52">
-              <div className="bg-white rounded-xl border-gray-300 border">
+              <div className="bg-white rounded-xl border border-gray-300">
                 <div className="flex justify-between py-8 px-8 items-cener">
                   <div className="flex items-center space-x-8">
                     <Image
@@ -41,18 +60,14 @@ export default function Company() {
                       className="rounded-full"
                     />
                     <div>
-                      <h1 className="mb-2 text-2xl font-bold first:capitalize">
-                        PT. Tokopedia Indonesia
-                      </h1>
+                      <h1 className="mb-2 text-2xl font-bold first:capitalize"></h1>
                       <h1 className="text-base font-medium whitespace-pre first:capitalize">
-                        Jakarta Selatan, Indonesia
+                        {job.type}
                       </h1>
                       <a
                         href="https://www.tokopedia.com"
                         className="text-base font-medium text-blue-500 whitespace-pre first:capitalize"
-                      >
-                        https://www.tokopedia.com
-                      </a>
+                      ></a>
                     </div>
                   </div>
                   <div className="py-8 px-8 space-x-4">
@@ -86,7 +101,9 @@ export default function Company() {
                       Deskripsi Pekerjaan
                     </h1>
                     <h1 className="py-4 text-base font-normal whitespace-pre-line">
-                      {`1.  Develop iOS smart application
+                      {job.description}
+                      {`
+1.  Develop iOS smart application
 2. Collaborate with teams throught the design process
 3. Do development process from requirement definision & analysisl, design, implementation/coding
 4. Function test, application release, and maintenance.
@@ -102,10 +119,9 @@ export default function Company() {
                       </div>
                       <div className="flex col-span-2 justify-start space-x-4">
                         <div className="py-1 px-4 bg-gray-200 rounded-lg">
-                          <p className="text-sm text-gray-800">S1</p>
-                        </div>
-                        <div className="py-1 px-4 bg-gray-200 rounded-lg">
-                          <p className="text-sm text-gray-800">S2</p>
+                          <p className="text-sm text-gray-800">
+                            {job.education}
+                          </p>
                         </div>
                       </div>
                       <div className="flex col-span-1 justify-between items-start">
@@ -115,14 +131,7 @@ export default function Company() {
                       <div className="flex col-span-2 justify-start space-x-4">
                         <div className="flex col-span-2 justify-start space-x-4">
                           <div className="py-1 px-4 bg-gray-200 rounded-lg">
-                            <p className="text-sm text-gray-800">
-                              Teknik Informatika
-                            </p>
-                          </div>
-                          <div className="py-1 px-4 bg-gray-200 rounded-lg">
-                            <p className="text-sm text-gray-800">
-                              Teknik Komputer
-                            </p>
+                            <p className="text-sm text-gray-800">{job.major}</p>
                           </div>
                         </div>
                       </div>
@@ -131,7 +140,7 @@ export default function Company() {
                         <p>:</p>
                       </div>
                       <div className="flex col-span-2 justify-start space-x-4">
-                        <p>1 Orang</p>
+                        <p>{job.available}</p>
                       </div>
                       <div className="flex col-span-1 justify-between items-start">
                         <p>Syarat khusus lain</p>
@@ -139,7 +148,9 @@ export default function Company() {
                       </div>
                       <div className="flex col-span-2 justify-start space-x-4 whitespace-pre-line">
                         <p>
-                          {`1. D4/51 Computer Engineering/Science or Informatics Engineering
+                          {job.specificreq}
+                          {`
+1. D4/51 Computer Engineering/Science or Informatics Engineering
 2. Good understanding and has experience about OOP
 3. Have knowledge of software development and programming (C/C++ language)
 4. Has experience in develop iOS/Android smartphone application will be advantage
@@ -155,28 +166,30 @@ export default function Company() {
                     <div>
                       <h1 className="text-sm text-gray-500">Nama Posisi</h1>
                       <h1 className="text-xl font-bold text-blue-500">
-                        Application Designer
+                        {job.name}
                       </h1>
                     </div>
                     <div>
                       <h1 className="text-sm text-gray-500">Penempatan</h1>
                       <h1 className="text-base font-semibold">
-                        Kabupaten Bekasi, Jawa Barat
+                        {job.placement}
                       </h1>
                     </div>
                     <div>
                       <h1 className="text-sm text-gray-500">Tayang</h1>
-                      <h1 className="text-base font-semibold">26 Juni 2022</h1>
+                      <h1 className="text-base font-semibold">
+                        {job.created_at}
+                      </h1>
                     </div>
                     <div>
                       <h1 className="text-sm text-gray-500">Tipe Pekerjaan</h1>
-                      <h1 className="text-base font-semibold">Fulltime</h1>
+                      <h1 className="text-base font-semibold">{job.type}</h1>
                     </div>
                     <div>
                       <h1 className="text-sm text-gray-500">
                         Status Pekerjaan
                       </h1>
-                      <h1 className="text-base font-semibold">Tetap</h1>
+                      <h1 className="text-base font-semibold">{job.status}</h1>
                     </div>
                     <div>
                       <h1 className="text-sm text-gray-500">
