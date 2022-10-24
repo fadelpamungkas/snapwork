@@ -1,6 +1,6 @@
 import { ClipboardListIcon } from "@heroicons/react/outline";
 
-export default function CompanyFormDialog( {item}) {
+export default function CompanyFormDialog({ item }) {
   return (
     <>
       <body className="w-full text-gray-900">
@@ -143,7 +143,6 @@ export default function CompanyFormDialog( {item}) {
                       name="address"
                       value={item.address}
                       className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
-                      className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                       placeholder="Enter company address"
                     />
                   </div>
@@ -174,7 +173,7 @@ export default function CompanyFormDialog( {item}) {
                     id="officername"
                     type="text"
                     name="officername"
-                      value={item.officername}
+                    value={item.officername}
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Enter officer name"
                   />
@@ -185,7 +184,7 @@ export default function CompanyFormDialog( {item}) {
                     id="officeremail"
                     type="email"
                     name="officeremail"
-                      value={item.officeremail}
+                    value={item.officeremail}
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Enter officer email"
                   />
@@ -196,7 +195,7 @@ export default function CompanyFormDialog( {item}) {
                     id="officerphone"
                     type="text"
                     name="officerphone"
-                      value={item.officerphone}
+                    value={item.officerphone}
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Enter officer phone number"
                   />
@@ -207,7 +206,7 @@ export default function CompanyFormDialog( {item}) {
                     id="officermobile"
                     type="text"
                     name="officermobile"
-                      value={item.officermobile}
+                    value={item.officermobile}
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Enter officer mobile number"
                   />

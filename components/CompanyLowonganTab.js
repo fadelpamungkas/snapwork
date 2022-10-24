@@ -8,21 +8,29 @@ export default function CompanyLowonganTab({ editable, company }) {
         <div className="p-8 space-y-8">
           {editable ? (
             <>
-              {company.companyjob.map((item) => (
-                <ProfileCareerCard editable={editable} item={item} />
+              {company.companyjob.map((item, index) => (
+                <ProfileCareerCard
+                  key={index}
+                  editable={editable}
+                  item={item}
+                />
               ))}
             </>
           ) : (
-            <>
-              {company.companyjob.map((item) => (
-                <Link href={`/company/${company._id}/${item._id}`} passHref>
-                  <a className="flex">
-                    <ProfileCareerCard editable={editable} item={item} />
-                  </a>
-                </Link>
-              ))}
-            </>
-          )}
+              <>
+                {company.companyjob.map((item, index) => (
+                  <Link
+                    href={`/company/${company._id}/${item._id}`}
+                    passHref
+                    key={index}
+                  >
+                    <a className="flex">
+                      <ProfileCareerCard editable={editable} item={item} />
+                    </a>
+                  </Link>
+                ))}
+              </>
+            )}
         </div>
       </div>
     </>
