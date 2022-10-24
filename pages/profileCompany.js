@@ -47,7 +47,7 @@ export default function Profile() {
         <div className="w-full bg-gray-50">
           <div className="py-16 px-8 mx-auto max-w-screen-xl">
             <section className="p-2 bg-white rounded-xl border shadow-2xl">
-              <div className="mb-8 p-2">
+              <div className="p-2 mb-8">
                 <Image
                   className="object-fill max-w-lg rounded-2xl shadow-2xl"
                   src={CompanyBanner}
@@ -70,10 +70,10 @@ export default function Profile() {
                           PT Tokopedia Indonesia
                         </h1>
                       ) : (
-                        <h1 className="mt-4 text-xl font-semibold">
-                          PT Tokopedia Indonesia
+                          <h1 className="mt-4 text-xl font-semibold">
+                            PT Tokopedia Indonesia
                         </h1>
-                      )}
+                        )}
                     </div>
                     <div className="flex flex-col justify-center items-start py-4 space-y-4">
                       <div className="space-y-2">
@@ -123,9 +123,7 @@ export default function Profile() {
                         ))}
                       </Tab.List>
                       <Tab.Panels className="mt-2">
-                        <Tab.Panel>
-                          <CompanyLowonganTab editable={true}/>
-                        </Tab.Panel>
+                        <Tab.Panel></Tab.Panel>
                         <Tab.Panel>
                           <CompanyProfileTab />
                         </Tab.Panel>
