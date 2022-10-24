@@ -8,7 +8,7 @@ import { Tab } from "@headlessui/react";
 import { CogIcon } from "@heroicons/react/outline";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import toRupiah from "../../lib/currency"
+import toRupiah from "../../lib/currency";
 import useUser from "../../lib/useUser";
 
 function classNames(...classes) {
@@ -16,11 +16,15 @@ function classNames(...classes) {
 }
 
 export async function getStaticProps() {
-  const resCompanies = await fetch("https://snapwork.herokuapp.com/api/companies");
+  const resCompanies = await fetch(
+    "https://snapwork.herokuapp.com/api/companies"
+  );
   const getCompanies = await resCompanies.json();
   const companies = getCompanies.data.data;
 
-  const resOrders = await fetch("https://snapwork.herokuapp.com/api/transaction/orders");
+  const resOrders = await fetch(
+    "https://snapwork.herokuapp.com/api/transaction/orders"
+  );
   const getOrders = await resOrders.json();
   const orders = getOrders.data.data;
 
@@ -63,16 +67,18 @@ export default function AdminDashboard({ companies, orders }) {
     setIsOpenCompanyDetail(false);
   }
 
-  function openCompanyDetailModal() {
+  function openCompanyDetailModal(item) {
     setIsOpenCompanyDetail(true);
+    setCompanyItem(item);
   }
 
   function closePaymentDetailModal() {
     setisOpenPaymentDetail(false);
   }
 
-  function openPaymentDetailModal() {
+  function openPaymentDetailModal(item) {
     setisOpenPaymentDetail(true);
+    setPaymentItem(item);
   }
 
   return (
@@ -144,18 +150,15 @@ export default function AdminDashboard({ companies, orders }) {
                                 {item.status}
                               </h1>
                             ) : (
-                              <h1 className="py-2 px-4 text-sm text-yellow-900 bg-yellow-100 rounded-2xl">
-                                {item.status}
-                              </h1>
-                            )}
+                                <h1 className="py-2 px-4 text-sm text-yellow-900 bg-yellow-100 rounded-2xl">
+                                  {item.status}
+                                </h1>
+                              )}
                           </div>
                           <button
                             type="button"
                             className="inline-flex col-span-1 justify-center py-2 px-6 text-sm font-medium text-blue-900 bg-blue-100 rounded-2xl border border-transparent transition duration-150 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                            onClick={() => (
-                              setCompanyItem(item),
-                              setIsOpenCompanyDetail(true),
-                            )}
+                            onClick={() => openCompanyDetailModal(item)}
                           >
                             Detail
                           </button>
@@ -180,7 +183,10 @@ export default function AdminDashboard({ companies, orders }) {
                         </h1>
                       </div>
                       {orders.map((item, index) => (
-                        <div key={index} className="grid grid-cols-8 justify-center items-center py-2 space-x-4">
+                        <div
+                          key={index}
+                          className="grid grid-cols-8 justify-center items-center py-2 space-x-4"
+                        >
                           <div className="flex col-span-2 items-center space-x-4">
                             <Image
                               src={DefaultPicture}
@@ -206,18 +212,15 @@ export default function AdminDashboard({ companies, orders }) {
                                 {item.status}
                               </h1>
                             ) : (
-                              <h1 className="py-2 px-4 text-sm text-yellow-900 bg-yellow-100 rounded-2xl">
-                                {item.status}
-                              </h1>
-                            )}
+                                <h1 className="py-2 px-4 text-sm text-yellow-900 bg-yellow-100 rounded-2xl">
+                                  {item.status}
+                                </h1>
+                              )}
                           </div>
                           <button
                             type="button"
                             className="inline-flex col-span-1 justify-center py-2 px-6 text-sm font-medium text-blue-900 bg-blue-100 rounded-2xl border border-transparent transition duration-150 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                            onClick={() => (
-                              setPaymentItem(item),
-                              setisOpenPaymentDetail(true),
-                            )}
+                            onClick={() => openPaymentDetailModal(item)}
                           >
                             Detail
                           </button>
@@ -414,7 +417,7 @@ export default function AdminDashboard({ companies, orders }) {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="overflow-hidden p-8 w-full max-w-screen-lg text-left align-middle bg-white rounded-2xl transition-all transform">
-                  <CompanyFormDialog item={companyItem}/>
+                  <CompanyFormDialog item={companyItem} />
                   <div className="flex justify-end mt-4 space-x-8">
                     <button
                       type="button"
@@ -467,7 +470,7 @@ export default function AdminDashboard({ companies, orders }) {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="overflow-hidden p-8 w-full max-w-lg text-left align-middle bg-white rounded-2xl transition-all transform">
-                  <PaymentFormDialog item={paymentItem}/>
+                  <PaymentFormDialog item={paymentItem} />
                   <div className="flex justify-end mt-4 space-x-8">
                     <button
                       type="button"
