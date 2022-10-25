@@ -86,10 +86,10 @@ export default function Index({ company }) {
                           {company.name}
                         </h1>
                       ) : (
-                        <h1 className="mt-4 text-xl font-semibold">
-                          {company.name}
-                        </h1>
-                      )}
+                          <h1 className="mt-4 text-xl font-semibold">
+                            {company.name}
+                          </h1>
+                        )}
                     </div>
                     <div className="flex flex-col justify-center items-start py-4 space-y-4">
                       <div className="space-y-2">
@@ -136,6 +136,7 @@ export default function Index({ company }) {
                       <Tab.Panels className="mt-2">
                         <Tab.Panel>
                           <CompanyLowonganTab
+                            editable={false}
                             company={company}
                           />
                         </Tab.Panel>

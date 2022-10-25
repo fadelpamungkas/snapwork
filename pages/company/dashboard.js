@@ -50,17 +50,19 @@ export default function CompanyDashboard({ companies, orders }) {
   const [paymentItem, setPaymentItem] = useState("");
   const [isOpenCompanyDetail, setIsOpenCompanyDetail] = useState(false);
   const [isOpenPaymentDetail, setisOpenPaymentDetail] = useState(false);
-  console.log(user);
-  const userid = user.userData.id;
+  const userid = user?.userData.id;
 
   const { data, error } = useSWR(
     `https://snapwork.herokuapp.com/api/companybyuserid/${userid}`,
     fetcher
   );
+  console.log(data);
 
-  if (!user || user.isLoggedIn === false) {
+  if (!data || !user || user.isLoggedIn === false) {
     return <div>Loading...</div>;
   }
+  const company = data.data.data;
+
   const tabItem = [
     {
       id: 1,
@@ -223,15 +225,9 @@ export default function CompanyDashboard({ companies, orders }) {
                                 height={90}
                                 className="rounded-full"
                               />
-                              {user?.isLoggedIn ? (
-                                <h1 className="mt-4 text-xl font-semibold">
-                                  PT Tokopedia Indonesia
-                                </h1>
-                              ) : (
-                                  <h1 className="mt-4 text-xl font-semibold">
-                                    PT Tokopedia Indonesia
-                                </h1>
-                                )}
+                              <h1 className="mt-4 text-xl font-semibold">
+                                {company.name}
+                              </h1>
                             </div>
                             <div className="flex flex-col justify-center items-start py-4 space-y-4">
                               <div className="space-y-2">
@@ -239,22 +235,20 @@ export default function CompanyDashboard({ companies, orders }) {
                                   Jenis Industri
                                 </h1>
                                 <h1 className="text-sm">
-                                  Penerbitan, percetakan, dan reproduksi
+                                  {company.industrytype}
                                 </h1>
                               </div>
                               <div className="space-y-2">
                                 <h1 className="text-sm text-gray-500">
                                   Situs Web
                                 </h1>
-                                <h1 className="text-sm">
-                                  https://www.tokopedia.com/
-                                </h1>
+                                <h1 className="text-sm">{company.website}</h1>
                               </div>
                               <div className="space-y-2">
                                 <h1 className="text-sm text-gray-500">
                                   Alamat
                                 </h1>
-                                <h1 className="text-sm">{`Jl. Padjajaran, Pogung Lor, Sinduadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55581`}</h1>
+                                <h1 className="text-sm">{company.address}</h1>
                               </div>
                             </div>
                           </div>
@@ -280,9 +274,16 @@ export default function CompanyDashboard({ companies, orders }) {
                                 ))}
                               </Tab.List>
                               <Tab.Panels className="mt-2">
-                                <Tab.Panel></Tab.Panel>
                                 <Tab.Panel>
-                                  <CompanyProfileTab />
+                                  <CompanyLowonganTab
+                                    editable={true}
+                                    company={company}
+                                  />
+                                </Tab.Panel>
+                                <Tab.Panel>
+                                  <CompanyProfileTab
+                                    description={company.description}
+                                  />
                                 </Tab.Panel>
                               </Tab.Panels>
                             </Tab.Group>

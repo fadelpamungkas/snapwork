@@ -3,8 +3,8 @@ import Link from "next/link";
 import useUser from "../lib/useUser";
 import { useState } from "react";
 import fetchJson, { FetchError } from "../lib/fetchJson";
-import Vector25 from "../public/Vector25.png"
-import SnapWorkLogo from "../public/SnapWork.png"
+import Vector25 from "../public/Vector25.png";
+import SnapWorkLogo from "../public/SnapWork.png";
 
 export default function Login() {
   const [visible, setVisible] = useState(true);
@@ -62,23 +62,21 @@ export default function Login() {
 
   return (
     <body>
-      <div className="p-16 min-h-screen bg-indigo-500">
+      <div className="relative p-16 min-h-screen bg-indigo-500">
         <div>
-          <Image
-            src={SnapWorkLogo}
-            width={100}
-            height={20}
-            alt="SnapWork"
-          />
+          <Image src={SnapWorkLogo} width={100} height={20} alt="SnapWork" />
         </div>
         <div className="flex grid-cols-2 justify-center items-center p-8">
           <div className="flex-col col-span-1 justify-center items-center space-y-4 w-full">
-            <h1 className="text-7xl font-bold text-white">Selamat Datang di SnapWork</h1>
+            <h1 className="text-7xl font-bold text-white">
+              Selamat Datang di SnapWork
+            </h1>
             <p className="w-2/3 font-light text-white">
-              The passage experienced a surge in popularity during the 1960s when
-              Letraset used it on their dry-transfer sheets, and again during the
-              90s as desktop publishers bundled the text with their software.
-              </p>
+              The passage experienced a surge in popularity during the 1960s
+              when Letraset used it on their dry-transfer sheets, and again
+              during the 90s as desktop publishers bundled the text with their
+              software.
+            </p>
           </div>
           <div className="flex col-span-1 justify-center items-center p-8 w-2/3 bg-white rounded-xl">
             <div className="p-12 w-full">
@@ -142,7 +140,7 @@ export default function Login() {
                 <hr className="w-full bg-gray-400" />
                 <p className="px-2.5 text-base font-medium leading-4 text-gray-500">
                   OR
-							</p>
+                </p>
                 <hr className="w-full bg-gray-400" />
               </div>
               <form id="formLogin" onSubmit={handleSubmit}>
@@ -227,16 +225,18 @@ export default function Login() {
                     className="py-4 w-full text-sm font-semibold leading-none text-white bg-green-500 rounded-lg shadow-md transition duration-150 ease-in-out hover:bg-green-600 hover:shadow-lg focus:ring-2 focus:ring-green-700 focus:ring-offset-2 focus:outline-none active:shadow-none"
                   >
                     Masuk
-								</button>
+                  </button>
                 </div>
                 <div className="mt-4 text-center">
                   <p className="text-sm font-light">
                     Belum punya akun?
-							<Link href="/signup">
-                      <a className="text-sm font-medium text-blue-500"> Daftar Sekarang</a>
+                    <Link href="/signup">
+                      <a className="text-sm font-medium text-blue-500">
+                        {" "}
+                        Daftar Sekarang
+                      </a>
                     </Link>
                   </p>
-
                 </div>
               </form>
             </div>

@@ -27,32 +27,32 @@ export default function ProfileCareerCard({ editable, item }) {
 Membuat aplikasi atau situs yang mudah digunakan oleh pengguna, dan terlihat keren, bagus, namun simple. Karena perasaan pengguna saat berinteraksi dengan interface jadi fokus utamanya.
 `}
           </p>
-          <div className="grid grid-cols-3 gap-2 py-4">
-            <div className="flex col-span-1 justify-between items-start">
+          <div className="grid grid-cols-5 gap-2 py-4">
+            <div className="flex col-span-2 justify-between items-start">
               <p>Jenjang Pendidikan</p>
               <p>:</p>
             </div>
-            <div className="flex col-span-2 justify-start space-x-4">
+            <div className="flex col-span-3 justify-start space-x-4">
               <div className="py-1 px-4 bg-gray-200 rounded-lg">
                 <p className="text-sm text-gray-800">{item.education}</p>
               </div>
             </div>
-            <div className="flex col-span-1 justify-between items-start">
+            <div className="flex col-span-2 justify-between items-start">
               <p>Jurusan</p>
               <p>:</p>
             </div>
-            <div className="flex col-span-2 justify-start space-x-4">
+            <div className="flex col-span-3 justify-start space-x-4">
               <div className="flex col-span-2 justify-start space-x-4">
                 <div className="py-1 px-4 bg-gray-200 rounded-lg">
                   <p className="text-sm text-gray-800">{item.major}</p>
                 </div>
               </div>
             </div>
-            <div className="flex col-span-1 justify-between items-start">
+            <div className="flex col-span-2 justify-between items-start">
               <p>Tipe Pekerjaan</p>
               <p>:</p>
             </div>
-            <div className="flex col-span-2 justify-start space-x-4">
+            <div className="flex col-span-3 justify-start space-x-4">
               <p>{item.type}</p>
             </div>
           </div>
@@ -65,11 +65,20 @@ Membuat aplikasi atau situs yang mudah digunakan oleh pengguna, dan terlihat ker
             </div>
           </div>
           {editable && (
-            <div className="absolute right-0 bottom-0">
-              <div className="p-4">
+            <div className="flex justify-around items-center w-full">
+              <div className="py-2">
                 <button
                   type="button"
-                  className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                  className="inline-flex justify-center py-2 px-14 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                  onClick={openModal}
+                >
+                  Hapus
+                </button>
+              </div>
+              <div className="py-2">
+                <button
+                  type="button"
+                  className="inline-flex justify-center py-2 px-14 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
                   onClick={openModal}
                 >
                   Ubah

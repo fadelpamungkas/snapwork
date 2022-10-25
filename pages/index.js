@@ -4,6 +4,8 @@ import HomeBanner from "../public/HomeBanner1.png";
 import HeadNav from "../components/HeadNav";
 import FootNav from "../components/FootNav";
 import CareerCard from "../components/CareerCard";
+import useUser from "../lib/useUser";
+import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
@@ -68,6 +70,9 @@ export async function getStaticProps() {
 }
 
 export default function Index({ companies }) {
+  const router = useRouter();
+  const { user } = useUser();
+
   const [selectedEducation, setSelectedEducation] = useState(education[0]);
   const [selectedRegion, setSelectedRegion] = useState(region[0]);
   const [query, setQuery] = useState("");
@@ -76,20 +81,29 @@ export default function Index({ companies }) {
     query === ""
       ? education
       : education.filter((edu) =>
-          edu.name
-            .toLowerCase()
-            .replace(/\s+/g, "")
-            .includes(query.toLowerCase().replace(/\s+/g, ""))
-        );
+        edu.name
+          .toLowerCase()
+          .replace(/\s+/g, "")
+          .includes(query.toLowerCase().replace(/\s+/g, ""))
+      );
   const filteredRegion =
     query === ""
       ? region
       : region.filter((reg) =>
-          reg.name
-            .toLowerCase()
-            .replace(/\s+/g, "")
-            .includes(query.toLowerCase().replace(/\s+/g, ""))
-        );
+        reg.name
+          .toLowerCase()
+          .replace(/\s+/g, "")
+          .includes(query.toLowerCase().replace(/\s+/g, ""))
+      );
+
+  if (user?.isLoggedIn === true) {
+    if (user.userData.role === "mitra") {
+      router.push("/company/dashboard");
+    } else if (user.userData.role === "admin") {
+      router.push("/admin.dashboard");
+    }
+  }
+
   return (
     <>
       <div className="py-8 w-full text-gray-900">
@@ -164,48 +178,48 @@ export default function Index({ companies }) {
                                 Nothing found.
                               </div>
                             ) : (
-                              filteredEducation.map((edu) => (
-                                <Combobox.Option
-                                  key={edu.id}
-                                  className={({ active }) =>
-                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                filteredEducation.map((edu) => (
+                                  <Combobox.Option
+                                    key={edu.id}
+                                    className={({ active }) =>
+                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                       active
                                         ? "bg-blue-500 text-white"
                                         : "text-gray-900"
-                                    }`
-                                  }
-                                  value={edu}
-                                >
-                                  {({ selected, active }) => (
-                                    <>
-                                      <span
-                                        className={`block truncate ${
-                                          selected
-                                            ? "font-medium"
-                                            : "font-normal"
-                                        }`}
-                                      >
-                                        {edu.name}
-                                      </span>
-                                      {selected ? (
+                                      }`
+                                    }
+                                    value={edu}
+                                  >
+                                    {({ selected, active }) => (
+                                      <>
                                         <span
-                                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                            active
-                                              ? "text-white"
-                                              : "text-blue-500"
-                                          }`}
+                                          className={`block truncate ${
+                                            selected
+                                              ? "font-medium"
+                                              : "font-normal"
+                                            }`}
                                         >
-                                          <CheckIcon
-                                            className="w-5 h-5"
-                                            aria-hidden="true"
-                                          />
+                                          {edu.name}
                                         </span>
-                                      ) : null}
-                                    </>
-                                  )}
-                                </Combobox.Option>
-                              ))
-                            )}
+                                        {selected ? (
+                                          <span
+                                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                              active
+                                                ? "text-white"
+                                                : "text-blue-500"
+                                              }`}
+                                          >
+                                            <CheckIcon
+                                              className="w-5 h-5"
+                                              aria-hidden="true"
+                                            />
+                                          </span>
+                                        ) : null}
+                                      </>
+                                    )}
+                                  </Combobox.Option>
+                                ))
+                              )}
                           </Combobox.Options>
                         </Transition>
                       </div>
@@ -244,48 +258,48 @@ export default function Index({ companies }) {
                                 Nothing found.
                               </div>
                             ) : (
-                              filteredRegion.map((reg) => (
-                                <Combobox.Option
-                                  key={reg.id}
-                                  className={({ active }) =>
-                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                filteredRegion.map((reg) => (
+                                  <Combobox.Option
+                                    key={reg.id}
+                                    className={({ active }) =>
+                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                       active
                                         ? "bg-blue-500 text-white"
                                         : "text-gray-900"
-                                    }`
-                                  }
-                                  value={reg}
-                                >
-                                  {({ selected, active }) => (
-                                    <>
-                                      <span
-                                        className={`block truncate ${
-                                          selected
-                                            ? "font-medium"
-                                            : "font-normal"
-                                        }`}
-                                      >
-                                        {reg.name}
-                                      </span>
-                                      {selected ? (
+                                      }`
+                                    }
+                                    value={reg}
+                                  >
+                                    {({ selected, active }) => (
+                                      <>
                                         <span
-                                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                            active
-                                              ? "text-white"
-                                              : "text-blue-500"
-                                          }`}
+                                          className={`block truncate ${
+                                            selected
+                                              ? "font-medium"
+                                              : "font-normal"
+                                            }`}
                                         >
-                                          <CheckIcon
-                                            className="w-5 h-5"
-                                            aria-hidden="true"
-                                          />
+                                          {reg.name}
                                         </span>
-                                      ) : null}
-                                    </>
-                                  )}
-                                </Combobox.Option>
-                              ))
-                            )}
+                                        {selected ? (
+                                          <span
+                                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                              active
+                                                ? "text-white"
+                                                : "text-blue-500"
+                                              }`}
+                                          >
+                                            <CheckIcon
+                                              className="w-5 h-5"
+                                              aria-hidden="true"
+                                            />
+                                          </span>
+                                        ) : null}
+                                      </>
+                                    )}
+                                  </Combobox.Option>
+                                ))
+                              )}
                           </Combobox.Options>
                         </Transition>
                       </div>
