@@ -12,7 +12,8 @@ import useSWR from "swr";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function Index({ user }) {
+export default function Index() {
+  const { user } = useUser();
   const { mutateUser } = useUser();
   const router = useRouter();
   const companyId = router.query.companyid;
@@ -36,7 +37,7 @@ export default function Index({ user }) {
 
   function openModal() {
     if (user.userData.role === "none") {
-			router.push("/chooserole");
+      router.push("/chooserole");
     } else {
       setIsOpen(true);
     }

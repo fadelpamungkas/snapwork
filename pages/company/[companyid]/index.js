@@ -136,7 +136,6 @@ export default function Index({ company }) {
                       <Tab.Panels className="mt-2">
                         <Tab.Panel>
                           <CompanyLowonganTab
-                            editable={false}
                             company={company}
                           />
                         </Tab.Panel>

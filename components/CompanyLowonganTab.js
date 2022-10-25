@@ -1,36 +1,22 @@
 import Link from "next/link";
 import ProfileCareerCard from "../components/ProfileCareerCard";
 
-export default function CompanyLowonganTab({ editable, company }) {
+export default function CompanyLowonganTab({ company }) {
   return (
     <>
       <div>
         <div className="p-8 space-y-8">
-          {editable ? (
-            <>
-              {company.companyjob.map((item, index) => (
-                <ProfileCareerCard
-                  key={index}
-                  editable={editable}
-                  item={item}
-                />
-              ))}
-            </>
-          ) : (
-              <>
-                {company.companyjob.map((item, index) => (
-                  <Link
-                    href={`/company/${company._id}/${item._id}`}
-                    passHref
-                    key={index}
-                  >
-                    <a className="flex">
-                      <ProfileCareerCard editable={editable} item={item} />
-                    </a>
-                  </Link>
-                ))}
-              </>
-            )}
+          {company.companyjob.map((item, index) => (
+            <Link
+              href={`/company/${company._id}/${item._id}`}
+              passHref
+              key={index}
+            >
+              <a className="flex">
+                <ProfileCareerCard editable={false} item={item} />
+              </a>
+            </Link>
+          ))}
         </div>
       </div>
     </>
