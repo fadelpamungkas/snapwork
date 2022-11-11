@@ -1,6 +1,6 @@
 import { ClipboardListIcon } from "@heroicons/react/outline";
 
-export default function EditLowonganDialog({ item }) {
+export default function AddLowonganDialog() {
   return (
     <>
       <div className="w-full">
@@ -20,7 +20,6 @@ export default function EditLowonganDialog({ item }) {
                     name="q"
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Nama Posisi"
-                    defaultValue={item.name}
                   />
                 </div>
                 <div className="space-y-2">
@@ -31,7 +30,6 @@ export default function EditLowonganDialog({ item }) {
                     name="q"
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Fungsi Pekerjaan"
-                    defaultValue={item.kind}
                   />
                 </div>
                 <div className="space-y-2">
@@ -42,7 +40,6 @@ export default function EditLowonganDialog({ item }) {
                     name="q"
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Tipe Pekerjaan"
-                    defaultValue={item.type}
                   />
                 </div>
                 <div className="space-y-2">
@@ -53,7 +50,6 @@ export default function EditLowonganDialog({ item }) {
                     name="q"
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Status Pekerjaan"
-                    defaultValue={item.status}
                   />
                 </div>
                 <div className="space-y-2">
@@ -64,7 +60,6 @@ export default function EditLowonganDialog({ item }) {
                     name="q"
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Penempatan Pekerjaan"
-                    defaultValue={item.placement}
                   />
                 </div>
                 <div className="space-y-2">
@@ -75,7 +70,6 @@ export default function EditLowonganDialog({ item }) {
                     name="q"
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Lowongan Tersedia"
-                    defaultValue={item.available}
                   />
                 </div>
                 <div className="space-y-2">
@@ -86,7 +80,6 @@ export default function EditLowonganDialog({ item }) {
                     name="q"
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Deskripsi Pekerjaan"
-                    defaultValue={item.description}
                   />
                 </div>
               </div>
@@ -103,7 +96,6 @@ export default function EditLowonganDialog({ item }) {
                     name="q"
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Soft Skill"
-                    defaultValue={item.softskill}
                   />
                 </div>
                 <div className="space-y-2">
@@ -114,7 +106,6 @@ export default function EditLowonganDialog({ item }) {
                     name="q"
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Hard Skill"
-                    defaultValue={item.hardskill}
                   />
                 </div>
                 <div className="space-y-2">
@@ -125,7 +116,6 @@ export default function EditLowonganDialog({ item }) {
                     name="q"
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Jenjang Pendidikan"
-                    defaultValue={item.education}
                   />
                 </div>
                 <div className="space-y-2">
@@ -136,7 +126,6 @@ export default function EditLowonganDialog({ item }) {
                     name="q"
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Jurusan"
-                    defaultValue={item.major}
                   />
                 </div>
                 <div className="space-y-2">
@@ -147,7 +136,6 @@ export default function EditLowonganDialog({ item }) {
                     name="q"
                     className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                     placeholder="Syarat Khusus Lain"
-                    defaultValue={item.specificreq}
                   />
                 </div>
               </div>

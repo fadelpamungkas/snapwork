@@ -6,14 +6,23 @@ import { Fragment, useState } from "react";
 import TokopediaAvatar from "../public/avtokopedia.png";
 
 export default function ProfileCareerCard({ editable, item }) {
-  let [isOpen, setIsOpen] = useState(false);
+  let [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState(false);
+  let [isOpenUpdateDialog, setIsOpenUpdateDialog] = useState(false);
 
-  function closeModal() {
-    setIsOpen(false);
+  function closeDeleteModal() {
+    setIsOpenDeleteDialog(false);
   }
 
-  function openModal() {
-    setIsOpen(true);
+  function openDeleteModal() {
+    setIsOpenDeleteDialog(true);
+  }
+
+  function closeUpdateModal() {
+    setIsOpenUpdateDialog(false);
+  }
+
+  function openUpdateModal() {
+    setIsOpenUpdateDialog(true);
   }
   return (
     <>
@@ -70,7 +79,7 @@ Membuat aplikasi atau situs yang mudah digunakan oleh pengguna, dan terlihat ker
                 <button
                   type="button"
                   className="inline-flex justify-center py-2 px-14 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                  onClick={openModal}
+                  onClick={openDeleteModal}
                 >
                   Hapus
                 </button>
@@ -79,7 +88,7 @@ Membuat aplikasi atau situs yang mudah digunakan oleh pengguna, dan terlihat ker
                 <button
                   type="button"
                   className="inline-flex justify-center py-2 px-14 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                  onClick={openModal}
+                  onClick={openUpdateModal}
                 >
                   Ubah
                 </button>
@@ -88,8 +97,68 @@ Membuat aplikasi atau situs yang mudah digunakan oleh pengguna, dan terlihat ker
           )}
         </div>
       </div>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Transition appear show={isOpenDeleteDialog} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="overflow-y-auto fixed inset-0">
+            <div className="flex justify-center items-center p-4 min-h-full text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="overflow-hidden p-8 w-full max-w-lg text-left align-middle bg-white rounded-2xl transition-all transform">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Hapus Lowongan
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500 whitespace-pre-line">
+                      Apakah anda yakin ingin menghapus lowongan ini?
+                    </p>
+                  </div>
+
+                  <div className="flex justify-end mt-4 space-x-8">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center py-2 px-8 font-medium text-gray-500 bg-gray-200 rounded-md border border-transparent transition duration-150 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                      onClick={closeDeleteModal}
+                    >
+                      Batal
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                      onClick={closeDeleteModal}
+                    >
+                      Hapus
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+      <Transition appear show={isOpenUpdateDialog} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeUpdateModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -121,20 +190,20 @@ Membuat aplikasi atau situs yang mudah digunakan oleh pengguna, dan terlihat ker
                     Ubah Lowongan
                   </Dialog.Title>
                   <hr />
-                  <EditLowonganDialog />
+                  <EditLowonganDialog item={item} />
 
                   <div className="flex justify-end mt-4 space-x-8">
                     <button
                       type="button"
                       className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
+                      onClick={closeUpdateModal}
                     >
                       Batal
                     </button>
                     <button
                       type="button"
                       className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
+                      onClick={closeUpdateModal}
                     >
                       Post
                     </button>

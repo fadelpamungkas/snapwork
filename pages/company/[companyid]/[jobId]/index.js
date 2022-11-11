@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import HeaderImage from "../../../../public/CompanyHeaderDefault.png";
 import FootNav from "../../../../components/FootNav";
@@ -10,19 +11,23 @@ import { useRouter } from "next/router";
 import useUser from "../../../../lib/useUser";
 import useSWR from "swr";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const jobFetcher = (...args) => fetch(...args).then((res) => res.json());
+const companyFetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Index() {
   const { user } = useUser();
-  const { mutateUser } = useUser();
   const router = useRouter();
   const companyId = router.query.companyid;
   const jobId = router.query.jobId;
-  console.log(companyId, jobId);
 
-  const { data, error } = useSWR(
+  const { data: jobres, error: joberror } = useSWR(
     `https://snapwork.herokuapp.com/api/company/${companyId}/${jobId}`,
-    fetcher
+    jobFetcher
+  );
+
+  const { data: companyres, error: companyerror } = useSWR(
+    `https://snapwork.herokuapp.com/api/company/${companyId}`,
+    companyFetcher
   );
 
   let [isOpen, setIsOpen] = useState(false);
@@ -31,22 +36,21 @@ export default function Index() {
     setIsOpen(false);
   }
 
-  function closeChooseUserModal() {
-    setIsOpenChooseUser(false);
-  }
-
   function openModal() {
-    if (user.userData.role === "none") {
+    if (user?.userData.role === "none") {
       router.push("/chooserole");
     } else {
       setIsOpen(true);
     }
   }
 
-  if (error) return <div>Failed to load</div>;
-  if (!data) return <div>Loading...</div>;
+  if (joberror || companyerror) return <div>Failed to load</div>;
+  if (!jobres || !companyres) return <div>Loading...</div>;
 
-  const job = data?.data.data;
+  console.log(job);
+
+  const job = jobres?.data.data;
+  const company = companyres?.data.data;
 
   return (
     <>
@@ -71,14 +75,18 @@ export default function Index() {
                       className="rounded-full"
                     />
                     <div>
-                      <h1 className="mb-2 text-2xl font-bold first:capitalize"></h1>
+                      <h1 className="text-2xl font-bold first:capitalize">
+                        {company.name}
+                      </h1>
                       <h1 className="text-base font-medium whitespace-pre first:capitalize">
-                        {job.type}
+                        {company.address}
                       </h1>
                       <a
                         href="https://www.tokopedia.com"
                         className="text-base font-medium text-blue-500 whitespace-pre first:capitalize"
-                      ></a>
+                      >
+                        {company.website}
+                      </a>
                     </div>
                   </div>
                   <div className="py-8 px-8 space-x-4">
@@ -103,10 +111,10 @@ export default function Index() {
                 <div className="col-span-2 space-y-8">
                   <div className="p-8 bg-white rounded-xl border border-gray-300">
                     <h1 className="text-2xl font-semibold">
-                      Informasi Pekerjaan
+                      Informasi Perusahaan
                     </h1>
                     <h1 className="py-4 text-base font-normal whitespace-pre-line">
-                      {`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam id blandit eget nunc, in tempus tempor. Euismod ipsum ut nisi ac aliquet senectus sagittis vel semper. Egestas integer integer enim duis. Sit augue nisi interdum malesuada ornare in ultrices amet pellentesque. Rhoncus proin hac ipsum sagittis cras senectus vitae ultrices id. Pharetra diam auctor malesuada et sit nulla tempor nunc id. Tellus aliquet lectus quisque volutpat sollicitudin eget pharetra gravida tristique. Pharetra montes, rhoncus, mauris lectus quis purus enim interdum auctor. Adipiscing tellus faucibus ante ut neque. Integer tincidunt vivamus neque eu, lectus sed scelerisque sagittis, fermentum. Blandit in praesent arcu scelerisque aliquam mauris vestibulum gravida sed. Rutrum duis habitant hendrerit sed. `}
+                      {company.description}
                     </h1>
                     <h1 className="text-xl font-semibold">
                       Deskripsi Pekerjaan
@@ -218,60 +226,37 @@ export default function Index() {
                   </div>
                   <div className="p-8 bg-white rounded-xl border border-gray-300">
                     <h1 className="pb-2 text-xl font-semibold">
-                      Lowongan Terbaru
+                      Lowongan Lainnya
                     </h1>
                     <div className="grid grid-cols-1 divide-y divide-gray-300">
-                      <div className="py-2">
-                        <h1 className="text-base font-semibold">
-                          Software Engineer
-                        </h1>
-                        <div className="flex justify-start items-center mt-1 space-x-2">
-                          <Image
-                            src={TokopediaAvatar}
-                            alt=""
-                            width={20}
-                            height={20}
-                            className="rounded-full"
-                          />
-                          <h1 className="text-sm text-gray-500">
-                            PT. Tokopedia Indonesia • Yogyakarta
-                          </h1>
-                        </div>
-                      </div>
-                      <div className="py-2">
-                        <h1 className="text-base font-semibold">
-                          System Analyst
-                        </h1>
-                        <div className="flex justify-start items-center mt-1 space-x-2">
-                          <Image
-                            src={TokopediaAvatar}
-                            alt=""
-                            width={20}
-                            height={20}
-                            className="rounded-full"
-                          />
-                          <h1 className="text-sm text-gray-500">
-                            PT. Tokopedia Indonesia • Banjarmasin
-                          </h1>
-                        </div>
-                      </div>
-                      <div className="py-2">
-                        <h1 className="text-base font-semibold">
-                          Fullstack Developer
-                        </h1>
-                        <div className="flex justify-start items-center mt-1 space-x-2">
-                          <Image
-                            src={TokopediaAvatar}
-                            alt=""
-                            width={20}
-                            height={20}
-                            className="rounded-full"
-                          />
-                          <h1 className="text-sm text-gray-500">
-                            PT. Tokopedia Indonesia • Jakarta
-                          </h1>
-                        </div>
-                      </div>
+                      {company.companyjob.map(
+                        (job, index) =>
+                          job._id !== jobId && (
+                            <Link
+                              key={index}
+                              href={`/company/${company._id}/${job._id}`}
+                              passHref
+                            >
+                              <a className="py-2">
+                                <h1 className="text-base font-semibold">
+                                  {job.name}
+                                </h1>
+                                <div className="flex justify-start items-center mt-1 space-x-2">
+                                  <Image
+                                    src={TokopediaAvatar}
+                                    alt=""
+                                    width={20}
+                                    height={20}
+                                    className="rounded-full"
+                                  />
+                                  <h1 className="text-sm text-gray-500">
+                                    {company.name} • {job.placement}
+                                  </h1>
+                                </div>
+                              </a>
+                            </Link>
+                          )
+                      )}
                     </div>
                   </div>
                 </div>

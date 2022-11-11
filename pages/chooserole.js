@@ -3,10 +3,34 @@ import FootNav from "../components/FootNav";
 import HeadNav from "../components/HeadNav";
 import PersonalLogo from "../public/personal.png";
 import PerusahaanLogo from "../public/perusahaan.png";
+import { useRouter } from "next/router";
 import useUser from "../lib/useUser";
 
-export default function Company_Register() {
-  const { user } = useUser();
+export default function Choose_Role() {
+  const { user, mutateUser } = useUser();
+  const router = useRouter();
+
+  const refreshRole = async (user) => {
+    const userId = user.userData.id;
+    const responseRole = await fetch(
+      `https://snapwork.herokuapp.com/api/user/${userId}`
+    );
+    const userData = await responseRole.json();
+
+    const oldUser = user;
+    oldUser.userData.role = userData.data.data.role;
+
+    try {
+      mutateUser(oldUser);
+      console.log(oldUser);
+    } catch (error) {
+      if (error instanceof FetchError) {
+        setErrorMsg(error.data.message);
+      } else {
+        console.error("An unexpected error happened:", error);
+      }
+    }
+  };
 
   const handleSubmitPersonal = async (event) => {
     event.preventDefault();
@@ -27,7 +51,8 @@ export default function Company_Register() {
     console.log(data);
 
     if (data === 200) {
-      alert("success");
+      if (user) refreshRole(user);
+      router.push("/profile");
     } else {
       alert("failed");
     }
@@ -52,7 +77,8 @@ export default function Company_Register() {
     console.log(data);
 
     if (data === 200) {
-      alert("success");
+      if (user) refreshRole(user);
+      router.push("/company_register");
     } else {
       alert("failed");
     }
@@ -60,10 +86,10 @@ export default function Company_Register() {
 
   return (
     <>
-      <body className="py-8 w-full text-gray-900">
+      <div className="w-full text-gray-900">
         <HeadNav />
-        <div className="w-full bg-gray-50">
-          <div className="py-16 px-8 mx-auto max-w-screen-xl">
+        <div className="w-full min-h-screen bg-gray-50">
+          <div className="py-24 px-8 mx-auto max-w-screen-xl">
             <section className="p-16 space-y-8 bg-blue-400 rounded-xl shadow-2xl">
               <div className="flex justify-center items-center py-2 px-4">
                 <div className="space-y-4 max-w-2xl text-white">
@@ -129,8 +155,7 @@ export default function Company_Register() {
             </section>
           </div>
         </div>
-        <FootNav />
-      </body>
+      </div>
     </>
   );
 }

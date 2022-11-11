@@ -5,6 +5,7 @@ import HeadNav from "../components/HeadNav";
 import FootNav from "../components/FootNav";
 import CareerCard from "../components/CareerCard";
 import useUser from "../lib/useUser";
+import fetchJson, { FetchError } from "../lib/fetchJson";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
@@ -71,7 +72,7 @@ export async function getStaticProps() {
 
 export default function Index({ companies }) {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, mutateUser } = useUser();
 
   const [selectedEducation, setSelectedEducation] = useState(education[0]);
   const [selectedRegion, setSelectedRegion] = useState(region[0]);
@@ -100,9 +101,33 @@ export default function Index({ companies }) {
     if (user.userData.role === "mitra") {
       router.push("/company/dashboard");
     } else if (user.userData.role === "admin") {
-      router.push("/admin.dashboard");
+      router.push("/admin/dashboard");
     }
   }
+
+  const refreshRole = async (user) => {
+    const userId = user?.userData.id;
+    const responseRole = await fetch(
+      `https://snapwork.herokuapp.com/api/user/${userId}`
+    );
+    const userData = await responseRole.json();
+
+    const oldUser = user;
+    oldUser.userData.role = userData.data.data.role;
+
+    try {
+      mutateUser(oldUser);
+      console.log(oldUser);
+    } catch (error) {
+      if (error instanceof FetchError) {
+        setErrorMsg(error.data.message);
+      } else {
+        console.error("An unexpected error happened:", error);
+      }
+    }
+  };
+
+  if (user?.isLoggedIn) refreshRole(user);
 
   return (
     <>
@@ -123,7 +148,7 @@ export default function Index({ companies }) {
                   <h1 className="text-lg text-white">Filter Pencarian</h1>
                 </div>
                 <div className="py-4 px-6 w-full">
-                  <div clasName="py-2">
+                  <div className="py-2">
                     <h1 className="mb-2 text-sm">Kategori</h1>
                     {cbItems.map((item) => (
                       <div

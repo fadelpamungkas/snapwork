@@ -94,7 +94,7 @@ export default function Index({ company }) {
                     <div className="flex flex-col justify-center items-start py-4 space-y-4">
                       <div className="space-y-2">
                         <h1 className="text-sm text-gray-500">
-                          {router.query.companyid}
+                          Tipe Industri
                         </h1>
                         <h1 className="text-sm">{company.industrytype}</h1>
                       </div>

@@ -44,7 +44,7 @@ export default function ProfileMenu({ user }) {
               <ChevronDownIcon
                 className={`${
                   open ? "-rotate-180 transform" : "text-opacity-100"
-                }
+                  }
                   h-5 w-5 text-white transition duration-150 ease-in-out group-hover:text-rose-50 group-hover:text-opacity-80`}
                 aria-hidden="true"
               />
@@ -72,61 +72,61 @@ export default function ProfileMenu({ user }) {
                       </Menu.Item>
                     </>
                   ) : (
-                    <>
-                      {user.userData.role === "mitra" ? (
-                        <Menu.Item>
-                          <Link href="/profileCompany" passHref>
-                            <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
-                              <UserIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
-                              Profile
-                            </a>
-                          </Link>
-                        </Menu.Item>
-                      ) : (
-                        <>
+                      <>
+                        {user.userData.role === "mitra" ? (
                           <Menu.Item>
-                            <Link href="/profile" passHref>
+                            <Link href="/company/dashboard" passHref>
                               <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
                                 <UserIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
-                                Profile
-                              </a>
+                                Company Dashboard
+                            </a>
                             </Link>
                           </Menu.Item>
-                          <Menu.Item>
-                            <Link href="/company_register" passHref>
-                              <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
-                                <IdentificationIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
-                                Daftar Perusahaan
+                        ) : (
+                            <>
+                              <Menu.Item>
+                                <Link href="/profile" passHref>
+                                  <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
+                                    <UserIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
+                                    Profile
                               </a>
-                            </Link>
-                          </Menu.Item>
-                        </>
-                      )}
-                      <Menu.Item>
-                        <Link href="/profile" passHref>
-                          <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
-                            <CogIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
-                            Settings
-                          </a>
-                        </Link>
-                      </Menu.Item>
-                      <Menu.Item>
-                        <Link href="/faq" passHref>
-                          <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
-                            <AnnotationIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
-                            FAQ
-                          </a>
-                        </Link>
-                      </Menu.Item>
-                    </>
-                  )}
+                                </Link>
+                              </Menu.Item>
+                              <Menu.Item>
+                                <Link href="/company_register" passHref>
+                                  <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
+                                    <IdentificationIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
+                                    Daftar Perusahaan
+                              </a>
+                                </Link>
+                              </Menu.Item>
+                              <Menu.Item>
+                                <Link href="/profile" passHref>
+                                  <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
+                                    <CogIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
+                                    Settings
+                              </a>
+                                </Link>
+                              </Menu.Item>
+                              <Menu.Item>
+                                <Link href="/faq" passHref>
+                                  <a className="flex items-center py-2 px-2 w-full text-sm text-gray-700 rounded-md transition duration-75 hover:text-white hover:bg-blue-600 group">
+                                    <AnnotationIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
+                                    FAQ
+                              </a>
+                                </Link>
+                              </Menu.Item>
+                            </>
+                          )}
+                      </>
+                    )}
                   <Menu.Item>
                     {({ active }) => (
                       <button
                         onClick={handleLogout}
                         className={`${
                           active ? "bg-blue-600 text-white" : "text-gray-700"
-                        } group group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-75 hover:text-white`}
+                          } group group flex w-full items-center rounded-md px-2 py-2 text-sm transition duration-75 hover:text-white`}
                       >
                         <LogoutIcon className="mr-2 w-5 h-5 text-red-500 group-hover:text-white" />
                         Logout

@@ -26,6 +26,7 @@ export default function Login() {
         password: event.target.pass.value,
       }),
     });
+
     const data = await response.json();
     console.log(data);
     if (data.status === 200) {
