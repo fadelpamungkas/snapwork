@@ -7,7 +7,7 @@ import FootNav from "../../components/FootNav";
 export async function getStaticProps() {
   // params contains the post `id`.
   // If the route is like /posts/1, then params.id is 1
-  const res = await fetch(`http://127.0.0.1:8080/api/news/`);
+  const res = await fetch(`https://snapwork.herokuapp.com/api/news/`);
   const data = await res.json();
   const news = data.data.data;
 

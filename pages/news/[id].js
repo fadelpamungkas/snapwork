@@ -6,7 +6,7 @@ import FootNav from "../../components/FootNav";
 
 export async function getStaticPaths() {
   // Call an external API endpoint to get posts
-  const res = await fetch("http://127.0.0.1:8080/api/news");
+  const res = await fetch("https://snapwork.herokuapp.com/api/news");
   const data = await res.json();
 
   // Get the paths we want to pre-render based on posts
@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   // params contains the post `id`.
   // If the route is like /posts/1, then params.id is 1
-  const res = await fetch(`http://127.0.0.1:8080/api/news/${params.id}`);
+  const res = await fetch(`https://snapwork.herokuapp.com/api/news/${params.id}`);
   const data = await res.json();
   const news = data.data.data;
 
