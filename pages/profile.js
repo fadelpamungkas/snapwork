@@ -2,17 +2,21 @@ import Image from "next/image";
 import FootNav from "../components/FootNav";
 import HeadNav from "../components/HeadNav";
 import ProfilTab from "../components/ProfilTab";
-import CVTab from "../components/CVTab";
+import DatadiriTab from "../components/DatadiriTab";
 import PengembanganDiriTab from "../components/PengembanganDiriTab";
 import KarirTab from "../components/KarirTab";
-import { Tab } from '@headlessui/react'
-import TokopediaAvatar from "../public/avtokopedia.png";
+import { Tab } from "@headlessui/react";
 import UserAvatar from "../public/avuser.png";
 import { CogIcon } from "@heroicons/react/outline";
 import useUser from "../lib/useUser";
+import useSWR from "swr";
+
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
+
+const personFetcher = (...args) => fetch(...args).then((res) => res.json());
+
 export default function Profile() {
   const { user } = useUser();
 
@@ -23,7 +27,7 @@ export default function Profile() {
     },
     {
       id: 2,
-      name: "CV Saya",
+      name: "Data Diri",
     },
     {
       id: 3,
@@ -34,27 +38,36 @@ export default function Profile() {
       name: "Karir Saya",
     },
   ];
+
+  const userId = user?.userData.id;
+
+  const { data: personres, error: personerror } = useSWR(
+    `https://snapwork.herokuapp.com/api/person/${userId}`,
+    personFetcher
+  );
+
+  if (personerror) return <div>Failed to load</div>;
+  if (!personres) return <div>Loading...</div>;
+
+  const person = personres?.data.data;
+  console.log(person);
+
   return (
     <>
-      <body className="w-full py-8 text-gray-900">
+      <body className="py-8 w-full text-gray-900">
         <HeadNav />
         <div className="w-full bg-gray-50">
-          <div className="mx-auto max-w-screen-xl py-16 px-8">
-            <section className="border rounded-xl bg-white p-2 shadow-2xl">
-              <div className="flex items-center py-2 px-4 justify-between">
-                <h1 className="text-2xl text-blue-500 font-semibold">Profil Saya</h1>
-                <button type="submit" className="text-lg text-red-500 font-medium rounded-2xl space-x-2 px-6 py-2 inline-flex items-center">
-                  <CogIcon
-                    className="h-5 w-5"
-                    aria-hidden="true"
-                  />
-                  <span>Ubah Profil</span>
-                </button>
+          <div className="py-16 px-8 mx-auto max-w-screen-xl">
+            <section className="p-2 bg-white rounded-xl border shadow-2xl">
+              <div className="flex justify-between items-center py-2 px-4">
+                <h1 className="text-2xl font-semibold text-blue-500">
+                  Profil Saya
+                </h1>
               </div>
-              <div className="mx-auto max-w-screen-xl px-2 grid grid-cols-10 gap-8">
+              <div className="grid grid-cols-10 gap-8 px-2 mx-auto max-w-screen-xl">
                 <div className="col-span-3">
-                  <div className="rounded-xl p-8 border divide-y divide-gray-300">
-                    <div className="flex flex-col items-center justify-center py-4">
+                  <div className="p-8 rounded-xl border divide-y divide-gray-300">
+                    <div className="flex flex-col justify-center items-center py-4">
                       <Image
                         src={UserAvatar}
                         alt=""
@@ -63,66 +76,66 @@ export default function Profile() {
                         className="rounded-full"
                       />
                       {user?.isLoggedIn ? (
-                        <h1 className="text-xl font-semibold mt-4">{user.userData.name}</h1>
+                        <h1 className="mt-4 text-xl font-semibold">
+                          {user.userData.name}
+                        </h1>
                       ) : (
-                          <h1 className="text-xl font-semibold mt-4">Fadel Pamungkas</h1>
-                        )}
-                      < h1 className="text-sm">S1 Teknik Informatika</h1>
-                      <h1 className="text-sm">Mahasiswa di Universitas Islam Indonesia</h1>
+                        <h1 className="mt-4 text-xl font-semibold">-</h1>
+                      )}
+                      <h1 className="text-sm">S1 Teknik Informatika</h1>
+                      <h1 className="text-sm">
+                        Mahasiswa di Universitas Islam Indonesia
+                      </h1>
                       <h1 className="text-sm">Agustus 2018 - Sekarang</h1>
                     </div>
-                    <div className="flex flex-col items-start justify-center py-4 space-y-4">
+                    <div className="flex flex-col justify-center items-start py-4 space-y-4">
                       <div className="space-y-2">
-                        <h1 className="text-sm text-gray-500">Pendidikan Terakhir</h1>
-                        <h1 className="text-sm">SMA AL Azhar Cairo Yogyakarta</h1>
+                        <h1 className="text-sm text-gray-500">
+                          Pendidikan Terakhir
+                        </h1>
+                        {person?.education?.name ? (
+                          <h1 className="text-sm">{person.education.name}</h1>
+                        ) : (
+                          <h1 className="text-sm">-</h1>
+                        )}
                       </div>
                       <div className="space-y-2">
-                        <h1 className="text-sm text-gray-500">Pekerjaan Terakhir</h1>
-                        <h1 className="text-sm">Software Engineer di Tokopedia</h1>
-                      </div>
-                      <div className="space-y-2">
-                        <h1 className="text-sm text-gray-500">Alamat</h1>
-                        <h1 className="text-sm">{`Jl. Padjajaran, Pogung Lor, Sinduadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55581`}</h1>
+                        <h1 className="text-sm text-gray-500">Social Media</h1>
+                        <div className="grid grid-cols-3">
+                          <div className="col-span-1">
+                            <h1 className="text-sm">Twitter</h1>
+                            <h1 className="text-sm">Linkedin</h1>
+                          </div>
+                          <div className="col-span-2">
+                            {person?.twitter ? (
+                              <h1 className="text-sm">: {person.twitter}</h1>
+                            ) : (
+                              <h1 className="text-sm truncate">: -</h1>
+                            )}
+                            {person?.linkedin ? (
+                              <h1 className="text-sm">: {person.linkedin}</h1>
+                            ) : (
+                              <h1 className="text-sm truncate">: -</h1>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    {user?.isLoggedIn ? (
-                      <div className="flex flex-col items-start justify-center py-4 space-y-4">
-                        <div className="space-y-2">
-                          <h1 className="text-sm text-gray-500">Instagram</h1>
-                          <h1 className="text-sm">instagram.com/{user.userData.name}</h1>
-                        </div>
-                        <div className="space-y-2">
-                          <h1 className="text-sm text-gray-500">Linkedin</h1>
-                          <h1 className="text-sm">linkedin.com/{user.userData.name}</h1>
-                        </div>
-                      </div>
-                    ) : (
-                        <div className="flex flex-col items-start justify-center py-4 space-y-4">
-                          <div className="space-y-2">
-                            <h1 className="text-sm text-gray-500">Instagram</h1>
-                            <h1 className="text-sm">instagram.com/MikaelaRimnara</h1>
-                          </div>
-                          <div className="space-y-2">
-                            <h1 className="text-sm text-gray-500">Linkedin</h1>
-                            <h1 className="text-sm">linkedin.com/Mikaela-Rimnara</h1>
-                          </div>
-                        </div>
-                      )}
                   </div>
                 </div>
                 <div className="col-span-7">
-                  <div className="rounded-xl flex-col justify-center items-start border">
+                  <div className="flex-col justify-center items-start rounded-xl border">
                     <Tab.Group>
-                      <Tab.List className="flex space-x-1 rounded-xl p-1 justify-evenly items-center">
+                      <Tab.List className="flex justify-evenly items-center p-1 space-x-1 rounded-xl">
                         {tabItem.map((item) => (
                           <Tab
                             key={item}
                             className={({ selected }) =>
                               classNames(
-                                'py-2.5 text-base font-medium leading-5 text-black',
+                                "py-2.5 text-base font-medium leading-5 text-black",
                                 selected
-                                  ? 'border-b-4 border-b-blue-300 '
-                                  : 'text-black hover:border-b-4 border-b-blue-50'
+                                  ? "border-b-4 border-b-blue-300 "
+                                  : "border-b-blue-50 text-black hover:border-b-4"
                               )
                             }
                           >
@@ -135,7 +148,7 @@ export default function Profile() {
                           <ProfilTab />
                         </Tab.Panel>
                         <Tab.Panel>
-                          <CVTab />
+                          <DatadiriTab person={person} />
                         </Tab.Panel>
                         <Tab.Panel>
                           <PengembanganDiriTab />
@@ -154,5 +167,5 @@ export default function Profile() {
         <FootNav />
       </body>
     </>
-  )
+  );
 }

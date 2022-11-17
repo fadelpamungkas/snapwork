@@ -1,5 +1,3 @@
-import { ClipboardListIcon } from "@heroicons/react/outline";
-
 export default function AddLowonganDialog() {
   return (
     <>

@@ -63,7 +63,7 @@ export default function NewsTabAdminDashboard() {
     const data = await response.json();
 
     if (data === 200) {
-      closeDeleteNewsModal()
+      closeDeleteNewsModal();
     } else {
       alert("Error: " + data.message);
     }
@@ -91,7 +91,7 @@ export default function NewsTabAdminDashboard() {
     console.log(data);
 
     if (data === 200) {
-      closeNewsDetailModal()
+      closeNewsDetailModal();
     } else {
       alert("Error: " + data.message);
     }
@@ -118,7 +118,7 @@ export default function NewsTabAdminDashboard() {
     console.log(data);
 
     if (data === 200) {
-      closeNewsDetailModal()
+      closeNewsDetailModal();
     } else {
       alert("Error: " + data.message);
     }
@@ -150,7 +150,7 @@ dari database yang telah dihubungkan`}</p>
                     />
                     <h1 className="text-lg font-semibold">{item.title}</h1>
                     <p className="truncate">{item.body1}</p>
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center pt-2">
                       <p className="text-sm text-gray-500">
                         Penulis: {item.author}
                       </p>
@@ -180,7 +180,7 @@ dari database yang telah dihubungkan`}</p>
                 className="col-span-1 w-full h-full cursor-pointer"
               >
                 <div className="flex justify-center items-center p-4 h-full bg-white rounded-xl border-2 border-green-500 border-dashed shadow-xl transition duration-150 hover:bg-green-50">
-                  <div className="">
+                  <div className="space-y-4">
                     <Image src={AddIcon} width={100} height={100} alt="Add" />
                     <h1 className="text-lg font-semibold text-green-500">
                       Tambah Berita
@@ -511,7 +511,7 @@ dari database yang telah dihubungkan`}</p>
                 <button
                   type="button"
                   className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                  onClick={() => (closeNewsDetailModal())}
+                  onClick={() => closeNewsDetailModal()}
                 >
                   Batal
                 </button>
@@ -530,7 +530,7 @@ dari database yang telah dihubungkan`}</p>
                 <button
                   type="button"
                   className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                  onClick={() => (closeNewsDetailModal())}
+                  onClick={() => closeNewsDetailModal()}
                 >
                   Batal
                 </button>

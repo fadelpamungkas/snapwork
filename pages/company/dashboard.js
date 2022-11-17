@@ -1,18 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
+import ProfileMenu from "../../components/ProfileMenu";
 import FootNav from "../../components/FootNav";
 import HeadNav from "../../components/HeadNav";
 import CompanyProfileTab from "../../components/CompanyProfileTab";
 import CompanyLowonganTab from "../../components/CompanyLowonganTab";
 import AddLowonganDialog from "../../components/AddLowonganDialog";
+import ProfileTabCompanyDashboard from "../../components/ProfileTabCompanyDashboard";
+import LowonganTabCompanyDashboard from "../../components/LowonganTabCompanyDashboard";
 import DefaultPicture from "../../public/default_picture.png";
 import CompanyBanner from "../../public/CompanyBanner1.png";
 import TokopediaAvatar from "../../public/avtokopedia.png";
+import SnapworkLogo from "../../public/SnapWork.png";
 import AddIcon from "../../public/AddIcon.png";
 import { Tab } from "@headlessui/react";
 import { CogIcon } from "@heroicons/react/outline";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import {
+  DocumentTextIcon,
+  UserIcon,
+  TicketIcon,
+  HomeIcon,
+  ClipboardIcon,
+} from "@heroicons/react/outline";
 import toRupiah from "../../lib/currency";
 import useUser from "../../lib/useUser";
 import useSWR from "swr";
@@ -66,14 +77,27 @@ export default function CompanyDashboard({ companies, apps }) {
     {
       id: 1,
       name: "Dashboard",
+      icon: HomeIcon,
     },
     {
       id: 2,
-      name: "Profil",
+      name: "Profil Perusahaan",
+      icon: UserIcon,
     },
     {
       id: 3,
+      name: "Pembayaran",
+      icon: TicketIcon,
+    },
+    {
+      id: 4,
+      name: "Lowongan",
+      icon: ClipboardIcon,
+    },
+    {
+      id: 5,
       name: "Lamaran",
+      icon: DocumentTextIcon,
     },
   ];
 
@@ -99,10 +123,56 @@ export default function CompanyDashboard({ companies, apps }) {
   return (
     <>
       <body className="w-full text-gray-900 bg-gray-100">
-        <HeadNav />
-        <div className="px-8 pt-24 pb-4 mx-auto max-w-screen-xl">
+        <div className="px-8 pt-4 pb-4 mx-auto max-w-screen-xl">
+          <div className="grid grid-cols-5">
+            <div className="col-span-1 bg-white rounded-t-2xl">
+              <div className="flex justify-center items-center h-full">
+                <Image
+                  src={SnapworkLogo}
+                  className="object-contain"
+                  width={120}
+                  height={50}
+                  alt="Snapwork"
+                />
+              </div>
+            </div>
+            <div className="col-span-4 pb-8 pl-8">
+              <div className="p-4 bg-rose-50 rounded-2xl">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h1 className="text-2xl font-semibold">Dashboard</h1>
+                    <h1 className="pt-2 text-lg font-medium">
+                      Welcome, PT. Indonesia EPSON INDUSTRY
+                    </h1>
+                    <p className="text-sm text-gray-500 whitespace-pre-line">
+                      {`Memberikan kemudahan membaca informasi dengan cepat dan
+                      akurat dari database yang telah dihubungkan`}
+                    </p>
+                  </div>
+                  <div className="">
+                    {user?.isLoggedIn ? (
+                      <ProfileMenu user={user} />
+                    ) : (
+                      <>
+                        <Link href="/login">
+                          <a className="py-3 px-6 font-medium text-blue-500 rounded-xl transition duration-150 hover:text-blue-600">
+                            Sign In
+                          </a>
+                        </Link>
+                        <Link href="/signup">
+                          <a className="py-3 px-6 font-medium text-white bg-blue-500 rounded-xl transition duration-150 hover:bg-blue-600">
+                            Sign Up
+                          </a>
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <Tab.Group vertical as="div" className="grid grid-cols-5">
-            <Tab.List className="flex flex-col col-span-1 justify-start items-start p-8 space-y-2 text-sm bg-white rounded-2xl">
+            <Tab.List className="flex flex-col col-span-1 justify-start items-start p-8 space-y-2 text-sm bg-white rounded-b-2xl">
               <div className="mb-4">
                 <h1 className="text-lg font-semibold">General</h1>
               </div>
@@ -111,15 +181,13 @@ export default function CompanyDashboard({ companies, apps }) {
                   key={item}
                   className={({ selected }) =>
                     classNames(
-                      "py-1 pl-8 text-base font-medium leading-5 text-black",
-                      "",
-                      selected
-                        ? "border-l-4 border-l-blue-300"
-                        : "border-l-blue-50 text-black hover:border-l-2"
+                      "flex items-center space-x-4 py-1 text-base font-medium leading-5 transition duration-150 hover:text-blue-500 focus:outline-none",
+                      selected ? "font-semibold text-blue-400" : "text-gray-400"
                     )
                   }
                 >
-                  {item.name}
+                  <item.icon className="w-6 h-6" />
+                  <h1>{item.name}</h1>
                 </Tab>
               ))}
             </Tab.List>
@@ -186,100 +254,7 @@ export default function CompanyDashboard({ companies, apps }) {
                 </div>
               </Tab.Panel>
               <Tab.Panel>
-                <div className="">
-                  <div className="grid grid-cols-1 p-8 bg-white rounded-2xl">
-                    <div className="flex justify-between items-center py-2">
-                      <h1 className="text-xl font-semibold">
-                        Profil Perusahaan
-                      </h1>
-                    </div>
-                    <section className="p-2 bg-white rounded-xl border shadow-2xl">
-                      <div className="p-2 mb-8">
-                        <Image
-                          className="object-fill max-w-lg rounded-2xl shadow-2xl"
-                          src={CompanyBanner}
-                          alt="Banner"
-                        />
-                      </div>
-                      <div className="grid grid-cols-10 gap-8 px-2 mx-auto max-w-screen-xl">
-                        <div className="col-span-3">
-                          <div className="p-8 rounded-xl border">
-                            <div className="flex flex-col justify-center items-center py-4">
-                              <Image
-                                src={TokopediaAvatar}
-                                alt=""
-                                width={90}
-                                height={90}
-                                className="rounded-full"
-                              />
-                              <h1 className="mt-4 text-xl font-semibold">
-                                {company.name}
-                              </h1>
-                            </div>
-                            <div className="flex flex-col justify-center items-start py-4 space-y-4">
-                              <div className="space-y-2">
-                                <h1 className="text-sm text-gray-500">
-                                  Jenis Industri
-                                </h1>
-                                <h1 className="text-sm">
-                                  {company.industrytype}
-                                </h1>
-                              </div>
-                              <div className="space-y-2">
-                                <h1 className="text-sm text-gray-500">
-                                  Situs Web
-                                </h1>
-                                <h1 className="text-sm">{company.website}</h1>
-                              </div>
-                              <div className="space-y-2">
-                                <h1 className="text-sm text-gray-500">
-                                  Alamat
-                                </h1>
-                                <h1 className="text-sm">{company.address}</h1>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-span-7">
-                          <div className="flex-col justify-center items-start rounded-xl border">
-                            <Tab.Group>
-                              <Tab.List className="flex justify-evenly items-center p-1 space-x-1 rounded-xl">
-                                {tabProfileItem.map((item) => (
-                                  <Tab
-                                    key={item}
-                                    className={({ selected }) =>
-                                      classNames(
-                                        "py-2.5 text-base font-medium leading-5 text-black",
-                                        selected
-                                          ? "border-b-4 border-b-blue-300 "
-                                          : "border-b-blue-50 text-black hover:border-b-4"
-                                      )
-                                    }
-                                  >
-                                    {item.name}
-                                  </Tab>
-                                ))}
-                              </Tab.List>
-                              <Tab.Panels className="mt-2">
-                                <Tab.Panel>
-                                  <CompanyLowonganTab
-                                    editable={true}
-                                    company={company}
-                                  />
-                                </Tab.Panel>
-                                <Tab.Panel>
-                                  <CompanyProfileTab
-                                    description={company.description}
-                                  />
-                                </Tab.Panel>
-                              </Tab.Panels>
-                            </Tab.Group>
-                          </div>
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </div>
+                <ProfileTabCompanyDashboard />
               </Tab.Panel>
               <Tab.Panel>
                 <div className="">
@@ -334,6 +309,9 @@ export default function CompanyDashboard({ companies, apps }) {
                     </div>
                   </div>
                 </div>
+              </Tab.Panel>
+              <Tab.Panel>
+                <LowonganTabCompanyDashboard />
               </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>

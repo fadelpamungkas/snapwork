@@ -34,7 +34,8 @@ export default function Choose_Role() {
 
   const handleSubmitPersonal = async (event) => {
     event.preventDefault();
-    const response = await fetch(
+    console.log(user);
+    const roleRes = await fetch(
       "https://snapwork.herokuapp.com/api/user/role",
       {
         method: "PUT",
@@ -42,15 +43,31 @@ export default function Choose_Role() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          _id: user?.userData.id,
+          _id: user.userData.id,
           role: "user",
         }),
       }
     );
-    const data = await response.json();
-    console.log(data);
+    const roleData = await roleRes.json();
+    const personRes = await fetch(
+      "https://snapwork.herokuapp.com/api/person",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: user.userData.id,
+          name: user.userData.name,
+          email: user.userData.email,
+        }),
+      }
+    );
+    const personData = await personRes.json();
+    console.log(roleData);
+    console.log(personData);
 
-    if (data === 200) {
+    if (roleData === 200 && personData === 200) {
       if (user) refreshRole(user);
       router.push("/profile");
     } else {

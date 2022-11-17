@@ -7,7 +7,7 @@ import useUser from "../lib/useUser";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-export default function CVTab() {
+export default function DatadiriTab({ person }) {
   const { user } = useUser();
   const [edit, setEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +15,7 @@ export default function CVTab() {
   const tabItem = [
     {
       id: 1,
-      name: "Data Diri",
+      name: "Biodata",
     },
     {
       id: 2,
@@ -24,10 +24,6 @@ export default function CVTab() {
     {
       id: 3,
       name: "Portofolio",
-    },
-    {
-      id: 4,
-      name: "Video Profil",
     },
   ];
 
@@ -70,7 +66,7 @@ export default function CVTab() {
             <div>
               <div className="grid grid-cols-1 divide-y divide-gray-300">
                 <div className="flex justify-between items-center py-2">
-                  <h1 className="text-xl font-semibold">Data Diri</h1>
+                  <h1 className="text-xl font-semibold">Biodata</h1>
                   {edit ? (
                     <button
                       type="submit"
@@ -100,31 +96,9 @@ export default function CVTab() {
                       <h1>Nama Lengkap</h1>
                       <h1>:</h1>
                     </div>
-                    {edit ? (
-                      <div className="col-span-2">
-                        {user?.isLoggedIn ? (
-                          <input
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="text"
-                            defaultValue={user.userData.name}
-                          />
-                        ) : (
-                          <input
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="text"
-                            defaultValue="Fadel Pamungkas"
-                          />
-                        )}
-                      </div>
-                    ) : (
-                      <div className="col-span-2">
-                        {user?.isLoggedIn ? (
-                          <h1>{user.userData.name}</h1>
-                        ) : (
-                          <h1>Fadel Pamungkas</h1>
-                        )}
-                      </div>
-                    )}
+                    <div className="col-span-2">
+                      <h1>{person.name}</h1>
+                    </div>
                   </div>
                   <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
                     <div className="flex col-span-1 justify-between items-start">
@@ -136,12 +110,12 @@ export default function CVTab() {
                         <input
                           className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
                           type="text"
-                          defaultValue="Gorontalo, 16 November 1999"
+                          defaultValue={person.birth}
                         />
                       </div>
                     ) : (
                       <div className="col-span-2">
-                        <h1>Gorontalo, 16 November 1999</h1>
+                        <h1>{person.birth}</h1>
                       </div>
                     )}
                   </div>
@@ -155,12 +129,12 @@ export default function CVTab() {
                         <input
                           className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
                           type="text"
-                          defaultValue="Laki-laki"
+                          defaultValue={person.birth}
                         />
                       </div>
                     ) : (
                       <div className="col-span-2">
-                        <h1>Laki-laki</h1>
+                        <h1>{person.birth}</h1>
                       </div>
                     )}
                   </div>
@@ -174,31 +148,50 @@ export default function CVTab() {
                         <input
                           className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
                           type="text"
-                          defaultValue="Islam"
+                          defaultValue={person.religion}
                         />
                       </div>
                     ) : (
                       <div className="col-span-2">
-                        <h1>Islam</h1>
+                        <h1>{person.religion}</h1>
                       </div>
                     )}
                   </div>
                   <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
                     <div className="flex col-span-1 justify-between items-start">
-                      <h1>Domisili</h1>
+                      <h1>Status Pernikahan</h1>
                       <h1>:</h1>
                     </div>
                     {edit ? (
                       <div className="col-span-2">
                         <input
-                          defaultValue="Jl Mulia ll No 7a, Ngaglik, Sleman, Yogyakarta"
                           className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
                           type="text"
+                          defaultValue={person?.marriage}
                         />
                       </div>
                     ) : (
                       <div className="col-span-2">
-                        <h1>Jl Mulia ll No 7a, Ngaglik, Sleman, Yogyakarta</h1>
+                        <h1>{person.marriage}</h1>
+                      </div>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Hobi</h1>
+                      <h1>:</h1>
+                    </div>
+                    {edit ? (
+                      <div className="col-span-2">
+                        <input
+                          className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                          type="text"
+                          defaultValue={person.hobby}
+                        />
+                      </div>
+                    ) : (
+                      <div className="col-span-2">
+                        <h1>{person.hobby}</h1>
                       </div>
                     )}
                   </div>
@@ -215,12 +208,12 @@ export default function CVTab() {
                         <input
                           className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
                           type="tel"
-                          defaultValue="+6281275151011"
+                          defaultValue={person.telephone}
                         />
                       </div>
                     ) : (
                       <div className="col-span-2">
-                        <h1>+6281275151011</h1>
+                        <h1>{person.telephone}</h1>
                       </div>
                     )}
                   </div>
@@ -230,12 +223,171 @@ export default function CVTab() {
                       <h1>:</h1>
                     </div>
                     <div className="col-span-2">
-                      {user?.isLoggedIn ? (
-                        <h1>{user.userData.email}</h1>
-                      ) : (
-                        <h1>fadelpamungkas3@gmail.com</h1>
-                      )}
+                      <h1>{person.email}</h1>
                     </div>
+                  </div>
+                </div>
+                <div className="py-2">
+                  <h1 className="text-base font-semibold">Media Sosial</h1>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Twitter</h1>
+                      <h1>:</h1>
+                    </div>
+                    {edit ? (
+                      <div className="col-span-2">
+                        <input
+                          className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                          type="tel"
+                          defaultValue={person.twitter}
+                        />
+                      </div>
+                    ) : (
+                      <div className="col-span-2">
+                        <h1>{person.twitter}</h1>
+                      </div>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Linkedin</h1>
+                      <h1>:</h1>
+                    </div>
+                    {edit ? (
+                      <div className="col-span-2">
+                        <input
+                          className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                          type="tel"
+                          defaultValue={person.linkedin}
+                        />
+                      </div>
+                    ) : (
+                      <div className="col-span-2">
+                        <h1>{person.linkedin}</h1>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="py-2">
+                  <h1 className="text-base font-semibold">Domisili Sekarang</h1>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Alamat</h1>
+                      <h1>:</h1>
+                    </div>
+                    {edit ? (
+                      <div className="col-span-2">
+                        <input
+                          className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                          type="tel"
+                          defaultValue={person.address}
+                        />
+                      </div>
+                    ) : (
+                      <div className="col-span-2">
+                        <h1>{person.address}</h1>
+                      </div>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Kota</h1>
+                      <h1>:</h1>
+                    </div>
+                    {edit ? (
+                      <div className="col-span-2">
+                        <input
+                          className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                          type="tel"
+                          defaultValue={person.city}
+                        />
+                      </div>
+                    ) : (
+                      <div className="col-span-2">
+                        <h1>{person.city}</h1>
+                      </div>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Provinsi</h1>
+                      <h1>:</h1>
+                    </div>
+                    {edit ? (
+                      <div className="col-span-2">
+                        <input
+                          className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                          type="tel"
+                          defaultValue={person.province}
+                        />
+                      </div>
+                    ) : (
+                      <div className="col-span-2">
+                        <h1>{person.province}</h1>
+                      </div>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Negara</h1>
+                      <h1>:</h1>
+                    </div>
+                    {edit ? (
+                      <div className="col-span-2">
+                        <input
+                          className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                          type="tel"
+                          defaultValue={person.state}
+                        />
+                      </div>
+                    ) : (
+                      <div className="col-span-2">
+                        <h1>{person.state}</h1>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="py-2">
+                  <h1 className="text-base font-semibold">
+                    Pendidikan Terakhir
+                  </h1>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Twitter</h1>
+                      <h1>:</h1>
+                    </div>
+                    {edit ? (
+                      <div className="col-span-2">
+                        <input
+                          className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                          type="tel"
+                          defaultValue={person.twitter}
+                        />
+                      </div>
+                    ) : (
+                      <div className="col-span-2">
+                        <h1>{person.twitter}</h1>
+                      </div>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Linkedin</h1>
+                      <h1>:</h1>
+                    </div>
+                    {edit ? (
+                      <div className="col-span-2">
+                        <input
+                          className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                          type="tel"
+                          defaultValue={person.linkedin}
+                        />
+                      </div>
+                    ) : (
+                      <div className="col-span-2">
+                        <h1>{person.linkedin}</h1>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="py-2">
@@ -250,12 +402,10 @@ export default function CVTab() {
                         <textarea
                           className="py-1 px-2 w-full h-36 rounded border border-gray-500"
                           type="text"
-                          value="Profesional TI yang berorientasi detail dengan pengalaman 10 tahun sebagai software support specialist dan system/network technician. Terampil dalam mengoperasikan berbagai platform, memiliki kemampuan komunikasi lisan dan verbal yang baik, dan mampu menjelaskan masalah software yang kompleks dalam istilah yang mudah dipahami."
+                          defaultValue={person.about}
                         />
                       ) : (
-                        <h1 className="whitespace-pre-line">
-                          {`Profesional TI yang berorientasi detail dengan pengalaman 10 tahun sebagai software support specialist dan system/network technician. Terampil dalam mengoperasikan berbagai platform, memiliki kemampuan komunikasi lisan dan verbal yang baik, dan mampu menjelaskan masalah software yang kompleks dalam istilah yang mudah dipahami.`}
-                        </h1>
+                        <h1 className="whitespace-pre-line">{person.about}</h1>
                       )}
                     </div>
                   </div>
@@ -282,9 +432,9 @@ export default function CVTab() {
                           KTP
                         </h1>
                         <div className="col-span-3">
-                          <p className="overflow-auto text-sm font-semibold">
-                            Foto KTP 2022.png
-                          </p>
+                          <h1 className="overflow-auto text-sm font-semibold">
+                            {document.getElementById("ktp").files.name}
+                          </h1>
                           <p className="text-sm">512KB</p>
                         </div>
                       </div>
@@ -296,12 +446,19 @@ export default function CVTab() {
                       </ul>
                     </div>
                     <div className="flex col-span-2 justify-center items-center m-auto space-x-4">
-                      <button className="py-1 px-5 text-sm text-white bg-red-500 rounded">
-                        Hapus
-                      </button>
-                      <button className="py-1 px-5 text-sm text-white bg-blue-500 rounded">
-                        Unggah
-                      </button>
+                      <label
+                        htmlFor="ktp"
+                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-600"
+                      >
+                        <h1>Unggah</h1>
+                        <input
+                          id="ktp"
+                          name="ktp"
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                        />
+                      </label>
                     </div>
                   </div>
                 </div>
@@ -397,18 +554,47 @@ export default function CVTab() {
                   </div>
                 </div>
               </div>
-            </div>
-          </Tab.Panel>
-          <Tab.Panel>
-            <div>
               <div className="grid grid-cols-1 divide-y divide-gray-300">
                 <div className="py-2">
-                  <h1 className="pb-2 text-xl font-semibold">Portofolio</h1>
+                  <h1 className="pb-2 text-xl font-semibold">
+                    Dokumen Pendukung
+                  </h1>
                   <p className="pb-2 text-sm">
                     Informasi berikut ini bersifat opsional, silakan diisi untuk
                     kepentingan lamar online yang mewajibkan syarat-syarat
                     dokumen harus diunggah.
                   </p>
+                </div>
+                <div className="py-2">
+                  <div className="grid grid-cols-5 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="col-span-3">
+                      <div className="grid grid-cols-4 justify-start items-start mb-2">
+                        <h1 className="col-span-1 text-lg font-semibold">
+                          Sertifikat
+                        </h1>
+                        <div className="col-span-3">
+                          <p className="overflow-auto text-sm font-semibold">
+                            Magang Kominfo.png
+                          </p>
+                          <p className="text-sm">512KB</p>
+                        </div>
+                      </div>
+                      <ul className="text-xs list-disc list-inside">
+                        <li>
+                          Hanya file jpg, jpeg, png dan pdf yang diijinkan
+                        </li>
+                        <li>Ukuran maksimal file adalah 800kb</li>
+                      </ul>
+                    </div>
+                    <div className="flex col-span-2 justify-center items-center m-auto space-x-4">
+                      <button className="py-1 px-5 text-sm text-white bg-red-500 rounded">
+                        Hapus
+                      </button>
+                      <button className="py-1 px-5 text-sm text-white bg-blue-500 rounded">
+                        Unggah
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -417,7 +603,7 @@ export default function CVTab() {
             <div>
               <div className="grid grid-cols-1 divide-y divide-gray-300">
                 <div className="py-2">
-                  <h1 className="pb-2 text-xl font-semibold">Video Profil</h1>
+                  <h1 className="pb-2 text-xl font-semibold">Portofolio</h1>
                   <p className="pb-2 text-sm">
                     Informasi berikut ini bersifat opsional, silakan diisi untuk
                     kepentingan lamar online yang mewajibkan syarat-syarat

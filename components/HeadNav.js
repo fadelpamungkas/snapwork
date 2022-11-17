@@ -2,62 +2,9 @@ import Link from "next/link";
 import useUser from "../lib/useUser";
 import {
   MapIcon,
-  TrendingUpIcon,
-  ShoppingCartIcon,
-  BookmarkIcon,
   CubeTransparentIcon,
 } from "@heroicons/react/solid";
-
-import { Popover, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
-import { Fragment } from "react";
-import Image from "next/image";
-import SoftwareDevelopmentIcon from "../public/SoftwareDevelopment.svg";
-import WebDevelopmentIcon from "../public/WebDevelopment.svg";
-import DataScienceIcon from "../public/DataScience.svg";
-import SystemAnalystIcon from "../public/SystemAnalyst.svg";
-import ITConsultantIcon from "../public/ITConsultant.svg";
-import CybersecurityIcon from "../public/Cybersecurity.svg";
 import ProfileMenu from "./ProfileMenu";
-
-const solutions = [
-  {
-    name: "Software Development",
-    description: "Measure actions your users take",
-    href: "##",
-    image: SoftwareDevelopmentIcon,
-  },
-  {
-    name: "Website Development",
-    description: "Create your own targeted content",
-    href: "##",
-    image: WebDevelopmentIcon,
-  },
-  {
-    name: "Data Science",
-    description: "Keep track of your growth",
-    href: "##",
-    image: DataScienceIcon,
-  },
-  {
-    name: "System Analyst",
-    description: "Keep track of your growth",
-    href: "##",
-    image: SystemAnalystIcon,
-  },
-  {
-    name: "IT Consultant",
-    description: "Keep track of your growth",
-    href: "##",
-    image: ITConsultantIcon,
-  },
-  {
-    name: "Cybersecurity",
-    description: "Keep track of your growth",
-    href: "##",
-    image: CybersecurityIcon,
-  },
-];
 
 export default function HeadNav() {
   const { user } = useUser();
