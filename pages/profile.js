@@ -101,21 +101,31 @@ export default function Profile() {
                       </div>
                       <div className="space-y-2">
                         <h1 className="text-sm text-gray-500">Social Media</h1>
-                        <div className="grid grid-cols-3">
-                          <div className="col-span-1">
-                            <h1 className="text-sm">Twitter</h1>
-                            <h1 className="text-sm">Linkedin</h1>
+                        <div className="grid grid-cols-4">
+                          <div className="col-span-1 space-y-1">
+                            <div className="flex justify-between items-center space-x-1">
+                              <h1 className="text-sm">Twitter</h1>
+                              <h1 className="text-sm">:</h1>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <h1 className="text-sm">Linkedin</h1>
+                              <h1 className="text-sm">:</h1>
+                            </div>
                           </div>
-                          <div className="col-span-2">
+                          <div className="col-span-3 pl-1 space-y-1">
                             {person?.twitter ? (
-                              <h1 className="text-sm">: {person.twitter}</h1>
+                              <h1 className="text-sm truncate">
+                                {person.twitter}
+                              </h1>
                             ) : (
-                              <h1 className="text-sm truncate">: -</h1>
+                              <h1 className="text-sm truncate">-</h1>
                             )}
                             {person?.linkedin ? (
-                              <h1 className="text-sm">: {person.linkedin}</h1>
+                              <h1 className="text-sm truncate">
+                                {person.linkedin}
+                              </h1>
                             ) : (
-                              <h1 className="text-sm truncate">: -</h1>
+                              <h1 className="text-sm truncate">-</h1>
                             )}
                           </div>
                         </div>
