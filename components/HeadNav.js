@@ -45,7 +45,7 @@ export default function HeadNav() {
           {user?.isLoggedIn ? (
             <>
               <li className="flex gap-x-2 items-center group">
-                <Link href="/quiz/confirmation">
+                <Link href="/quiz">
                   <a className="flex items-center space-x-2 font-medium tracking-wider transition duration-150 group-hover:font-semibold group-hover:scale-105 text-md">
                     <TesIcon className="transition duration-150 scale-0 group-hover:scale-100" />
                     <h1>Tes Kepribadian</h1>
@@ -59,7 +59,7 @@ export default function HeadNav() {
                       <Popover.Button
                         className={`
                 ${open ? "" : "text-opacity-90"}
-                text-md flex items-center space-x-2 font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold`}
+                text-md flex items-center font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold`}
                       >
                         <NotifiIcon className="transition duration-150 scale-0 group-hover:scale-100" />
                         <span>Notifikasi</span>

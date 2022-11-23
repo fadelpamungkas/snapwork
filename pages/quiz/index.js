@@ -1,32 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
 import HeadNav from "../../components/HeadNav";
 import FootNav from "../../components/FootNav";
 import PemetaanPotensiIcon from "../../public/PemetaanPotensi.svg";
 
 export default function TestConfirmation() {
-  const cbItems = [
-    {
-      id: "cb1",
-      value:
-        "Saya bersedia mengerjakan asesmen ini dengan sungguh-sungguh sesuai dengan kondisi saya sebenarnya.",
-    },
-    {
-      id: "cb2",
-      value:
-        "Saya akan menggunakan hasil tes ini dengan bijaksana untuk pengembangan diri secara positif.",
-    },
-    {
-      id: "cb3",
-      value:
-        "Saya berjanji tidak akan menggandakan dan menyebarluaskan tes ini, karena tes ini merupakan hasil karya cipta intelektual yang dilindungi.",
-    },
-    {
-      id: "cb4",
-      value:
-        "Hasil asesmen online ini dapat diketahui oleh pihak ketiga jika memang diperlukan. Untuk melindungi data dan kerahasiaan member, Snapwork akan memberikan notifikasi dan pernyataan kesediaan via email jika ada perusahaan yang ingin melihat profilmu.",
-    },
-  ];
   return (
     <>
       <div className="py-8 w-full min-h-screen">
@@ -58,9 +35,11 @@ para pencari kerja dengan kualifikasi kompetensi yang dibutuhkan perusahaan.`}
                       {`Asesmen ini bertujuan untuk mengetahui gaya 
 perilaku dan kelebihan serta kekurangan anda.`}
                     </p>
-                    <button className="py-2 px-24 text-white bg-green-500 rounded-md transition duration-150 hover:bg-green-600">
-                      Mulai Tes
-                    </button>
+                    <Link href="/quiz/test" passHref>
+                      <button className="py-2 px-12 text-white bg-green-500 rounded-md transition duration-150 hover:bg-green-600">
+                        Mulai Tes
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
