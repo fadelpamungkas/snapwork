@@ -5,7 +5,7 @@ import TokopediaAvatar from "../public/avtokopedia.png";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-export default function KarirTab() {
+export default function KarirTab({ applications }) {
   const tabItem = [
     {
       id: 1,
@@ -50,36 +50,67 @@ export default function KarirTab() {
                   </p>
                 </div>
               </div>
-              <div className="py-4 px-12 mt-8 rounded-lg border border-gray-300">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center space-x-4">
-                    <Image
-                      src={TokopediaAvatar}
-                      alt=""
-                      width={70}
-                      height={70}
-                      className="rounded-full"
-                    />
-                    <div>
-                      <h1 className="font-semibold">PT. Tokopedia Indonesia</h1>
-                      <div className="flex justify-start items-center space-x-1">
-                        <p className="text-xs text-gray-500">
-                          Application Designer
-                        </p>
-                        <p className="text-xs text-gray-500">•</p>
-                        <p className="text-xs text-gray-500">Full Time</p>
+              <div className="my-8 space-y-4">
+                {applications ? (
+                  <>
+                    {applications.map((item, index) => (
+                      <div
+                        key={index}
+                        className="py-4 px-12 rounded-lg border border-gray-300"
+                      >
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center space-x-4">
+                            <Image
+                              src={TokopediaAvatar}
+                              alt=""
+                              width={70}
+                              height={70}
+                              className="rounded-full"
+                            />
+                            <div>
+                              <h1 className="font-semibold">
+                                {item.companyname}
+                              </h1>
+                              <div className="flex justify-start items-center space-x-1">
+                                <p className="text-xs text-gray-500">
+                                  {item.jobposition}
+                                </p>
+                                <p className="text-xs text-gray-500">•</p>
+                                <p className="text-xs text-gray-500">
+                                  {item.jobtype}
+                                </p>
+                              </div>
+                              <div className="flex justify-start items-center space-x-1">
+                                <p className="text-xs text-gray-500">
+                                  Tanggal Melamar
+                                </p>
+                                <p className="text-xs text-gray-500">:</p>
+                                <p className="text-xs text-gray-500">
+                                  {item.created_at}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          {item.status === "Accepted" ? (
+                            <div className="py-2 px-4 text-sm text-green-900 bg-green-100 rounded-lg">
+                              <h1>{item.status}</h1>
+                            </div>
+                          ) : item.status === "Rejected" ? (
+                            <div className="py-2 px-4 text-sm text-red-900 bg-red-100 rounded-lg">
+                              <h1>{item.status}</h1>
+                            </div>
+                          ) : (
+                            <div className="py-2 px-4 text-sm text-yellow-900 bg-yellow-100 rounded-lg">
+                              <h1>{item.status}</h1>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      <div className="flex justify-start items-center space-x-1">
-                        <p className="text-xs text-gray-500">Tanggal Melamar</p>
-                        <p className="text-xs text-gray-500">:</p>
-                        <p className="text-xs text-gray-500">22 Juni 2022</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="py-2 px-5 text-sm text-white bg-red-500 rounded-md">
-                    Rejected
-                  </div>
-                </div>
+                    ))}
+                  </>
+                ) : (
+                  <h1>Tidak ada Lamaran</h1>
+                )}
               </div>
             </div>
           </Tab.Panel>

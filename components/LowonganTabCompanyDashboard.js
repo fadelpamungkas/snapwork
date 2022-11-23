@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { ClipboardListIcon } from "@heroicons/react/outline";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { RadioGroup } from "@headlessui/react";
@@ -9,10 +8,6 @@ import BNILogo from "../public/BNI.png";
 import BCALogo from "../public/BCA.png";
 import MandiriLogo from "../public/Mandiri.png";
 import AddIcon from "../public/AddIcon.png";
-import useUser from "../lib/useUser";
-import useSWR from "swr";
-
-const companyFetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const packets = [
   {
@@ -26,28 +21,13 @@ const packets = [
   },
 ];
 
-export default function LowonganTabCompanyDashboard() {
-  const { user } = useUser();
+export default function LowonganTabCompanyDashboard({ company }) {
   const [packet, setPacket] = useState(packets[0]);
   const [jobItem, setJobItem] = useState("");
   const [isOpenOrder, setIsOpenOrder] = useState(false);
   const [isOpenFinal, setIsOpenFinal] = useState(false);
   const [isOpenJobDetail, setIsOpenJobDetail] = useState(false);
   const [isOpenDeleteJob, setIsOpenDeleteJob] = useState(false);
-
-  const userid = user?.userData.id;
-
-  const { data: companyres, error: companyerror } = useSWR(
-    `https://snapwork.herokuapp.com/api/companybyuserid/${userid}`,
-    companyFetcher
-  );
-
-  if (companyerror) return <div>Failed to load</div>;
-  if (!companyres || !user || user.isLoggedIn === false) {
-    return <div>Loading...</div>;
-  }
-
-  const company = companyres?.data.data;
 
   function closeJobDetailModal() {
     setIsOpenJobDetail(false);
@@ -392,7 +372,9 @@ export default function LowonganTabCompanyDashboard() {
                                 : ""
                             }
                   ${
-                    checked ? "bg-green-600 bg-opacity-75 text-white" : "bg-white"
+                    checked
+                      ? "bg-green-600 bg-opacity-75 text-white"
+                      : "bg-white"
                   }
                     relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`
                           }

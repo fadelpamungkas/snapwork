@@ -4,7 +4,6 @@ import HeaderImage from "../../../../public/CompanyHeaderDefault.png";
 import FootNav from "../../../../components/FootNav";
 import HeadNav from "../../../../components/HeadNav";
 import TokopediaAvatar from "../../../../public/avtokopedia.png";
-import { BookmarkIcon } from "@heroicons/react/outline";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { useRouter } from "next/router";
@@ -13,12 +12,15 @@ import useSWR from "swr";
 
 const jobFetcher = (...args) => fetch(...args).then((res) => res.json());
 const companyFetcher = (...args) => fetch(...args).then((res) => res.json());
+const personFetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Index() {
   const { user } = useUser();
   const router = useRouter();
   const companyId = router.query.companyid;
   const jobId = router.query.jobId;
+  const [isOpen, setIsOpen] = useState(false);
+  const [isApplied, setIsApplied] = useState(false);
 
   const { data: jobres, error: joberror } = useSWR(
     `https://snapwork.herokuapp.com/api/company/${companyId}/${jobId}`,
@@ -30,27 +32,103 @@ export default function Index() {
     companyFetcher
   );
 
-  let [isOpen, setIsOpen] = useState(false);
+  const { data: personres, error: personerror } = useSWR(
+    `https://snapwork.herokuapp.com/api/person/${user?.userData?.id}`,
+    personFetcher
+  );
+
+  if (joberror || companyerror || personerror) return <div>Failed to load</div>;
+  if (!jobres || !companyres || !personres) return <div>Loading...</div>;
+
+  const job = jobres?.data.data;
+  const company = companyres?.data.data;
+  const person = personres?.data.data;
 
   function closeModal() {
     setIsOpen(false);
   }
 
   function openModal() {
-    if (user?.userData.role === "none") {
-      router.push("/chooserole");
+    setIsOpen(true);
+    addNotification();
+  }
+
+  function handleLamarButton() {
+    if (user?.isLoggedIn) {
+      if (user?.userData.role === "none") {
+        router.push("/chooserole");
+      } else {
+        submitApplication();
+      }
     } else {
-      setIsOpen(true);
+      router.push("/login");
     }
   }
 
-  if (joberror || companyerror) return <div>Failed to load</div>;
-  if (!jobres || !companyres) return <div>Loading...</div>;
+  const submitApplication = async () => {
+    const res = await fetch(
+      "https://snapwork.herokuapp.com/api/transaction/application",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          personid: person._id,
+          companyid: company._id,
+          companyjobid: job._id,
+          companyname: company.name,
+          jobposition: job.name,
+          jobplacement: job.placement,
+          jobtype: job.status,
+          username: person.name,
+          usermarriage: person.marriage,
+          userstate: person.state,
+          userbirth: person.birth,
+          usergender: person.gender,
+          useraddress: person.address,
+          userabout: person.about,
+          useremail: person.email,
+          usertelephone: person.telephone,
+          usertwitter: person.twitter,
+          userlinkedin: person.linkedin,
+          userdocument: person.document,
+          usereducation: person.education,
+        }),
+      }
+    );
+    const data = await res.json();
 
-  console.log(job);
+    if (data === 200) {
+      openModal();
+      setIsApplied(true);
+    } else {
+      alert("failed");
+    }
+  };
 
-  const job = jobres?.data.data;
-  const company = companyres?.data.data;
+  const addNotification = async () => {
+    const res = await fetch(
+      "https://snapwork.herokuapp.com/api/person/notification",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: person.userid,
+          status: "ApplySuccess",
+          title: "Lamaran Diterima",
+          description: `Selamat anda berhasil melamar sebagai ${job.name} di ${company.name}`,
+        }),
+      }
+    );
+    const data = await res.json();
+
+    if (data !== 200) {
+      alert("failed");
+    }
+  };
 
   return (
     <>
@@ -90,20 +168,23 @@ export default function Index() {
                     </div>
                   </div>
                   <div className="py-8 px-8 space-x-4">
-                    <button
-                      type="submit"
-                      className="inline-flex items-center py-2 px-8 space-x-2 rounded-lg transition duration-150 hover:text-blue-500"
-                    >
-                      <BookmarkIcon className="w-5 h-4" aria-hidden="true" />
-                      <span>Simpan</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={openModal}
-                      className="inline-flex items-center py-2 px-8 text-white bg-green-500 rounded-lg duration-150 hover:bg-green-600 transiiton"
-                    >
-                      Lamar
-                    </button>
+                    {isApplied ? (
+                      <button
+                        type="button"
+                        disabled
+                        className="inline-flex items-center py-2 px-8 text-white bg-green-500 rounded-lg disabled:bg-gray-500"
+                      >
+                        Applied
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={handleLamarButton}
+                        className="inline-flex items-center py-2 px-8 text-white bg-green-500 rounded-lg duration-150 hover:bg-green-600 transiiton"
+                      >
+                        Lamar
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -301,10 +382,9 @@ export default function Index() {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500 whitespace-pre-line">
-                      Anda berhasil mengisi lamaran pada{" "}
-                      <span className="font-bold">
-                        {" "}
-                        Application Designer - PT. Tokopedia Indonesia.{" "}
+                      Anda berhasil mengisi lamaran pada
+                      <span className="font-bold whitespace-pre-line">
+                        {` ${job.name} - ${company.name} `}
                       </span>
                       Anda dapat memantau proses rekrutmen melalui halaman{" "}
                       <span className="text-blue-500"> Profil Saya.</span>

@@ -116,16 +116,13 @@ export default function DatadiriTab({ person }) {
                       <button
                         form="formEditDatadiri"
                         type="submit"
-                        className="inline-flex justify-center items-center space-x-1 text-base font-medium text-blue-500"
+                        className="inline-flex justify-center items-center space-x-1 text-base font-medium text-blue-500 hover:text-blue-600"
                       >
                         Simpan
                       </button>
                     ) : (
-                      <div
-                        onClick={() => setEdit(true)}
-                        className="inline-flex justify-center items-center space-x-1 text-base font-medium text-red-500"
-                      >
-                        <EditButton className="hover:stroke-blue-500" />
+                      <div onClick={() => setEdit(true)}>
+                        <EditButton className="cursor-pointer hover:stroke-blue-500" />
                       </div>
                     )}
                   </div>
@@ -525,13 +522,13 @@ export default function DatadiriTab({ person }) {
                     <div className="flex col-span-2 justify-center items-center m-auto space-x-4">
                       <button
                         onClick={() => setKtpFile({ name: "-", size: "0" })}
-                        className="py-1 px-5 text-sm text-white bg-red-500 rounded"
+                        className="py-1 px-5 text-sm text-white bg-red-500 rounded hover:bg-red-600"
                       >
                         Hapus
                       </button>
                       <label
                         htmlFor="ktp"
-                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-600"
+                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
                       >
                         <h1>Unggah</h1>
                         <input
@@ -583,7 +580,7 @@ export default function DatadiriTab({ person }) {
                       </button>
                       <label
                         htmlFor="ijazah"
-                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-600"
+                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
                       >
                         <h1>Unggah</h1>
                         <input
@@ -635,7 +632,7 @@ export default function DatadiriTab({ person }) {
                       </button>
                       <label
                         htmlFor="skck"
-                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-600"
+                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
                       >
                         <h1>Unggah</h1>
                         <input
@@ -685,7 +682,7 @@ export default function DatadiriTab({ person }) {
                       </button>
                       <label
                         htmlFor="cv"
-                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-600"
+                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
                       >
                         <h1>Unggah</h1>
                         <input
@@ -747,7 +744,7 @@ export default function DatadiriTab({ person }) {
                       </button>
                       <label
                         htmlFor="cert"
-                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-600"
+                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
                       >
                         <h1>Unggah</h1>
                         <input

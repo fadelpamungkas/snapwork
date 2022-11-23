@@ -2,33 +2,13 @@ import Image from "next/image";
 import CompanyBanner from "../public/CompanyBanner1.png";
 import TokopediaAvatar from "../public/avtokopedia.png";
 import CompanyProfileTab from "../components/CompanyProfileTab";
-import CompanyLowonganTab from "../components/CompanyLowonganTab";
 import { Tab } from "@headlessui/react";
-import useUser from "../lib/useUser";
-import useSWR from "swr";
-
-const companyFetcher = (...args) => fetch(...args).then((res) => res.json());
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProfileTabCompanyDashboard() {
-  const { user } = useUser();
-  const userid = user?.userData.id;
-
-  const { data: companyres, error: companyerror } = useSWR(
-    `https://snapwork.herokuapp.com/api/companybyuserid/${userid}`,
-    companyFetcher
-  );
-
-  if (companyerror) return <div>Failed to load</div>;
-  if (!companyres || !user || user.isLoggedIn === false) {
-    return <div>Loading...</div>;
-  }
-
-  const company = companyres?.data.data;
-
+export default function ProfileTabCompanyDashboard({ company }) {
   return (
     <>
       <section className="p-2 bg-white rounded-xl">

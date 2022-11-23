@@ -11,29 +11,11 @@ import { Fragment } from "react";
 import BerandaIcon from "../public/Beranda.svg";
 import BeritaIcon from "../public/Berita.svg";
 import TesIcon from "../public/Tes.svg";
+import NotifiIcon from "../public/Notifikasi.svg";
 import ProfileMenu from "./ProfileMenu";
+import NotificationHeadNav from "./NotificationHeadNav";
 
 export default function HeadNav() {
-  const solutions = [
-    {
-      name: "Selamat! Lamaran anda diterima",
-      description: "17 Oktober 2021 pukul 09:15",
-      href: "##",
-      icon: BerandaIcon,
-    },
-    {
-      name: "Maaf, Lamaran anda ditolak",
-      description: "9 September 2021 pukul 10.08",
-      href: "##",
-      icon: BeritaIcon,
-    },
-    {
-      name: "Reports",
-      description: "Keep track of your growth",
-      href: "##",
-      icon: TesIcon,
-    },
-  ];
   const { user } = useUser();
 
   console.log(user);
@@ -77,9 +59,9 @@ export default function HeadNav() {
                       <Popover.Button
                         className={`
                 ${open ? "" : "text-opacity-90"}
-                text-md flex items-center font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold`}
+                text-md flex items-center space-x-2 font-medium tracking-wider transition duration-150 group-hover:scale-110 group-hover:font-semibold`}
                       >
-                        <TrendingUpIcon className="p-1 mr-2 w-6 h-6 bg-blue-500 rounded-lg transition duration-150 scale-0 group-hover:scale-100 fill-white" />
+                        <NotifiIcon className="transition duration-150 scale-0 group-hover:scale-100" />
                         <span>Notifikasi</span>
                         <ChevronDownIcon
                           className={`${
@@ -100,30 +82,7 @@ export default function HeadNav() {
                       >
                         <Popover.Panel className="absolute left-1/2 z-10 px-4 mt-3 w-screen max-w-lg transform -translate-x-1/2">
                           <div className="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5 shadow-lg">
-                            <div className="relative p-7 space-y-0 bg-white">
-                              <h1 className="pb-4 text-xl font-medium">
-                                Notifikasi
-                              </h1>
-                              {solutions.map((item) => (
-                                <a
-                                  key={item.name}
-                                  href={item.href}
-                                  className="flex items-center p-2 -m-3 rounded-lg transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-50"
-                                >
-                                  <div className="flex flex-shrink-0 justify-center items-center w-10 h-10 text-white sm:w-12 sm:h-12">
-                                    <item.icon aria-hidden="true" />
-                                  </div>
-                                  <div className="ml-4">
-                                    <p className="text-base font-medium text-gray-900">
-                                      {item.name}
-                                    </p>
-                                    <p className="text-base text-gray-500">
-                                      {item.description}
-                                    </p>
-                                  </div>
-                                </a>
-                              ))}
-                            </div>
+                            <NotificationHeadNav id={user?.userData.id} />
                           </div>
                         </Popover.Panel>
                       </Transition>

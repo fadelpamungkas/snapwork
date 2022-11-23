@@ -141,7 +141,7 @@ export default function Index({ companies }) {
               alt="Banner"
             />
           </section>
-          <section className="grid grid-cols-4 gap-8 py-8 px-8 mx-auto max-w-screen-xl">
+          <section className="grid grid-cols-4 gap-12 py-8 px-8 mx-auto max-w-screen-xl">
             <div className="col-span-1">
               <div className="flex-col justify-between items-center mx-auto w-full bg-white rounded-xl shadow-lg">
                 <div className="py-3 px-6 bg-blue-500 rounded-t-xl">
