@@ -70,6 +70,14 @@ export default function DatadiriTab({ person }) {
         province: event.target.province.value,
         state: event.target.state.value,
         about: event.target.about.value,
+        education: {
+          s1: event.target.s1.value,
+          s1date: event.target.s1date.value,
+          s1major: event.target.s1major.value,
+          sma: event.target.sma.value,
+          smadate: event.target.smadate.value,
+          smamajor: event.target.smamajor.value,
+        },
       }),
     });
     const data = await response.json();
@@ -113,13 +121,20 @@ export default function DatadiriTab({ person }) {
                   <div className="flex justify-between items-center py-2">
                     <h1 className="text-xl font-semibold">Biodata</h1>
                     {edit ? (
-                      <button
-                        form="formEditDatadiri"
-                        type="submit"
-                        className="inline-flex justify-center items-center space-x-1 text-base font-medium text-blue-500 hover:text-blue-600"
-                      >
-                        Simpan
-                      </button>
+                      <div className="flex justify-end items-center space-x-4">
+                        <div onClick={() => setEdit(false)}>
+                          <h1 className="text-base font-medium text-red-500 cursor-pointer hover:text-red-600">
+                            Batal
+                          </h1>
+                        </div>
+                        <button
+                          form="formEditDatadiri"
+                          type="submit"
+                          className="text-base font-medium text-blue-500 hover:text-blue-600"
+                        >
+                          Simpan
+                        </button>
+                      </div>
                     ) : (
                       <div onClick={() => setEdit(true)}>
                         <EditButton className="cursor-pointer hover:stroke-blue-500" />
@@ -291,13 +306,19 @@ export default function DatadiriTab({ person }) {
                       </div>
                       {edit ? (
                         <div className="col-span-2">
-                          <input
-                            id="twitter"
-                            name="twitter"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.twitter}
-                          />
+                          <div className="flex justify-start items-center">
+                            <h1 className="py-2 px-2.5 text-sm placeholder-gray-400 text-gray-800 rounded-l-lg border border-r-0 border-gray-500 shadow-sm transition duration-150">
+                              www.
+                            </h1>
+                            <input
+                              id="twitter"
+                              name="twitter"
+                              className="py-2 px-2.5 w-full text-sm placeholder-gray-400 text-gray-800 rounded-r-lg border border-gray-500 shadow-sm transition duration-150"
+                              type="tel"
+                              defaultValue={person.twitter}
+                              placeholder="twitter.com/john"
+                            />
+                          </div>
                         </div>
                       ) : (
                         <div className="col-span-2">
@@ -312,13 +333,19 @@ export default function DatadiriTab({ person }) {
                       </div>
                       {edit ? (
                         <div className="col-span-2">
-                          <input
-                            id="linkedin"
-                            name="linkedin"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.linkedin}
-                          />
+                          <div className="flex justify-start items-center">
+                            <h1 className="py-2 px-2.5 text-sm placeholder-gray-400 text-gray-800 rounded-l-lg border border-r-0 border-gray-500 shadow-sm transition duration-150">
+                              www.
+                            </h1>
+                            <input
+                              id="linkedin"
+                              name="linkedin"
+                              className="py-2 px-2.5 w-full text-sm placeholder-gray-400 text-gray-800 rounded-r-lg border border-gray-500 shadow-sm transition duration-150"
+                              type="tel"
+                              defaultValue={person.linkedin}
+                              placeholder="linkedin.com/in/john"
+                            />
+                          </div>
                         </div>
                       ) : (
                         <div className="col-span-2">
@@ -422,39 +449,127 @@ export default function DatadiriTab({ person }) {
                     </h1>
                     <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
                       <div className="flex col-span-1 justify-between items-start">
-                        <h1>Twitter</h1>
+                        <h1>S1</h1>
                         <h1>:</h1>
                       </div>
                       {edit ? (
                         <div className="col-span-2">
                           <input
+                            id="s1"
+                            name="s1"
                             className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
                             type="tel"
-                            defaultValue={person.twitter}
+                            defaultValue={person.education?.s1}
                           />
                         </div>
                       ) : (
                         <div className="col-span-2">
-                          <h1>{person.twitter}</h1>
+                          <h1>{person.education?.s1}</h1>
                         </div>
                       )}
                     </div>
                     <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
                       <div className="flex col-span-1 justify-between items-start">
-                        <h1>Linkedin</h1>
+                        <h1>Tanggal</h1>
                         <h1>:</h1>
                       </div>
                       {edit ? (
                         <div className="col-span-2">
                           <input
+                            id="s1date"
+                            name="s1date"
                             className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
                             type="tel"
-                            defaultValue={person.linkedin}
+                            defaultValue={person.education?.s1date}
                           />
                         </div>
                       ) : (
                         <div className="col-span-2">
-                          <h1>{person.linkedin}</h1>
+                          <h1>{person.education?.s1date}</h1>
+                        </div>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                      <div className="flex col-span-1 justify-between items-start">
+                        <h1>Jurusan</h1>
+                        <h1>:</h1>
+                      </div>
+                      {edit ? (
+                        <div className="col-span-2">
+                          <input
+                            id="s1major"
+                            name="s1major"
+                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                            type="tel"
+                            defaultValue={person.education?.s1major}
+                          />
+                        </div>
+                      ) : (
+                        <div className="col-span-2">
+                          <h1>{person.education?.s1major}</h1>
+                        </div>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-3 justify-start items-start mt-8 mb-4 space-x-2 text-sm text-gray-700">
+                      <div className="flex col-span-1 justify-between items-start">
+                        <h1>SMA</h1>
+                        <h1>:</h1>
+                      </div>
+                      {edit ? (
+                        <div className="col-span-2">
+                          <input
+                            id="sma"
+                            name="sma"
+                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                            type="tel"
+                            defaultValue={person.education?.sma}
+                          />
+                        </div>
+                      ) : (
+                        <div className="col-span-2">
+                          <h1>{person.education?.sma}</h1>
+                        </div>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                      <div className="flex col-span-1 justify-between items-start">
+                        <h1>Tanggal</h1>
+                        <h1>:</h1>
+                      </div>
+                      {edit ? (
+                        <div className="col-span-2">
+                          <input
+                            id="smadate"
+                            name="smadate"
+                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                            type="tel"
+                            defaultValue={person.education?.smadate}
+                          />
+                        </div>
+                      ) : (
+                        <div className="col-span-2">
+                          <h1>{person.education?.smadate}</h1>
+                        </div>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                      <div className="flex col-span-1 justify-between items-start">
+                        <h1>Konsentrasi</h1>
+                        <h1>:</h1>
+                      </div>
+                      {edit ? (
+                        <div className="col-span-2">
+                          <input
+                            id="smamajor"
+                            name="smamajor"
+                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
+                            type="tel"
+                            defaultValue={person.education?.smamajor}
+                          />
+                        </div>
+                      ) : (
+                        <div className="col-span-2">
+                          <h1>{person.education?.smamajor}</h1>
                         </div>
                       )}
                     </div>
@@ -738,7 +853,7 @@ export default function DatadiriTab({ person }) {
                     <div className="flex col-span-2 justify-center items-center m-auto space-x-4">
                       <button
                         onClick={() => setCertFile({ name: "-", size: "0" })}
-                        className="py-1 px-5 text-sm text-white bg-red-500 rounded"
+                        className="py-1 px-5 text-sm text-white bg-red-500 rounded transtiion dura"
                       >
                         Hapus
                       </button>

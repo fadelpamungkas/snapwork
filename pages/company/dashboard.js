@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProfileMenu from "../../components/ProfileMenu";
 import FootNav from "../../components/FootNav";
 import ProfileTabCompanyDashboard from "../../components/ProfileTabCompanyDashboard";
+import PembayaranTabCompanyDashboard from "../../components/PembayaranTabCompanyDashboard";
 import LowonganTabCompanyDashboard from "../../components/LowonganTabCompanyDashboard";
 import LamaranTabCompanyDashboard from "../../components/LamaranTabCompanyDashboard";
 import SnapworkLogo from "../../public/SnapWork.png";
@@ -156,12 +157,15 @@ export default function CompanyDashboard() {
                     applications={company?.applications}
                   />
                   <LowonganTabCompanyDashboard company={company} />
+                  <PembayaranTabCompanyDashboard job={company?.companyjob} />
                 </div>
               </Tab.Panel>
               <Tab.Panel>
                 <ProfileTabCompanyDashboard company={company} />
               </Tab.Panel>
-              <Tab.Panel></Tab.Panel>
+              <Tab.Panel>
+                <PembayaranTabCompanyDashboard job={company?.companyjob} />
+              </Tab.Panel>
               <Tab.Panel>
                 <LowonganTabCompanyDashboard company={company} />
               </Tab.Panel>

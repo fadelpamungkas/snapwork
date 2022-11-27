@@ -168,8 +168,13 @@ export default function LowonganTabCompanyDashboard({ company }) {
   return (
     <>
       <div className="">
-        <div className="grid grid-cols-1 rounded-2xl">
-          <div className="">
+        <div className="grid grid-cols-1 bg-white rounded-2xl">
+          <div className="flex justify-between items-center py-4 px-8 bg-blue-500 rounded-t-2xl">
+            <h1 className="text-lg font-medium text-white">
+              Lowongan Pekerjaan
+            </h1>
+          </div>
+          <div className="py-4 px-10">
             <div className="grid grid-cols-2 gap-8 justify-center items-center">
               {company?.companyjob.map((item, idx) => (
                 <div
@@ -520,8 +525,7 @@ export default function LowonganTabCompanyDashboard({ company }) {
       <>
         <div className="mt-2">
           <p className="text-sm text-gray-500 whitespace-pre-line">
-            {`Anda yakin menghapus lowongan:
-`}
+            {`Anda yakin menghapus lowongan:`}
             <span className="font-bold"> {item.name}</span>
           </p>
         </div>
@@ -532,7 +536,7 @@ export default function LowonganTabCompanyDashboard({ company }) {
             className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
             onClick={closeAndConfirmDeleteJobModal}
           >
-            Delete
+            Hapus
           </button>
         </div>
       </>

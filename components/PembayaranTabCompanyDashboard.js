@@ -15,7 +15,7 @@ import DocumentIcon from "../public/Document.svg";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 
-export default function LamaranTabCompanyDashboard({ applications }) {
+export default function PembayaranTabCompanyDashboard({ job }) {
   const [isOpenApplicationDetail, setIsOpenApplicationDetail] = useState(false);
   const [applicationItem, setApplicationItem] = useState("");
 
@@ -25,130 +25,39 @@ export default function LamaranTabCompanyDashboard({ applications }) {
 
   function openApplicationDetailModal(item) {
     setIsOpenApplicationDetail(true);
-    if (item.status === "Applied") {
-      item.status = "Screening";
-      handleUpdateApplicationStatus((item = item));
-    }
-    setApplicationItem(item);
-  }
-
-  function nextPhaseApplication(item) {
-    handleUpdateApplicationStatus(item);
-    setIsOpenApplicationDetail(false);
-  }
-
-  function rejectApplication(item) {
-    handleRejectApplicationStatus(item);
-    setIsOpenApplicationDetail(false);
-  }
-
-  const addNotification = async () => {
-    const res = await fetch(
-      "https://snapwork.herokuapp.com/api/person/notification",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userid: person.userid,
-          status: "ApplySuccess",
-          title: "Lamaran Diterima",
-          description: `Selamat anda berhasil melamar sebagai ${job.name} di ${company.name}`,
-        }),
-      }
-    );
-    const data = await res.json();
-
-    if (data !== 200) {
-      alert("failed");
-    }
-  };
-
-  const handleRejectApplicationStatus = async (item) => {
-    const response = await fetch(
-      "https://snapwork.herokuapp.com/api/transaction/application/status",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          applicationid: item._id,
-          personid: item.personid,
-          companyid: item.companyid,
-          status: "Rejected",
-        }),
-      }
-    );
-    const data = await response.json();
-
-    if (data === 200) {
-      alert("Berhasil update");
+    if (!item) {
+      setApplicationItem("");
     } else {
-      alert("Error: " + data.message);
+      setApplicationItem(item);
     }
-  };
-
-  const handleUpdateApplicationStatus = async (item) => {
-    const response = await fetch(
-      "https://snapwork.herokuapp.com/api/transaction/application/status",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          applicationid: item._id,
-          personid: item.personid,
-          companyid: item.companyid,
-          status: item.status,
-        }),
-      }
-    );
-    const data = await response.json();
-
-    if (data === 200) {
-      alert("Berhasil update");
-    } else {
-      alert("Error: " + data.message);
-    }
-  };
+  }
 
   return (
     <>
       <div className="">
         <div className="grid grid-cols-1 bg-white rounded-2xl">
-          <div className="flex justify-between items-center py-4 px-8 bg-blue-500 rounded-t-2xl">
-            <h1 className="text-lg font-medium text-white">
-              Verifikasi Pelamar Kerja
-            </h1>
+          <div className="flex justify-between items-center px-8 py-4 bg-blue-500 rounded-t-2xl">
+            <h1 className="text-lg font-medium text-white">Pembayaran Lowongan</h1>
           </div>
           <div className="py-4 px-10">
-            {applications ? (
+            {job ? (
               <>
-                {applications.map((item, index) => (
+                {job.map((item, index) => (
                   <div
                     key={index}
                     className="grid grid-cols-8 justify-center items-center py-2 space-x-4"
                   >
                     <div className="flex col-span-2 items-center space-x-4">
-                      <Image
-                        src={DefaultPicture}
-                        alt=""
-                        width={40}
-                        height={40}
-                        className="object-cover col-span-1 rounded-full"
-                      />
-                      <h1 className="font-semibold">{item.username}</h1>
+                      <h1 className="font-semibold">{index + 1}.</h1>
+                      <h1 className="font-semibold">{item.name}</h1>
                     </div>
-                    <h1 className="flex col-span-2 justify-center text-sm text-gray-500">
+                    <h1 className="flex col-span-2 text-sm text-gray-500">
                       {item.created_at}
                     </h1>
-                    <h1 className="flex col-span-2 justify-center text-sm font-semibold">
+                    <h1 className="flex col-span-1 justify-center text-sm font-semibold">
                       {item.jobposition}
                     </h1>
-                    <div className="flex col-span-1 justify-center">
+                    <div className="flex col-span-2 justify-center">
                       {item.status === "Accepted" ? (
                         <div className="py-2 px-4 text-sm text-green-900 bg-green-100 rounded-2xl">
                           <h1>{item.status}</h1>
@@ -438,31 +347,22 @@ export default function LamaranTabCompanyDashboard({ applications }) {
                                 </p>
                               </div>
                             </div>
-                            {applicationItem.status !== "Accepted" &&
-                              applicationItem.status !== "Rejected" && (
-                                <div className="flex justify-between pt-4 space-x-8 w-full">
-                                  <button
-                                    className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                                    onClick={() =>
-                                      rejectApplication(applicationItem)
-                                    }
-                                  >
-                                    Tolak
-                                  </button>
-                                  <button
-                                    className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                                    onClick={() =>
-                                      nextPhaseApplication(applicationItem)
-                                    }
-                                  >
-                                    {applicationItem.status === "Test" ? (
-                                      <h1>Terima</h1>
-                                    ) : (
-                                      <h1>Lanjut</h1>
-                                    )}
-                                  </button>
-                                </div>
-                              )}
+                            <div className="flex justify-between pt-4 space-x-8 w-full">
+                              <button
+                                type="button"
+                                className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                                onClick={closeApplicationDetailModal}
+                              >
+                                Tolak
+                              </button>
+                              <button
+                                type="button"
+                                className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                                onClick={closeApplicationDetailModal}
+                              >
+                                Terima
+                              </button>
+                            </div>
                           </div>
                         </div>
                         <div className="col-span-1 p-8 space-y-4 bg-white rounded-lg">

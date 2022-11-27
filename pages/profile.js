@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import FootNav from "../components/FootNav";
 import HeadNav from "../components/HeadNav";
@@ -82,19 +83,27 @@ export default function Profile() {
                       ) : (
                         <h1 className="mt-4 text-xl font-semibold">-</h1>
                       )}
-                      <h1 className="text-sm">S1 Teknik Informatika</h1>
-                      <h1 className="text-sm">
-                        Mahasiswa di Universitas Islam Indonesia
-                      </h1>
-                      <h1 className="text-sm">Agustus 2018 - Sekarang</h1>
+                      {person?.education && (
+                        <>
+                          <h1 className="text-sm">
+                            S1 {person.education?.s1major}
+                          </h1>
+                          <h1 className="text-sm">
+                            Mahasiswa di {person.education?.s1}
+                          </h1>
+                          <h1 className="text-sm">
+                            {person.education?.s1date}
+                          </h1>
+                        </>
+                      )}
                     </div>
                     <div className="flex flex-col justify-center items-start py-4 space-y-4">
                       <div className="space-y-2">
                         <h1 className="text-sm text-gray-500">
                           Pendidikan Terakhir
                         </h1>
-                        {person?.education?.name ? (
-                          <h1 className="text-sm">{person.education.name}</h1>
+                        {person?.education?.sma ? (
+                          <h1 className="text-sm">{person.education.sma}</h1>
                         ) : (
                           <h1 className="text-sm">-</h1>
                         )}
@@ -107,23 +116,37 @@ export default function Profile() {
                               <h1 className="text-sm">Twitter</h1>
                               <h1 className="text-sm">:</h1>
                             </div>
+                          </div>
+                          <div className="col-span-3 pl-1 space-y-1">
+                            {person?.twitter ? (
+                              <Link
+                                href={`https://www.${person.twitter}`}
+                                passHref
+                              >
+                                <h1 className="text-sm text-blue-500 cursor-pointer truncate">
+                                  {person.twitter}
+                                </h1>
+                              </Link>
+                            ) : (
+                              <h1 className="text-sm truncate">-</h1>
+                            )}
+                          </div>
+                          <div className="col-span-1 space-y-1">
                             <div className="flex justify-between items-center">
                               <h1 className="text-sm">Linkedin</h1>
                               <h1 className="text-sm">:</h1>
                             </div>
                           </div>
                           <div className="col-span-3 pl-1 space-y-1">
-                            {person?.twitter ? (
-                              <h1 className="text-sm truncate">
-                                {person.twitter}
-                              </h1>
-                            ) : (
-                              <h1 className="text-sm truncate">-</h1>
-                            )}
                             {person?.linkedin ? (
-                              <h1 className="text-sm truncate">
-                                {person.linkedin}
-                              </h1>
+                              <Link
+                                href={`https://www.${person.linkedin}`}
+                                passHref
+                              >
+                                <h1 className="text-sm text-blue-500 cursor-pointer truncate">
+                                  {person.linkedin}
+                                </h1>
+                              </Link>
                             ) : (
                               <h1 className="text-sm truncate">-</h1>
                             )}
@@ -178,7 +201,7 @@ export default function Profile() {
                       </Tab.List>
                       <Tab.Panels className="mt-2">
                         <Tab.Panel>
-                          <ProfilTab />
+                          <ProfilTab person={person} />
                         </Tab.Panel>
                         <Tab.Panel>
                           <DatadiriTab person={person} />
@@ -187,7 +210,7 @@ export default function Profile() {
                           <PengembanganDiriTab />
                         </Tab.Panel>
                         <Tab.Panel>
-                          <KarirTab applications={person.applications} />
+                          <KarirTab applications={person?.applications} />
                         </Tab.Panel>
                       </Tab.Panels>
                     </Tab.Group>
