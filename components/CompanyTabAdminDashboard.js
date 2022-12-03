@@ -30,6 +30,62 @@ export default function CompanyTabAdminDashboard() {
     setCompanyItem(item);
   }
 
+  function verifyCompany(item) {
+    handleVerifyCompanyStatus(item);
+    setIsOpenCompanyDetail(false);
+  }
+
+  function declineCompany(item) {
+    handleDeclineCompanyStatus(item);
+    setIsOpenCompanyDetail(false);
+  }
+
+  const handleVerifyCompanyStatus = async (item) => {
+    const response = await fetch(
+      "https://snapwork.herokuapp.com/api/company/status",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          companyid: item._id,
+          status: 1,
+        }),
+      }
+    );
+    const data = await response.json();
+
+    if (data === 200) {
+      alert("Berhasil update");
+    } else {
+      alert("Error: " + data.message);
+    }
+  };
+
+  const handleDeclineCompanyStatus = async (item) => {
+    const response = await fetch(
+      "https://snapwork.herokuapp.com/api/company/status",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          companyid: item._id,
+          status: 2,
+        }),
+      }
+    );
+    const data = await response.json();
+
+    if (data === 200) {
+      alert("Berhasil update");
+    } else {
+      alert("Error: " + data.message);
+    }
+  };
+
   function CompanyFormDialog({ item }) {
     return (
       <>
@@ -305,6 +361,10 @@ dari database yang telah dihubungkan`}</p>
                     <h1 className="py-2 px-4 text-sm text-green-600 bg-green-50 rounded-lg">
                       {item.status}
                     </h1>
+                  ) : item.status === "Decline" ? (
+                    <h1 className="py-2 px-4 text-sm text-red-600 bg-red-50 rounded-lg">
+                      {item.status}
+                    </h1>
                   ) : (
                     <h1 className="py-2 px-4 text-sm text-yellow-600 bg-yellow-50 rounded-lg">
                       {item.status}
@@ -354,22 +414,24 @@ dari database yang telah dihubungkan`}</p>
               >
                 <Dialog.Panel className="overflow-hidden p-8 w-full max-w-screen-lg text-left align-middle bg-white rounded-2xl transition-all transform">
                   <CompanyFormDialog item={companyItem} />
-                  <div className="flex justify-end mt-4 space-x-8">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                      onClick={closeCompanyDetailModal}
-                    >
-                      Decline
-                    </button>
-                    <button
-                      type="button"
-                      className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                      onClick={closeCompanyDetailModal}
-                    >
-                      Verify
-                    </button>
-                  </div>
+                  {companyItem.status === "Pending" && (
+                    <div className="flex justify-end mt-4 space-x-8">
+                      <button
+                        type="button"
+                        className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                        onClick={() => declineCompany(companyItem)}
+                      >
+                        Decline
+                      </button>
+                      <button
+                        type="button"
+                        className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                        onClick={() => verifyCompany(companyItem)}
+                      >
+                        Verify
+                      </button>
+                    </div>
+                  )}
                 </Dialog.Panel>
               </Transition.Child>
             </div>
