@@ -14,7 +14,7 @@ export default function Company_Register() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: user?.userData.id,
+        userid: user?.userData.id,
         name: event.target.name.value,
         industrytype: event.target.industry.value,
         email: event.target.email.value,
