@@ -176,7 +176,7 @@ export default function LowonganTabCompanyDashboard({ company }) {
           </div>
           <div className="py-4 px-10">
             <div className="grid grid-cols-2 gap-8 justify-center items-center">
-              {company?.companyjob.map((item, idx) => (
+              {company?.companyjob?.map((item, idx) => (
                 <div
                   key={idx}
                   className="col-span-1 p-4 space-y-2 h-full bg-white rounded-xl shadow-xl"

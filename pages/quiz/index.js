@@ -3,7 +3,7 @@ import HeadNav from "../../components/HeadNav";
 import FootNav from "../../components/FootNav";
 import PemetaanPotensiIcon from "../../public/PemetaanPotensi.svg";
 
-export default function TestConfirmation() {
+export default function AssessmentConfirmation() {
   return (
     <>
       <div className="py-8 w-full min-h-screen">

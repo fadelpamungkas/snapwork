@@ -224,7 +224,7 @@ export default function LamaranTabCompanyDashboard({ applications }) {
                             <h1 className="text-lg font-bold">
                               {applicationItem.username}
                             </h1>
-                            <p>{applicationItem.username}</p>
+                            <p>S1 {applicationItem.usereducation?.s1major}</p>
                             <p>Melamar sebagai {applicationItem.jobposition}</p>
                           </div>
                         </div>
@@ -396,7 +396,39 @@ export default function LamaranTabCompanyDashboard({ applications }) {
                           <h1 className="text-lg font-semibold">
                             Riwayat Pendidikan
                           </h1>
-                          <h1>{applicationItem.userabout}</h1>
+                          <div className="flex justify-start items-center space-x-4">
+                            <div className="p-2 bg-gray-100 rounded-full">
+                              <PhoneIcon className="w-6 h-6" />
+                            </div>
+                            <div>
+                              <h1 className="text-lg font-semibold leading-tight">
+                                {applicationItem.usereducation?.s1}
+                              </h1>
+                              <p>
+                                Jurusan {applicationItem.usereducation?.s1major}
+                              </p>
+                              <p className="pt-1 text-sm text-gray-500">
+                                {applicationItem.usereducation?.s1date}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex justify-start items-center space-x-4">
+                            <div className="p-2 bg-gray-100 rounded-full">
+                              <PhoneIcon className="w-6 h-6" />
+                            </div>
+                            <div>
+                              <h1 className="text-lg font-semibold leading-tight">
+                                {applicationItem.usereducation?.sma}
+                              </h1>
+                              <p>
+                                Konsentrasi{" "}
+                                {applicationItem.usereducation?.smamajor}
+                              </p>
+                              <p className="pt-1 text-sm text-gray-500">
+                                {applicationItem.usereducation?.smadate}
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       <div className="col-span-1 space-y-8">
@@ -492,8 +524,13 @@ export default function LamaranTabCompanyDashboard({ applications }) {
                             </div>
                             <div className="flex justify-start items-center space-x-2">
                               <LinkedinIcon className="w-10 h-10" />
-                              <div className="space-y-1">
-                                <h1>{applicationItem.userlinkedin}</h1>
+                              <div className="space-y-1 truncate">
+                                <a
+                                  href={`https://${applicationItem.userlinkedin}`}
+                                  className="text-blue-500 hover:underline"
+                                >
+                                  {applicationItem.userlinkedin}
+                                </a>
                                 <p className="text-sm text-gray-500">
                                   Linkedin
                                 </p>
@@ -501,8 +538,13 @@ export default function LamaranTabCompanyDashboard({ applications }) {
                             </div>
                             <div className="flex justify-start items-center space-x-2">
                               <TwitterIcon className="w-10 h-10" />
-                              <div className="space-y-1">
-                                <h1>{applicationItem.usertwitter}</h1>
+                              <div className="space-y-1 truncate">
+                                <a
+                                  href={`https://${applicationItem.usertwitter}`}
+                                  className="text-blue-500 hover:underline"
+                                >
+                                  {applicationItem.usertwitter}
+                                </a>
                                 <p className="text-sm text-gray-500">Twitter</p>
                               </div>
                             </div>
