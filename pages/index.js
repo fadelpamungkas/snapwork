@@ -82,20 +82,20 @@ export default function Index({ companies }) {
     query === ""
       ? education
       : education.filter((edu) =>
-        edu.name
-          .toLowerCase()
-          .replace(/\s+/g, "")
-          .includes(query.toLowerCase().replace(/\s+/g, ""))
-      );
+          edu.name
+            .toLowerCase()
+            .replace(/\s+/g, "")
+            .includes(query.toLowerCase().replace(/\s+/g, ""))
+        );
   const filteredRegion =
     query === ""
       ? region
       : region.filter((reg) =>
-        reg.name
-          .toLowerCase()
-          .replace(/\s+/g, "")
-          .includes(query.toLowerCase().replace(/\s+/g, ""))
-      );
+          reg.name
+            .toLowerCase()
+            .replace(/\s+/g, "")
+            .includes(query.toLowerCase().replace(/\s+/g, ""))
+        );
 
   if (user?.isLoggedIn === true) {
     if (user.userData.role === "mitra") {
@@ -203,48 +203,48 @@ export default function Index({ companies }) {
                                 Nothing found.
                               </div>
                             ) : (
-                                filteredEducation.map((edu) => (
-                                  <Combobox.Option
-                                    key={edu.id}
-                                    className={({ active }) =>
-                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                              filteredEducation.map((edu) => (
+                                <Combobox.Option
+                                  key={edu.id}
+                                  className={({ active }) =>
+                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                       active
                                         ? "bg-blue-500 text-white"
                                         : "text-gray-900"
-                                      }`
-                                    }
-                                    value={edu}
-                                  >
-                                    {({ selected, active }) => (
-                                      <>
+                                    }`
+                                  }
+                                  value={edu}
+                                >
+                                  {({ selected, active }) => (
+                                    <>
+                                      <span
+                                        className={`block truncate ${
+                                          selected
+                                            ? "font-medium"
+                                            : "font-normal"
+                                        }`}
+                                      >
+                                        {edu.name}
+                                      </span>
+                                      {selected ? (
                                         <span
-                                          className={`block truncate ${
-                                            selected
-                                              ? "font-medium"
-                                              : "font-normal"
-                                            }`}
+                                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                            active
+                                              ? "text-white"
+                                              : "text-blue-500"
+                                          }`}
                                         >
-                                          {edu.name}
+                                          <CheckIcon
+                                            className="w-5 h-5"
+                                            aria-hidden="true"
+                                          />
                                         </span>
-                                        {selected ? (
-                                          <span
-                                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                              active
-                                                ? "text-white"
-                                                : "text-blue-500"
-                                              }`}
-                                          >
-                                            <CheckIcon
-                                              className="w-5 h-5"
-                                              aria-hidden="true"
-                                            />
-                                          </span>
-                                        ) : null}
-                                      </>
-                                    )}
-                                  </Combobox.Option>
-                                ))
-                              )}
+                                      ) : null}
+                                    </>
+                                  )}
+                                </Combobox.Option>
+                              ))
+                            )}
                           </Combobox.Options>
                         </Transition>
                       </div>
@@ -283,48 +283,48 @@ export default function Index({ companies }) {
                                 Nothing found.
                               </div>
                             ) : (
-                                filteredRegion.map((reg) => (
-                                  <Combobox.Option
-                                    key={reg.id}
-                                    className={({ active }) =>
-                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                              filteredRegion.map((reg) => (
+                                <Combobox.Option
+                                  key={reg.id}
+                                  className={({ active }) =>
+                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                       active
                                         ? "bg-blue-500 text-white"
                                         : "text-gray-900"
-                                      }`
-                                    }
-                                    value={reg}
-                                  >
-                                    {({ selected, active }) => (
-                                      <>
+                                    }`
+                                  }
+                                  value={reg}
+                                >
+                                  {({ selected, active }) => (
+                                    <>
+                                      <span
+                                        className={`block truncate ${
+                                          selected
+                                            ? "font-medium"
+                                            : "font-normal"
+                                        }`}
+                                      >
+                                        {reg.name}
+                                      </span>
+                                      {selected ? (
                                         <span
-                                          className={`block truncate ${
-                                            selected
-                                              ? "font-medium"
-                                              : "font-normal"
-                                            }`}
+                                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                            active
+                                              ? "text-white"
+                                              : "text-blue-500"
+                                          }`}
                                         >
-                                          {reg.name}
+                                          <CheckIcon
+                                            className="w-5 h-5"
+                                            aria-hidden="true"
+                                          />
                                         </span>
-                                        {selected ? (
-                                          <span
-                                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                              active
-                                                ? "text-white"
-                                                : "text-blue-500"
-                                              }`}
-                                          >
-                                            <CheckIcon
-                                              className="w-5 h-5"
-                                              aria-hidden="true"
-                                            />
-                                          </span>
-                                        ) : null}
-                                      </>
-                                    )}
-                                  </Combobox.Option>
-                                ))
-                              )}
+                                      ) : null}
+                                    </>
+                                  )}
+                                </Combobox.Option>
+                              ))
+                            )}
                           </Combobox.Options>
                         </Transition>
                       </div>
@@ -338,7 +338,9 @@ export default function Index({ companies }) {
                 {companies.map((item, index) => (
                   <div key={index}>
                     <a className="flex">
-                      {item.status === "Verified" && <CareerCard item={item} />}
+                      {item.status === "Verified" && item.companyjob && (
+                        <CareerCard item={item} />
+                      )}
                     </a>
                   </div>
                 ))}
