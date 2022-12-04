@@ -48,7 +48,18 @@ export default function ProfilTab({ person }) {
           <div className="space-y-2">
             <h1 className="text-lg font-medium text-blue-500">Portfolio</h1>
             {person.portfolio ? (
-              <p>Link: {person?.portfolio}</p>
+              <>
+                <p>{person.portfolio?.description}</p>
+                <p>
+                  {`Link: `}
+                  <a
+                    className="text-blue-500"
+                    href={`https://${person.portfolio?.link}`}
+                  >
+                    {person.portfolio?.link}
+                  </a>
+                </p>
+              </>
             ) : (
               <p>Link: -</p>
             )}
