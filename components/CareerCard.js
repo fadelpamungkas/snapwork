@@ -28,17 +28,6 @@ export default function CareerCard({ item }) {
                   </h1>
                 </div>
               </div>
-              <div className="flex justify-start items-center mb-4 space-x-4">
-                <div className="py-1 px-4 bg-yellow-200 rounded-xl">
-                  <h1 className="text-sm text-yellow-900">Photoshop</h1>
-                </div>
-                <div className="py-1 px-4 bg-purple-200 rounded-xl">
-                  <h1 className="text-sm text-purple-900">Desktop</h1>
-                </div>
-                <div className="py-1 px-4 bg-cyan-200 rounded-xl">
-                  <h1 className="text-sm text-cyan-900">Permainan Video</h1>
-                </div>
-              </div>
               <p className="text-sm text-gray-500">{item.description}</p>
               <div className="absolute top-0 right-0">
                 <div className="flex-col justify-center items-center py-6 px-8 mx-auto w-full bg-red-500 rounded-tr-xl rounded-bl-xl">

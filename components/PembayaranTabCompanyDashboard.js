@@ -14,6 +14,8 @@ import LinkedinIcon from "../public/LinkedinUser.svg";
 import DocumentIcon from "../public/Document.svg";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import toRupiah from "../lib/currency";
+import countTime from "../lib/datetime";
 
 export default function PembayaranTabCompanyDashboard({ job }) {
   const [isOpenApplicationDetail, setIsOpenApplicationDetail] = useState(false);
@@ -36,10 +38,33 @@ export default function PembayaranTabCompanyDashboard({ job }) {
     <>
       <div className="">
         <div className="grid grid-cols-1 bg-white rounded-2xl">
-          <div className="flex justify-between items-center px-8 py-4 bg-blue-500 rounded-t-2xl">
-            <h1 className="text-lg font-medium text-white">Pembayaran Lowongan</h1>
+          <div className="flex justify-between items-center py-4 px-8 bg-blue-500 rounded-t-2xl">
+            <h1 className="text-lg font-medium text-white">
+              Pembayaran Lowongan
+            </h1>
           </div>
           <div className="py-4 px-10">
+            <div className="grid grid-cols-8 justify-center items-center py-2 space-x-4">
+              <div className="flex col-span-2 items-center space-x-3">
+                <h1 className="text-sm text-gray-500">No</h1>
+                <h1 className="text-sm text-gray-500">Nama Posisi</h1>
+              </div>
+              <h1 className="flex col-span-2 justify-center text-sm text-gray-500">
+                Tanggal Pembayaran
+              </h1>
+              <h1 className="flex col-span-1 justify-center text-sm text-gray-500">
+                Jumlah
+              </h1>
+              <h1 className="flex col-span-1 justify-center text-sm text-gray-500">
+                Tenggat
+              </h1>
+              <div className="flex col-span-1 justify-center text-sm text-gray-500">
+                Status
+              </div>
+              <div className="flex col-span-1 justify-center text-sm text-gray-500">
+                Detail
+              </div>
+            </div>
             {job ? (
               <>
                 {job.map((item, index) => (
@@ -51,24 +76,45 @@ export default function PembayaranTabCompanyDashboard({ job }) {
                       <h1 className="font-semibold">{index + 1}.</h1>
                       <h1 className="font-semibold">{item.name}</h1>
                     </div>
-                    <h1 className="flex col-span-2 text-sm text-gray-500">
-                      {item.created_at}
-                    </h1>
-                    <h1 className="flex col-span-1 justify-center text-sm font-semibold">
-                      {item.jobposition}
-                    </h1>
-                    <div className="flex col-span-2 justify-center">
-                      {item.status === "Accepted" ? (
+                    {item.payment?.created_at ? (
+                      <h1 className="flex col-span-2 justify-center text-sm text-gray-500">
+                        {item.payment.created_at}
+                      </h1>
+                    ) : (
+                      <h1 className="flex col-span-2 justify-center text-sm text-gray-500">
+                        -
+                      </h1>
+                    )}
+                    {item.payment?.price ? (
+                      <h1 className="flex col-span-1 justify-center text-sm font-semibold">
+                        {toRupiah(item.payment.price)}
+                      </h1>
+                    ) : (
+                      <h1 className="flex col-span-1 justify-center text-sm font-semibold">
+                        -
+                      </h1>
+                    )}
+                    {item.payment?.until ? (
+                      <h1 className="flex col-span-1 justify-center text-sm font-semibold">
+                        {countTime(item.payment.until)} hari lagi
+                      </h1>
+                    ) : (
+                      <h1 className="flex col-span-1 justify-center text-sm font-semibold">
+                        -
+                      </h1>
+                    )}
+                    <div className="flex col-span-1 justify-center">
+                      {item.payment?.status === "Done" ? (
                         <div className="py-2 px-4 text-sm text-green-900 bg-green-100 rounded-2xl">
-                          <h1>{item.status}</h1>
+                          <h1>{item.payment?.status}</h1>
                         </div>
-                      ) : item.status === "Rejected" ? (
-                        <div className="py-2 px-4 text-sm text-red-900 bg-red-100 rounded-2xl">
-                          <h1>{item.status}</h1>
+                      ) : item.payment?.status === "Pending" ? (
+                        <div className="py-2 px-4 text-sm text-yellow-900 bg-yellow-100 rounded-2xl">
+                          <h1>{item.payment?.status}</h1>
                         </div>
                       ) : (
-                        <div className="py-2 px-4 text-sm text-yellow-900 bg-yellow-100 rounded-2xl">
-                          <h1>{item.status}</h1>
+                        <div className="py-2 px-4 text-sm text-red-900 bg-red-100 rounded-2xl">
+                          <h1>Waiting</h1>
                         </div>
                       )}
                     </div>

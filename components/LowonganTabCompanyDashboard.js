@@ -8,30 +8,36 @@ import BNILogo from "../public/BNI.png";
 import BCALogo from "../public/BCA.png";
 import MandiriLogo from "../public/Mandiri.png";
 import AddIcon from "../public/AddIcon.png";
+import toRupiah from "../lib/currency";
 
 const packets = [
   {
-    name: "10 Hari Iklan Lowongan Pekerjaan",
+    id: 1,
+    name: "10 Hari Postingan",
+    price: 25000,
   },
   {
-    name: "20 Hari Iklan Lowongan Pekerjaan",
+    id: 2,
+    name: "20 Hari Postingan",
+    price: 40000,
   },
   {
-    name: "30 Hari Iklan Lowongan Pekerjaan",
+    id: 3,
+    name: "30 Hari Postingan",
+    price: 50000,
   },
 ];
 
 export default function LowonganTabCompanyDashboard({ company }) {
-  const [packet, setPacket] = useState(packets[0]);
+  const [packet, setPacket] = useState("");
+  const [jobId, setJobId] = useState("");
+  const [fileProof, setFileProof] = useState("");
   const [jobItem, setJobItem] = useState("");
-  const [isOpenOrder, setIsOpenOrder] = useState(false);
   const [isOpenFinal, setIsOpenFinal] = useState(false);
   const [isOpenJobDetail, setIsOpenJobDetail] = useState(false);
+  const [isOpenPacket, setIsOpenPacket] = useState(false);
+  const [isOpenPayment, setIsOpenPayment] = useState(false);
   const [isOpenDeleteJob, setIsOpenDeleteJob] = useState(false);
-
-  function closeJobDetailModal() {
-    setIsOpenJobDetail(false);
-  }
 
   function openJobDetailModal(item) {
     setIsOpenJobDetail(true);
@@ -40,6 +46,10 @@ export default function LowonganTabCompanyDashboard({ company }) {
     } else {
       setJobItem(item);
     }
+  }
+
+  function closeJobDetailModal() {
+    setIsOpenJobDetail(false);
   }
 
   function closeDeleteJobModal() {
@@ -57,22 +67,33 @@ export default function LowonganTabCompanyDashboard({ company }) {
     setJobItem(item);
   }
 
-  function closeOrderModal() {
-    setIsOpenOrder(false);
+  function openModalPacket() {
+    setIsOpenJobDetail(false);
+    setIsOpenPacket(true);
   }
 
-  function openOrderModal() {
-    setIsOpenOrder(true);
-    setIsOpenJobDetail(false);
+  function closeModalPacket() {
+    setIsOpenPacket(false);
+  }
+
+  function openModalPayment() {
+    setIsOpenPacket(false);
+    setIsOpenPayment(true);
+  }
+
+  function closeModalPayment() {
+    setIsOpenPayment(false);
+  }
+
+  function openModalFinal() {
+    setIsOpenPayment(false);
+    setIsOpenFinal(true);
   }
 
   function closeModalFinal() {
     setIsOpenFinal(false);
-  }
-
-  function openModalFinal() {
-    setIsOpenOrder(false);
-    setIsOpenFinal(true);
+    setPacket("");
+    setFileProof("");
   }
 
   const handleDeleteJob = async (jobId) => {
@@ -119,7 +140,6 @@ export default function LowonganTabCompanyDashboard({ company }) {
       }
     );
     const data = await response.json();
-    console.log(data);
 
     if (data === 200) {
       closeJobDetailModal();
@@ -155,11 +175,36 @@ export default function LowonganTabCompanyDashboard({ company }) {
       }
     );
     const data = await response.json();
-    console.log(data);
+
+    if (data.status === 200) {
+      setJobId(data.data.data);
+      openModalPacket();
+    } else {
+      alert("Error: " + data.message);
+    }
+  };
+
+  const handleUpdatePayment = async () => {
+    const response = await fetch(
+      "https://snapwork.herokuapp.com/api/company/job/payment",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          companyid: company._id,
+          companyjobid: jobId,
+          status: "Pending",
+          packet: packet.id,
+          fileproof: fileProof,
+        }),
+      }
+    );
+    const data = await response.json();
 
     if (data === 200) {
-      closeJobDetailModal();
-      openOrderModal();
+      openModalFinal();
     } else {
       alert("Error: " + data.message);
     }
@@ -311,7 +356,7 @@ export default function LowonganTabCompanyDashboard({ company }) {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Hapus Berita
+                    Hapus Lowongan
                   </Dialog.Title>
                   <DeleteConfirmation item={jobItem} />
                 </Dialog.Panel>
@@ -320,8 +365,8 @@ export default function LowonganTabCompanyDashboard({ company }) {
           </div>
         </Dialog>
       </Transition>
-      <Transition appear show={isOpenOrder} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeOrderModal}>
+      <Transition appear show={isOpenPacket} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModalPacket}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -345,7 +390,7 @@ export default function LowonganTabCompanyDashboard({ company }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="overflow-hidden p-2 w-full max-w-lg text-left align-middle bg-white rounded-2xl transition-all transform">
+                <Dialog.Panel className="overflow-hidden p-2 w-full max-w-lg text-left align-middle bg-gray-100 rounded-2xl transition-all transform">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
@@ -355,72 +400,255 @@ export default function LowonganTabCompanyDashboard({ company }) {
                       src={PaymentBanner}
                       alt="Header"
                     />
-                    <div className="flex justify-center items-center p-8 m-2 bg-white rounded-2xl shadow-xl -translate-y-12">
-                      <h1 className="text-3xl font-bold">
+                    <div className="p-4 m-2 bg-white rounded-2xl shadow-xl -translate-y-12">
+                      <h1 className="flex justify-center p-4 text-2xl font-bold">
                         Pilih Paket Lowongan
                       </h1>
                     </div>
                   </Dialog.Title>
-                  <RadioGroup value={packet} onChange={setPacket}>
-                    <RadioGroup.Label className="sr-only">
-                      Server size
-                    </RadioGroup.Label>
-                    <div className="space-y-2">
-                      {packets.map((item) => (
-                        <RadioGroup.Option
-                          key={item.name}
-                          value={item}
-                          className={({ active, checked }) =>
-                            `${
-                              active
-                                ? "ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-sky-300"
-                                : ""
-                            }
-                  ${
-                    checked
-                      ? "bg-green-600 bg-opacity-75 text-white"
-                      : "bg-white"
-                  }
+                  <div className="mx-4 space-y-4">
+                    <h1>
+                      Postingan lowongan pekerjaan anda akan di unggah dengan
+                      batasan paket dibawah ini setelah anda melakukan
+                      pembayaran dihalaman setelah ini
+                    </h1>
+                    <RadioGroup value={packet} onChange={setPacket}>
+                      <RadioGroup.Label className="sr-only">
+                        Server size
+                      </RadioGroup.Label>
+                      <div className="space-y-2">
+                        {packets.map((item, index) => (
+                          <RadioGroup.Option
+                            key={index}
+                            value={item}
+                            className={({ checked }) =>
+                              `${
+                                checked ? "bg-green-500 text-white" : "bg-white"
+                              }
                     relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`
-                          }
-                        >
-                          {({ active, checked }) => (
-                            <>
-                              <div className="flex justify-between items-center w-full">
-                                {checked && (
-                                  <div className="text-white shrink-0">
-                                    <CheckIcon className="w-6 h-6" />
-                                  </div>
-                                )}
-                                <div className="flex items-center">
-                                  <div className="text-sm">
-                                    <RadioGroup.Label
-                                      as="p"
-                                      className={`font-medium  ${
-                                        checked ? "text-white" : "text-gray-900"
-                                      }`}
-                                    >
-                                      {item.name}
-                                    </RadioGroup.Label>
-                                    <RadioGroup.Description
-                                      as="span"
-                                      className={`inline ${
-                                        checked
-                                          ? "text-sky-100"
-                                          : "text-gray-500"
-                                      }`}
-                                    >
-                                      {item.name}
-                                    </RadioGroup.Description>
+                            }
+                          >
+                            {({ checked }) => (
+                              <>
+                                <div className="flex justify-start items-center space-x-4 w-full">
+                                  {checked ? (
+                                    <div className="text-white shrink-0">
+                                      <CheckIcon className="w-6 h-6 rounded-full" />
+                                    </div>
+                                  ) : (
+                                    <div className="text-white shrink-0">
+                                      <CheckIcon className="w-6 h-6 bg-gray-200 rounded-full" />
+                                    </div>
+                                  )}
+                                  <div className="flex items-center">
+                                    <div className="text-base">
+                                      <RadioGroup.Label
+                                        as="p"
+                                        className={`font-medium  ${
+                                          checked
+                                            ? "text-white"
+                                            : "text-gray-900"
+                                        }`}
+                                      >
+                                        {`${item.name} ( ${toRupiah(
+                                          item.price
+                                        )} )`}
+                                      </RadioGroup.Label>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </>
-                          )}
-                        </RadioGroup.Option>
-                      ))}
+                              </>
+                            )}
+                          </RadioGroup.Option>
+                        ))}
+                      </div>
+                    </RadioGroup>
+                  </div>
+                  <div className="flex justify-evenly items-center m-12 space-x-4">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center py-2 px-4 text-sm font-medium text-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2"
+                      onClick={() => closeModalPacket()}
+                    >
+                      Batal
+                    </button>
+                    {packet ? (
+                      <button
+                        type="button"
+                        className="inline-flex justify-center py-2 px-4 text-sm font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={() => openModalPayment()}
+                      >
+                        Lanjut
+                      </button>
+                    ) : (
+                      <button
+                        disabled
+                        type="button"
+                        className="inline-flex justify-center py-2 px-4 text-sm font-medium text-white bg-gray-400 rounded-md border border-transparent"
+                      >
+                        Lanjut
+                      </button>
+                    )}
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+      <Transition appear show={isOpenPayment} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModalPayment}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="overflow-y-auto fixed inset-0">
+            <div className="flex justify-center items-center p-4 min-h-full text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="overflow-hidden p-2 w-full max-w-lg text-left align-middle bg-gray-100 rounded-2xl transition-all transform">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    <Image
+                      className="object-fill max-w-lg rounded-xl shadow-xl"
+                      src={PaymentBanner}
+                      alt="Header"
+                    />
+                    <div className="p-4 m-2 bg-white rounded-2xl shadow-xl -translate-y-12">
+                      <h1>Total</h1>
+                      <h1 className="text-2xl font-bold">Rp50.000</h1>
+                      <h1 className="text-sm text-gray-300">
+                        Order ID #report-202210050735258297562
+                      </h1>
                     </div>
-                  </RadioGroup>
+                  </Dialog.Title>
+                  <div className="mx-4 space-y-2">
+                    <h1 className="text-lg font-semibold">Transfer Bank</h1>
+                    <div className="space-y-4">
+                      <div className="flex justify-start items-start">
+                        <div className="p-1 border border-gray-900">
+                          <Image
+                            className="object-contain"
+                            src={BCALogo}
+                            width={50}
+                            height={20}
+                            alt="BCA"
+                          />
+                        </div>
+                        <div className="mx-4 space-y-1">
+                          <h1 className="text-xl font-bold">
+                            1420 0008 6693 1
+                          </h1>
+                          <h1 className="text-lg font-medium">
+                            BCA{" "}
+                            <span className="text-base font-normal">
+                              atas nama
+                            </span>{" "}
+                            Fadel Pamungkas
+                          </h1>
+                        </div>
+                      </div>
+                      <hr />
+                      <div className="flex justify-start items-start">
+                        <div className="p-1 border border-gray-900">
+                          <Image
+                            className="object-contain"
+                            src={MandiriLogo}
+                            width={50}
+                            height={20}
+                            alt="Mandiri"
+                          />
+                        </div>
+                        <div className="mx-4 space-y-1">
+                          <h1 className="text-xl font-bold">
+                            1420 0008 6693 1
+                          </h1>
+                          <h1 className="text-lg font-medium">
+                            Mandiri{" "}
+                            <span className="text-base font-normal">
+                              atas nama
+                            </span>{" "}
+                            Fadel Pamungkas
+                          </h1>
+                        </div>
+                      </div>
+                      <hr />
+                      <div className="flex justify-start items-start">
+                        <div className="p-1 border border-gray-900">
+                          <Image
+                            className="object-contain"
+                            src={BNILogo}
+                            width={50}
+                            height={20}
+                            alt="BNI"
+                          />
+                        </div>
+                        <div className="mx-4 space-y-1">
+                          <h1 className="text-xl font-bold">
+                            1420 0008 6693 1
+                          </h1>
+                          <h1 className="text-lg font-medium">
+                            BNI{" "}
+                            <span className="text-base font-normal">
+                              atas nama
+                            </span>{" "}
+                            Haydar Maulana
+                          </h1>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pt-8 m-4 space-y-2">
+                    <label
+                      htmlFor="fileproof"
+                      className="flex flex-col justify-center items-center space-y-4 w-full h-32 bg-white rounded-xl border border-blue-500 border-dashed"
+                    >
+                      {fileProof ? (
+                        <h1 className="overflow-auto text-sm font-semibold">
+                          {fileProof}
+                        </h1>
+                      ) : (
+                        <h1 className="overflow-auto text-sm font-semibold text-gray-500">
+                          No file selected
+                        </h1>
+                      )}
+                      <label
+                        htmlFor="fileproof"
+                        className="py-1 px-5 text-sm text-blue-500 rounded border border-blue-500 transition duration-150 cursor-pointer hover:text-white hover:bg-blue-600"
+                      >
+                        <h1>Browse</h1>
+                        <input
+                          id="fileproof"
+                          name="fileproof"
+                          type="file"
+                          onChange={() =>
+                            setFileProof(
+                              document.getElementById("fileproof").files[0].name
+                            )
+                          }
+                          accept="image/*"
+                          className="hidden"
+                        />
+                      </label>
+                    </label>
+                  </div>
                   <div className="pt-8 m-4 space-y-2">
                     <h1 className="text-lg font-semibold">Cara Pembayaran</h1>
                     <ul className="px-4 list-decimal list-outside">
@@ -433,21 +661,31 @@ export default function LowonganTabCompanyDashboard({ company }) {
                       </li>
                     </ul>
                   </div>
-                  <div className="flex justify-end m-4 space-x-4">
+                  <div className="flex justify-evenly items-center m-4 space-x-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-md border border-transparent hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2"
-                      onClick={closeOrderModal}
+                      className="inline-flex justify-center py-2 px-4 text-sm font-medium text-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2"
+                      onClick={() => closeModalPayment()}
                     >
-                      Batal
+                      Kembali
                     </button>
-                    <button
-                      type="button"
-                      className="inline-flex justify-center py-2 px-4 text-sm font-medium text-blue-900 bg-blue-100 rounded-md border border-transparent hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={openModalFinal}
-                    >
-                      Lanjut
-                    </button>
+                    {fileProof ? (
+                      <button
+                        type="button"
+                        className="inline-flex justify-center py-2 px-4 text-sm font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={() => handleUpdatePayment()}
+                      >
+                        Unggah
+                      </button>
+                    ) : (
+                      <button
+                        disabled
+                        type="button"
+                        className="inline-flex justify-center py-2 px-4 text-sm font-medium text-white bg-gray-400 rounded-md border border-transparent"
+                      >
+                        Unggah
+                      </button>
+                    )}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -498,15 +736,8 @@ export default function LowonganTabCompanyDashboard({ company }) {
                   <div className="flex justify-end space-x-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-md border border-transparent hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2"
-                      onClick={openOrderModal}
-                    >
-                      Kembali
-                    </button>
-                    <button
-                      type="button"
                       className="inline-flex justify-center py-2 px-4 text-sm font-medium text-blue-900 bg-blue-100 rounded-md border border-transparent hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModalFinal}
+                      onClick={() => closeModalFinal()}
                     >
                       OK
                     </button>
@@ -534,7 +765,7 @@ export default function LowonganTabCompanyDashboard({ company }) {
           <button
             type="button"
             className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-            onClick={closeAndConfirmDeleteJobModal}
+            onClick={() => closeAndConfirmDeleteJobModal()}
           >
             Hapus
           </button>
@@ -844,7 +1075,7 @@ export default function LowonganTabCompanyDashboard({ company }) {
                   <button
                     type="button"
                     className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                    onClick={closeJobDetailModal}
+                    onClick={() => closeJobDetailModal()}
                   >
                     Batal
                   </button>

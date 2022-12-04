@@ -18,6 +18,7 @@ export default function CVTab() {
   const [edit, setEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenFinal, setIsOpenFinal] = useState(false);
+  const [fileProof, setFileProof] = useState("");
 
   const tabItem = [
     {
@@ -128,7 +129,7 @@ laporan lengkap`}</p>
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="overflow-hidden p-2 w-full max-w-lg text-left align-middle bg-white rounded-2xl transition-all transform">
+                <Dialog.Panel className="overflow-hidden p-2 w-full max-w-lg text-left align-middle bg-gray-100 rounded-2xl transition-all transform">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
@@ -160,7 +161,7 @@ laporan lengkap`}</p>
                           />
                         </div>
                         <div className="mx-4 space-y-1">
-                          <h1 className="text-3xl font-bold">
+                          <h1 className="text-xl font-bold">
                             1420 0008 6693 1
                           </h1>
                           <h1 className="text-lg font-medium">
@@ -184,7 +185,7 @@ laporan lengkap`}</p>
                           />
                         </div>
                         <div className="mx-4 space-y-1">
-                          <h1 className="text-3xl font-bold">
+                          <h1 className="text-xl font-bold">
                             1420 0008 6693 1
                           </h1>
                           <h1 className="text-lg font-medium">
@@ -208,7 +209,7 @@ laporan lengkap`}</p>
                           />
                         </div>
                         <div className="mx-4 space-y-1">
-                          <h1 className="text-3xl font-bold">
+                          <h1 className="text-xl font-bold">
                             1420 0008 6693 1
                           </h1>
                           <h1 className="text-lg font-medium">
@@ -223,6 +224,40 @@ laporan lengkap`}</p>
                     </div>
                   </div>
                   <div className="pt-8 m-4 space-y-2">
+                    <label
+                      htmlFor="fileproof"
+                      className="flex flex-col justify-center items-center space-y-4 w-full h-32 bg-white rounded-xl border border-blue-500 border-dashed"
+                    >
+                      {fileProof ? (
+                        <h1 className="overflow-auto text-sm font-semibold">
+                          {fileProof}
+                        </h1>
+                      ) : (
+                        <h1 className="overflow-auto text-sm font-semibold text-gray-500">
+                          No file selected
+                        </h1>
+                      )}
+                      <label
+                        htmlFor="fileproof"
+                        className="py-1 px-5 text-sm text-blue-500 rounded border border-blue-500 transition duration-150 cursor-pointer hover:text-white hover:bg-blue-600"
+                      >
+                        <h1>Browse</h1>
+                        <input
+                          id="fileproof"
+                          name="fileproof"
+                          type="file"
+                          onChange={() =>
+                            setFileProof(
+                              document.getElementById("fileproof").files[0].name
+                            )
+                          }
+                          accept="image/*"
+                          className="hidden"
+                        />
+                      </label>
+                    </label>
+                  </div>
+                  <div className="pt-8 m-4 space-y-2">
                     <h1 className="text-lg font-semibold">Cara Pembayaran</h1>
                     <ul className="px-4 list-decimal list-outside">
                       <li className="">Ketuk ATM di halaman pembayaran.</li>
@@ -234,21 +269,32 @@ laporan lengkap`}</p>
                       </li>
                     </ul>
                   </div>
-                  <div className="flex justify-end m-4 space-x-4">
+                  <div className="flex justify-evenly items-center m-4 space-x-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-md border border-transparent hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center py-2 px-4 text-sm font-medium text-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2"
                       onClick={closeModal}
                     >
                       Batal
                     </button>
-                    <button
-                      type="button"
-                      className="inline-flex justify-center py-2 px-4 text-sm font-medium text-blue-900 bg-blue-100 rounded-md border border-transparent hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={openModalFinal}
-                    >
-                      Lanjut
-                    </button>
+                    {fileProof ? (
+                      <button
+                        type="button"
+                        className="inline-flex justify-center py-2 px-4 text-sm font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={openModalFinal}
+                      >
+                        Unggah
+                      </button>
+                    ) : (
+                      <button
+                        disabled
+                        type="button"
+                        className="inline-flex justify-center py-2 px-4 text-sm font-medium text-white bg-gray-400 rounded-md border border-transparent"
+                        onClick={openModalFinal}
+                      >
+                        Unggah
+                      </button>
+                    )}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
