@@ -8,7 +8,6 @@ import PengembanganDiriTab from "../components/PengembanganDiriTab";
 import KarirTab from "../components/KarirTab";
 import { Tab } from "@headlessui/react";
 import UserAvatar from "../public/avuser.png";
-import { CogIcon } from "@heroicons/react/outline";
 import useUser from "../lib/useUser";
 import useSWR from "swr";
 
