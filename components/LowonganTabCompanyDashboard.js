@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Dialog, Transition } from "@headlessui/react";
+import { Menu, Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import TokopediaAvatar from "../public/avtokopedia.png";
@@ -224,9 +224,9 @@ export default function LowonganTabCompanyDashboard({ company }) {
               {company?.companyjob?.map((item, idx) => (
                 <div
                   key={idx}
-                  className="col-span-1 p-4 space-y-2 h-full bg-white rounded-xl shadow-xl"
+                  className="col-span-1 p-8 space-y-2 h-full bg-white rounded-xl shadow-lg"
                 >
-                  <div className="grid grid-cols-3 gap-8 items-center h-full">
+                  <div className="grid grid-cols-4 gap-4 items-center h-full">
                     <div className="flex col-span-1 justify-center items-center">
                       <Image
                         src={TokopediaAvatar}
@@ -236,29 +236,71 @@ export default function LowonganTabCompanyDashboard({ company }) {
                         className="object-cover rounded-full"
                       />
                     </div>
-                    <div className="col-span-2 space-y-2">
-                      <div className="py-1 px-4 text-white bg-red-500 rounded-full w-fit">
-                        <p className="text-sm">{item.available} Lowongan</p>
+                    <div className="col-span-3 space-y-2">
+                      <div className="flex justify-between items-center">
+                        <h1 className="text-lg font-semibold">{item.name}</h1>
+                        <Menu
+                          as="div"
+                          className="inline-block relative text-left"
+                        >
+                          <div>
+                            <Menu.Button className="inline-flex justify-center px-2 text-sm font-medium text-gray-500 hover:text-gray-900">
+                              <EllipsisIcon />
+                            </Menu.Button>
+                          </div>
+                          <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-100"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                          >
+                            <Menu.Items className="absolute right-0 mt-2 w-32 bg-white rounded-md divide-y divide-gray-100 ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none">
+                              <div className="py-1 px-1">
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <button
+                                      onClick={() => openJobDetailModal(item)}
+                                      className={`${
+                                        active
+                                          ? "bg-green-500 text-white"
+                                          : "text-gray-900"
+                                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                    >
+                                      Ubah
+                                    </button>
+                                  )}
+                                </Menu.Item>
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <button
+                                      onClick={() => openDeleteJobModal(item)}
+                                      className={`${
+                                        active
+                                          ? "bg-red-500 text-white"
+                                          : "text-gray-900"
+                                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                    >
+                                      Hapus
+                                    </button>
+                                  )}
+                                </Menu.Item>
+                              </div>
+                            </Menu.Items>
+                          </Transition>
+                        </Menu>
                       </div>
-                      <h1 className="text-lg font-semibold">{item.name}</h1>
-                      <p className="overflow-ellipsis line-clamp-3">
-                        {item.description}
-                      </p>
-                      <div className="flex justify-between pt-4">
-                        <button
-                          type="button"
-                          onClick={() => openDeleteJobModal(item)}
-                          className="inline-flex items-center py-2 px-8 text-white bg-red-500 rounded-lg duration-150 hover:bg-red-600 transiiton"
-                        >
-                          Hapus
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => openJobDetailModal(item)}
-                          className="inline-flex items-center py-2 px-8 text-white bg-green-500 rounded-lg duration-150 hover:bg-green-600 transiiton"
-                        >
-                          Ubah
-                        </button>
+                      <div className="grid grid-cols-4 gap-2">
+                        <p className="col-span-1 text-sm">Lowongan</p>
+                        <p className="col-span-3 text-sm overflow-ellipsis line-clamp-3">
+                          : {item.available} tersedia
+                        </p>
+                        <p className="col-span-1 text-sm">Tenggat</p>
+                        <p className="col-span-3 text-sm overflow-ellipsis line-clamp-3">
+                          : {item.payment?.until}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -266,11 +308,11 @@ export default function LowonganTabCompanyDashboard({ company }) {
               ))}
               <button
                 onClick={() => openJobDetailModal()}
-                className="col-span-1 w-full h-full cursor-pointer"
+                className="col-span-1 w-full cursor-pointer h-fit"
               >
                 <div className="flex justify-center items-center p-4 h-full bg-white rounded-xl border-2 border-green-500 border-dashed shadow-xl transition duration-150 hover:bg-green-50">
-                  <div className="space-y-4">
-                    <Image src={AddIcon} width={100} height={100} alt="Add" />
+                  <div className="space-y-2">
+                    <Image src={AddIcon} width={80} height={80} alt="Add" />
                     <h1 className="text-lg font-semibold text-green-500">
                       Tambah Lowongan
                     </h1>
@@ -1116,6 +1158,25 @@ function CheckIcon(props) {
         strokeWidth={1.5}
         strokeLinecap="round"
         strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function EllipsisIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="w-6 h-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
       />
     </svg>
   );
