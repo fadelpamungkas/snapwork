@@ -125,6 +125,23 @@ export default function LamaranTabCompanyDashboard({ applications }) {
             </h1>
           </div>
           <div className="py-4 px-10">
+            <div className="grid grid-cols-8 justify-center items-center py-2 space-x-4">
+              <h1 className="flex col-span-2 ml-14 text-sm text-gray-500">
+                Nama
+              </h1>
+              <h1 className="flex col-span-2 justify-center text-sm text-gray-500">
+                Tanggal Melamar
+              </h1>
+              <h1 className="flex col-span-2 justify-center text-sm text-gray-500">
+                Posisi
+              </h1>
+              <h1 className="flex col-span-1 justify-center text-sm text-gray-500">
+                Status
+              </h1>
+              <h1 className="flex col-span-1 justify-center text-sm text-gray-500">
+                Detail
+              </h1>
+            </div>
             {applications ? (
               <>
                 {applications.map((item, index) => (
