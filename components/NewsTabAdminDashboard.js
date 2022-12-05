@@ -127,12 +127,10 @@ export default function NewsTabAdminDashboard() {
   return (
     <>
       <div className="">
-        <div className="pb-4 space-y-1">
-          <h1 className="text-2xl font-semibold">Pengelolaan Berita</h1>
-          <p className="text-sm text-gray-500 whitespace-pre-line">{`Memberikan kemudahan membaca informasi dengan cepat dan akurat 
-dari database yang telah dihubungkan`}</p>
-        </div>
-        <div className="grid grid-cols-1 rounded-2xl">
+        <div className="grid grid-cols-1 p-8 bg-white rounded-2xl">
+          <div className="flex justify-between items-center">
+            <h1 className="text-xl font-semibold">Pengelolaan Berita</h1>
+          </div>
           <div className="pt-4">
             <div className="grid grid-cols-3 gap-8 justify-center items-center">
               {news.map((item, idx) => (
@@ -140,7 +138,7 @@ dari database yang telah dihubungkan`}</p>
                   key={idx}
                   className="col-span-1 p-4 space-y-2 h-full bg-white rounded-xl shadow-xl"
                 >
-                  <div className="h-full">
+                  <div className="space-y-4 h-full">
                     <Image
                       src={HeaderImage}
                       width={350}
@@ -148,26 +146,22 @@ dari database yang telah dihubungkan`}</p>
                       alt="Personal"
                       className="object-cover rounded-lg"
                     />
-                    <h1 className="text-lg font-semibold">{item.title}</h1>
-                    <p className="truncate">{item.body1}</p>
-                    <div className="flex justify-between items-center pt-2">
-                      <p className="text-sm text-gray-500">
-                        Penulis: {item.author}
-                      </p>
-                      <p className="text-sm text-gray-500">{item.created_at}</p>
-                    </div>
-                    <div className="flex justify-between pt-4">
+                    <h1 className="text-base font-semibold leading-snug">
+                      {item.title}
+                    </h1>
+                    <p className="text-sm text-gray-500">Oleh {item.author}</p>
+                    <div className="flex justify-between">
                       <button
                         type="button"
                         onClick={() => openDeleteNewsModal(item)}
-                        className="inline-flex items-center py-2 px-8 text-white bg-red-500 rounded-lg duration-150 hover:bg-red-600 transiiton"
+                        className="inline-flex items-center py-1.5 px-6 text-white bg-red-500 rounded-lg duration-150 hover:bg-red-600 transiiton"
                       >
                         Hapus
                       </button>
                       <button
                         type="button"
                         onClick={() => openNewsDetailModal(item)}
-                        className="inline-flex items-center py-2 px-8 text-white bg-green-500 rounded-lg duration-150 hover:bg-green-600 transiiton"
+                        className="inline-flex items-center py-1.5 px-6 text-white bg-green-500 rounded-lg duration-150 hover:bg-green-600 transiiton"
                       >
                         Ubah
                       </button>

@@ -80,7 +80,7 @@ export default function CompanyDashboard() {
   return (
     <>
       <body className="w-full text-gray-900 bg-gray-100">
-        <div className="px-8 pt-4 pb-4 mx-auto max-w-screen-xl">
+        <div className="px-8 py-8 mx-auto max-w-screen-xl">
           <div className="grid grid-cols-5">
             <div className="col-span-1 bg-white rounded-t-2xl">
               <div className="flex justify-center items-center h-full">

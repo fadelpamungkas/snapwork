@@ -311,13 +311,11 @@ export default function CompanyTabAdminDashboard() {
   return (
     <>
       <div className="space-y-8">
-        <div className="space-y-1">
-          <h1 className="text-2xl font-semibold">Verifikasi Perusahaan</h1>
-          <p className="text-sm text-gray-500 whitespace-pre-line">{`Memberikan kemudahan membaca informasi dengan cepat dan akurat 
-dari database yang telah dihubungkan`}</p>
-        </div>
         <div className="grid grid-cols-1 p-8 bg-white rounded-2xl">
-          <div className="">
+          <div className="flex justify-between items-center">
+            <h1 className="text-xl font-semibold">Verifikasi Perusahaan</h1>
+          </div>
+          <div className="pt-4">
             <div className="grid grid-cols-8 justify-center items-center py-2 space-x-4">
               <h1 className="flex col-span-3 pl-14 text-sm text-gray-500">
                 Nama Perusahaan

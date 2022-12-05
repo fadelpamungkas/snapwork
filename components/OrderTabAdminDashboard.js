@@ -119,11 +119,6 @@ export default function OrderTabAdminDashboard() {
   return (
     <>
       <div className="space-y-8">
-        <div className="space-y-1">
-          <h1 className="text-2xl font-semibold">Verifikasi Pembayaran</h1>
-          <p className="text-sm text-gray-500 whitespace-pre-line">{`Memberikan kemudahan membaca informasi dengan cepat dan akurat 
-dari database yang telah dihubungkan`}</p>
-        </div>
         <div className="grid grid-cols-1 p-8 bg-white rounded-2xl">
           <div className="flex justify-between items-center">
             <h1 className="text-xl font-semibold">
