@@ -57,6 +57,13 @@ export default function Index() {
     if (user?.isLoggedIn) {
       if (user?.userData.role === "none") {
         router.push("/chooserole");
+      } else if (
+        !person?.birth ||
+        !person?.document?.ktpname ||
+        !person?.portfolio?.link
+      ) {
+        alert("Silahkan isi data diri di profil anda");
+        router.push("/profile");
       } else {
         submitApplication();
       }
