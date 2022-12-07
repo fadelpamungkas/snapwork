@@ -121,7 +121,7 @@ export default function DatadiriTab({ person }) {
                           id="name"
                           type="text"
                           name="name"
-                          defaultValue={item.name}
+                          value={item.name}
                           className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                           placeholder="Masukkan Nama Lengkap"
                         />
@@ -213,7 +213,7 @@ export default function DatadiriTab({ person }) {
                           id="email"
                           type="email"
                           name="email"
-                          defaultValue={item.email}
+                          value={item.email}
                           className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
                           placeholder="Masukkan Email"
                         />

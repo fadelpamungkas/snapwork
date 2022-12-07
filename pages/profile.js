@@ -84,15 +84,21 @@ export default function Profile() {
                       )}
                       {person?.education && (
                         <>
-                          <h1 className="text-sm">
-                            S1 {person.education?.s1major}
-                          </h1>
-                          <h1 className="text-sm">
-                            Mahasiswa di {person.education?.s1}
-                          </h1>
-                          <h1 className="text-sm">
-                            {person.education?.s1date}
-                          </h1>
+                          {person.education?.s1major && (
+                            <h1 className="text-sm">
+                              S1 {person.education?.s1major}
+                            </h1>
+                          )}
+                          {person.education?.s1 && (
+                            <h1 className="text-sm">
+                              Mahasiswa di {person.education?.s1}
+                            </h1>
+                          )}
+                          {person.education?.s1datein && (
+                            <h1 className="text-sm">
+                              {person.education?.s1date}
+                            </h1>
+                          )}
                         </>
                       )}
                     </div>
