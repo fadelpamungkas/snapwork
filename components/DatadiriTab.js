@@ -1,6 +1,4 @@
-import Image from "next/image";
 import { Tab } from "@headlessui/react";
-import { CogIcon } from "@heroicons/react/outline";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import EditButton from "../public/edit.svg";
@@ -11,6 +9,7 @@ function classNames(...classes) {
 export default function DatadiriTab({ person }) {
   const [edit, setEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenBiodataDetail, setIsOpenBiodataDetail] = useState(false);
   const [ktpFile, setKtpFile] = useState({ name: "-", size: "0" });
   const [ijazahFile, setIjazahFile] = useState({ name: "-", size: "0" });
   const [skckFile, setSKCKFile] = useState({ name: "-", size: "0" });
@@ -46,6 +45,14 @@ export default function DatadiriTab({ person }) {
     setIsOpen(true);
   }
 
+  function openBiodataModal() {
+    setIsOpenBiodataDetail(true);
+  }
+
+  function closeBiodataModal() {
+    setIsOpenBiodataDetail(false);
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await fetch("https://snapwork.herokuapp.com/api/person", {
@@ -72,10 +79,12 @@ export default function DatadiriTab({ person }) {
         about: event.target.about.value,
         education: {
           s1: event.target.s1.value,
-          s1date: event.target.s1date.value,
+          s1datein: event.target.s1datein.value,
+          s1dateout: event.target.s1dateout.value,
           s1major: event.target.s1major.value,
           sma: event.target.sma.value,
-          smadate: event.target.smadate.value,
+          smadatein: event.target.smadatein.value,
+          smadateout: event.target.smadateout.value,
           smamajor: event.target.smamajor.value,
         },
       }),
@@ -85,12 +94,364 @@ export default function DatadiriTab({ person }) {
 
     if (data === 200) {
       alert("Berhasil diubah");
-      setEdit(false);
+      closeBiodataModal();
     } else {
-      alert("Fail to register, please contact for any problems");
-      setEdit(false);
+      alert("Fail to edit, please contact for any problems");
+      closeBiodataModal();
     }
   };
+
+  function BiodataFormDialog({ item }) {
+    return (
+      <>
+        <body className="w-full text-gray-900">
+          <div className="flex justify-center items-center py-2 px-4 space-x-4">
+            <h1 className="text-2xl font-semibold text-red-500">Biodata</h1>
+          </div>
+          <div className="px-2 mx-auto w-full">
+            <form id="formEditDatadiri" onSubmit={handleSubmit}>
+              <div className="py-4 px-8 space-y-4 rounded-xl">
+                <div className="py-2">
+                  <div className="grid grid-cols-2 space-y-4 text-sm">
+                    <div className="pr-12 mt-4 space-y-4">
+                      <div className="space-y-2">
+                        <h1>Nama Lengkap</h1>
+                        <input
+                          required
+                          id="name"
+                          type="text"
+                          name="name"
+                          defaultValue={item.name}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan Nama Lengkap"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Tempat, Tanggal Lahir</h1>
+                        <input
+                          required
+                          id="birth"
+                          type="text"
+                          name="birth"
+                          defaultValue={item.birth}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan Tempat & Tanggal Lahir"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label htmlFor="gender">Jenis Kelamin</label>
+                        <select
+                          required
+                          name="gender"
+                          id="gender"
+                          defaultValue={item.gender}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                        >
+                          <option value="Laki-Laki">Laki-Laki</option>
+                          <option value="Perempuan">Perempuan</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <label htmlFor="religion">Agama</label>
+                        <select
+                          required
+                          name="religion"
+                          id="religion"
+                          defaultValue={item.religion}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                        >
+                          <option value="Islam">Islam</option>
+                          <option value="Protestan">Protestan</option>
+                          <option value="Katolik">Katolik</option>
+                          <option value="Buddha">Buddha</option>
+                          <option value="Khonghucu">Khonghucu</option>
+                          <option value="Hindu">Hindu</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <label htmlFor="marriage">Status Pernikahan</label>
+                        <select
+                          required
+                          name="marriage"
+                          id="marriage"
+                          defaultValue={item.marriage}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                        >
+                          <option value="Lajang">Lajang</option>
+                          <option value="Kawin">Kawin</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Hobi</h1>
+                        <input
+                          required
+                          id="hobby"
+                          type="text"
+                          name="hobby"
+                          defaultValue={item.hobby}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan Hobi"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Nomor Ponsel</h1>
+                        <input
+                          required
+                          id="telephone"
+                          type="number"
+                          name="telephone"
+                          minLength="7"
+                          defaultValue={item.telephone}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan Nomor Telepon"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Email</h1>
+                        <input
+                          required
+                          id="email"
+                          type="email"
+                          name="email"
+                          defaultValue={item.email}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan Email"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Alamat</h1>
+                        <input
+                          required
+                          id="address"
+                          type="text"
+                          name="address"
+                          defaultValue={item.address}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan Alamat"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Kota</h1>
+                        <input
+                          required
+                          id="city"
+                          type="text"
+                          name="city"
+                          defaultValue={item.city}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan Kota"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Provinsi</h1>
+                        <input
+                          required
+                          id="province"
+                          type="text"
+                          name="province"
+                          defaultValue={item.province}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan Provinsi"
+                        />
+                      </div>
+                    </div>
+                    <div className="pl-12 space-y-4">
+                      <div className="space-y-2">
+                        <h1>Negara</h1>
+                        <input
+                          required
+                          id="state"
+                          type="text"
+                          name="state"
+                          defaultValue={item.state}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan Negara"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h1>S1</h1>
+                        <input
+                          required
+                          id="s1"
+                          type="text"
+                          name="s1"
+                          defaultValue={item.education?.s1}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan Universitas"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Tanggal Masuk</h1>
+                        <input
+                          required
+                          id="s1datein"
+                          type="month"
+                          name="s1datein"
+                          defaultValue={item.education?.s1datein}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Pilih Tanggal Masuk"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Tanggal Kelulusan</h1>
+                        <input
+                          required
+                          id="s1dateout"
+                          type="month"
+                          name="s1dateout"
+                          defaultValue={item.education?.s1dateout}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Pilih Tanggal Kelulusan"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label htmlFor="s1major">Jurusan</label>
+                        <select
+                          required
+                          name="s1major"
+                          id="s1majjor"
+                          defaultValue={item.education?.s1major}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                        >
+                          <option value="Teknik Informatika">
+                            Teknik Informatika
+                          </option>
+                          <option value="Teknik Industri">
+                            Teknik Industri
+                          </option>
+                          <option value="Teknik Kimia">Teknik Kimia</option>
+                          <option value="Teknik Elektro">Teknik Elektro</option>
+                          <option value="Teknik Mesin">Teknik Mesin</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <h1>SMA</h1>
+                        <input
+                          required
+                          id="sma"
+                          type="text"
+                          name="sma"
+                          defaultValue={item.education?.sma}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan SMA"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Tanggal Masuk</h1>
+                        <input
+                          required
+                          id="smadatein"
+                          type="month"
+                          name="smadatein"
+                          defaultValue={item.education?.smadatein}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan Tanggal Masuk"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Tanggal Kelulusan</h1>
+                        <input
+                          required
+                          id="smadateout"
+                          type="month"
+                          name="smadateout"
+                          defaultValue={item.education?.smadateout}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                          placeholder="Masukkan Tanggal Kelulusan"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label htmlFor="smamajor">Konsentrasi</label>
+                        <select
+                          required
+                          name="smamajor"
+                          id="smamajor"
+                          defaultValue={item.education?.smamajor}
+                          className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                        >
+                          <option value="IPA">IPA</option>
+                          <option value="IPS">IPS</option>
+                          <option value="Bahasa">Bahasa</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Twitter</h1>
+                        <div className="flex justify-center items-center">
+                          <input
+                            required
+                            type="text"
+                            value="www."
+                            disabled
+                            className="py-3.5 pr-1 pl-4 w-16 text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-l-lg border border-r-0 shadow-sm transition duration-150"
+                          />
+                          <input
+                            required
+                            id="twitter"
+                            type="text"
+                            name="twitter"
+                            defaultValue={item.twitter}
+                            className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-r-lg border border-l-0 shadow-sm transition duration-150"
+                            placeholder="Masukkan Link Twitter"
+                          />
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <h1>Linkedin</h1>
+                        <div className="flex justify-center items-center">
+                          <input
+                            required
+                            type="text"
+                            value="www."
+                            disabled
+                            className="py-3.5 pr-1 pl-4 w-16 text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-l-lg border border-r-0 shadow-sm transition duration-150"
+                          />
+                          <input
+                            required
+                            id="linkedin"
+                            type="text"
+                            name="linkedin"
+                            defaultValue={item.linkedin}
+                            className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-r-lg border border-l-0 shadow-sm transition duration-150"
+                            placeholder="Masukkan Link Linkedin"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <h1>Deskripsi Diri</h1>
+                  <textarea
+                    required
+                    id="about"
+                    type="text"
+                    name="about"
+                    defaultValue={item.about}
+                    className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150 min-h-fit"
+                    placeholder="Masukkan Deskripsi Diri"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end mt-4 space-x-8">
+                <button
+                  type="button"
+                  className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                >
+                  Ubah
+                </button>
+              </div>
+            </form>
+          </div>
+        </body>
+      </>
+    );
+  }
 
   return (
     <>
@@ -115,492 +476,262 @@ export default function DatadiriTab({ person }) {
         </Tab.List>
         <Tab.Panels className="col-span-4 py-2 px-8 border-t">
           <Tab.Panel>
-            <form id="formEditDatadiri" onSubmit={handleSubmit}>
-              <div>
-                <div className="grid grid-cols-1 divide-y divide-gray-300">
-                  <div className="flex justify-between items-center py-2">
-                    <h1 className="text-xl font-semibold">Biodata</h1>
-                    {edit ? (
-                      <div className="flex justify-end items-center space-x-4">
-                        <div onClick={() => setEdit(false)}>
-                          <h1 className="text-base font-medium text-red-500 cursor-pointer hover:text-red-600">
-                            Batal
-                          </h1>
-                        </div>
-                        <button
-                          form="formEditDatadiri"
-                          type="submit"
-                          className="text-base font-medium text-blue-500 hover:text-blue-600"
-                        >
-                          Simpan
-                        </button>
+            <div>
+              <div className="grid grid-cols-1 divide-y divide-gray-300">
+                <div className="flex justify-between items-center py-2">
+                  <h1 className="text-xl font-semibold">Biodata</h1>
+                  {edit ? (
+                    <div className="flex justify-end items-center space-x-4">
+                      <div onClick={() => setEdit(false)}>
+                        <h1 className="text-base font-medium text-red-500 cursor-pointer hover:text-red-600">
+                          Batal
+                        </h1>
                       </div>
-                    ) : (
-                      <div onClick={() => setEdit(true)}>
-                        <EditButton className="cursor-pointer hover:stroke-blue-500" />
-                      </div>
-                    )}
+                      <button
+                        form="formEditDatadiri"
+                        type="submit"
+                        className="text-base font-medium text-blue-500 hover:text-blue-600"
+                      >
+                        Simpan
+                      </button>
+                    </div>
+                  ) : (
+                    <div onClick={() => openBiodataModal()}>
+                      <EditButton className="cursor-pointer hover:stroke-blue-500" />
+                    </div>
+                  )}
+                </div>
+                <div className="py-2">
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <h1 className="text-base font-semibold">Informasi Umum</h1>
                   </div>
-                  <div className="py-2">
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <h1 className="text-base font-semibold">
-                        Informasi Umum
-                      </h1>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Nama Lengkap</h1>
+                      <h1>:</h1>
                     </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Nama Lengkap</h1>
-                        <h1>:</h1>
-                      </div>
-                      <div className="col-span-2">
-                        <h1>{person.name}</h1>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Tempat, Tanggal Lahir</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="birth"
-                            name="birth"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="text"
-                            defaultValue={person.birth}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.birth}</h1>
-                        </div>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Jenis Kelamin</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="gender"
-                            name="gender"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="text"
-                            defaultValue={person.gender}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.gender}</h1>
-                        </div>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Agama</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="religion"
-                            name="religion"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="text"
-                            defaultValue={person.religion}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.religion}</h1>
-                        </div>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Status Pernikahan</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="marriage"
-                            name="marriage"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="text"
-                            defaultValue={person?.marriage}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.marriage}</h1>
-                        </div>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Hobi</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="hobby"
-                            name="hobby"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="text"
-                            defaultValue={person.hobby}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.hobby}</h1>
-                        </div>
-                      )}
+                    <div className="col-span-2">
+                      <h1>{person.name}</h1>
                     </div>
                   </div>
-                  <div className="py-2">
-                    <h1 className="text-base font-semibold">
-                      Informasi Kontak
-                    </h1>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Nomor Ponsel</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="telephone"
-                            name="telephone"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.telephone}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.telephone}</h1>
-                        </div>
-                      )}
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Tempat, Tanggal Lahir</h1>
+                      <h1>:</h1>
                     </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Email</h1>
-                        <h1>:</h1>
-                      </div>
-                      <div className="col-span-2">
-                        <h1>{person.email}</h1>
-                      </div>
+                    <div className="col-span-2">
+                      <h1>{person.birth}</h1>
                     </div>
                   </div>
-                  <div className="py-2">
-                    <h1 className="text-base font-semibold">Media Sosial</h1>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Twitter</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <div className="flex justify-start items-center">
-                            <h1 className="py-2 px-2.5 text-sm placeholder-gray-400 text-gray-800 rounded-l-lg border border-r-0 border-gray-500 shadow-sm transition duration-150">
-                              www.
-                            </h1>
-                            <input
-                              id="twitter"
-                              name="twitter"
-                              className="py-2 px-2.5 w-full text-sm placeholder-gray-400 text-gray-800 rounded-r-lg border border-gray-500 shadow-sm transition duration-150"
-                              type="tel"
-                              defaultValue={person.twitter}
-                              placeholder="twitter.com/john"
-                            />
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.twitter}</h1>
-                        </div>
-                      )}
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Jenis Kelamin</h1>
+                      <h1>:</h1>
                     </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Linkedin</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <div className="flex justify-start items-center">
-                            <h1 className="py-2 px-2.5 text-sm placeholder-gray-400 text-gray-800 rounded-l-lg border border-r-0 border-gray-500 shadow-sm transition duration-150">
-                              www.
-                            </h1>
-                            <input
-                              id="linkedin"
-                              name="linkedin"
-                              className="py-2 px-2.5 w-full text-sm placeholder-gray-400 text-gray-800 rounded-r-lg border border-gray-500 shadow-sm transition duration-150"
-                              type="tel"
-                              defaultValue={person.linkedin}
-                              placeholder="linkedin.com/in/john"
-                            />
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.linkedin}</h1>
-                        </div>
-                      )}
+                    <div className="col-span-2">
+                      <h1>{person.gender}</h1>
                     </div>
                   </div>
-                  <div className="py-2">
-                    <h1 className="text-base font-semibold">
-                      Domisili Sekarang
-                    </h1>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Alamat</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="address"
-                            name="address"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.address}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.address}</h1>
-                        </div>
-                      )}
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Agama</h1>
+                      <h1>:</h1>
                     </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Kota</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="city"
-                            name="city"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.city}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.city}</h1>
-                        </div>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Provinsi</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="province"
-                            name="province"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.province}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.province}</h1>
-                        </div>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Negara</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="state"
-                            name="state"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.state}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.state}</h1>
-                        </div>
-                      )}
+                    <div className="col-span-2">
+                      <h1>{person.religion}</h1>
                     </div>
                   </div>
-                  <div className="py-2">
-                    <h1 className="text-base font-semibold">
-                      Pendidikan Terakhir
-                    </h1>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>S1</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="s1"
-                            name="s1"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.education?.s1}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.education?.s1}</h1>
-                        </div>
-                      )}
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Status Pernikahan</h1>
+                      <h1>:</h1>
                     </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Tanggal</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="s1date"
-                            name="s1date"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.education?.s1date}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.education?.s1date}</h1>
-                        </div>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Jurusan</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="s1major"
-                            name="s1major"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.education?.s1major}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.education?.s1major}</h1>
-                        </div>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-3 justify-start items-start mt-8 mb-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>SMA</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="sma"
-                            name="sma"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.education?.sma}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.education?.sma}</h1>
-                        </div>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Tanggal</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="smadate"
-                            name="smadate"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.education?.smadate}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.education?.smadate}</h1>
-                        </div>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Konsentrasi</h1>
-                        <h1>:</h1>
-                      </div>
-                      {edit ? (
-                        <div className="col-span-2">
-                          <input
-                            id="smamajor"
-                            name="smamajor"
-                            className="py-2 px-2.5 w-full text-sm leading-none placeholder-gray-400 text-gray-800 rounded-lg border border-gray-500 shadow-sm transition duration-150"
-                            type="tel"
-                            defaultValue={person.education?.smamajor}
-                          />
-                        </div>
-                      ) : (
-                        <div className="col-span-2">
-                          <h1>{person.education?.smamajor}</h1>
-                        </div>
-                      )}
+                    <div className="col-span-2">
+                      <h1>{person.marriage}</h1>
                     </div>
                   </div>
-                  <div className="py-2">
-                    <h1 className="text-base font-semibold">Profil Singkat</h1>
-                    <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                      <div className="flex col-span-1 justify-between items-start">
-                        <h1>Deskripsi Diri</h1>
-                        <h1>:</h1>
-                      </div>
-                      <div className="col-span-2">
-                        {edit ? (
-                          <textarea
-                            id="about"
-                            name="about"
-                            className="py-1 px-2 w-full h-36 rounded border border-gray-500"
-                            type="text"
-                            defaultValue={person.about}
-                          />
-                        ) : (
-                          <h1 className="whitespace-pre-line">
-                            {person.about}
-                          </h1>
-                        )}
-                      </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Hobi</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.hobby}</h1>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-2">
+                  <h1 className="text-base font-semibold">Informasi Kontak</h1>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Nomor Ponsel</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.telephone}</h1>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Email</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.email}</h1>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-2">
+                  <h1 className="text-base font-semibold">Media Sosial</h1>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Twitter</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.twitter}</h1>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Linkedin</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.linkedin}</h1>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-2">
+                  <h1 className="text-base font-semibold">Domisili Sekarang</h1>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Alamat</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.address}</h1>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Kota</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.city}</h1>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Provinsi</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.province}</h1>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Negara</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.state}</h1>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-2">
+                  <h1 className="text-base font-semibold">
+                    Pendidikan Terakhir
+                  </h1>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>S1</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.education?.s1}</h1>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Tanggal Masuk</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.education?.s1datein}</h1>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Tanggal Kelulusan</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.education?.s1dateout}</h1>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Jurusan</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.education?.s1major}</h1>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start mt-8 mb-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>SMA</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.education?.sma}</h1>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Tanggal Masuk</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.education?.smadatein}</h1>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Tanggal Kelulusan</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.education?.smadateout}</h1>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Konsentrasi</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1>{person.education?.smamajor}</h1>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-2">
+                  <h1 className="text-base font-semibold">Profil Singkat</h1>
+                  <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="flex col-span-1 justify-between items-start">
+                      <h1>Deskripsi Diri</h1>
+                      <h1>:</h1>
+                    </div>
+                    <div className="col-span-2">
+                      <h1 className="whitespace-pre-line">{person.about}</h1>
                     </div>
                   </div>
                 </div>
               </div>
-            </form>
+            </div>
           </Tab.Panel>
           <Tab.Panel>
             <div>
@@ -954,6 +1085,39 @@ export default function DatadiriTab({ person }) {
                       Batal
                     </button>
                   </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+      <Transition appear show={isOpenBiodataDetail} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeBiodataModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="overflow-y-auto fixed inset-0">
+            <div className="flex justify-center items-center p-4 min-h-full text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="overflow-hidden p-8 w-full max-w-screen-lg text-left align-middle bg-white rounded-2xl transition-all transform">
+                  <BiodataFormDialog item={person} />
                 </Dialog.Panel>
               </Transition.Child>
             </div>
