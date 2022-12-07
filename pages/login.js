@@ -171,6 +171,7 @@ export default function Login() {
                     <input
                       id="pass"
                       name="pass"
+                      minLength="4"
                       type={visible ? "password" : "text"}
                       className="py-3.5 px-4 mt-2 w-full text-xs rounded-lg border border-gray-400"
                       placeholder="Masukkan password anda"

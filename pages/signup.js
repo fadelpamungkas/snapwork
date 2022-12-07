@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import SnapWorkLogo from "../public/SnapWork.png"
+import SnapWorkLogo from "../public/SnapWork.png";
 
 export default function Signup() {
   const [visible, setVisible] = useState(true);
@@ -47,21 +47,19 @@ export default function Signup() {
     <body>
       <div className="p-16 min-h-screen bg-indigo-500">
         <div>
-          <Image
-            src={SnapWorkLogo}
-            width={100}
-            height={20}
-            alt="SnapWork"
-          />
+          <Image src={SnapWorkLogo} width={100} height={20} alt="SnapWork" />
         </div>
         <div className="flex grid-cols-2 justify-center items-center p-8">
           <div className="flex-col col-span-1 justify-center items-center space-y-4 w-full">
-            <h1 className="text-7xl font-bold text-white">Selamat Datang di SnapWork</h1>
+            <h1 className="text-7xl font-bold text-white">
+              Selamat Datang di SnapWork
+            </h1>
             <p className="w-2/3 font-light text-white">
-              The passage experienced a surge in popularity during the 1960s when
-              Letraset used it on their dry-transfer sheets, and again during the
-              90s as desktop publishers bundled the text with their software.
-					</p>
+              The passage experienced a surge in popularity during the 1960s
+              when Letraset used it on their dry-transfer sheets, and again
+              during the 90s as desktop publishers bundled the text with their
+              software.
+            </p>
           </div>
           <div className="flex col-span-1 justify-center items-center p-8 w-2/3 bg-white rounded-xl">
             <div className="p-12 w-full">
@@ -75,7 +73,7 @@ export default function Signup() {
                     className="text-sm font-medium leading-none text-gray-800"
                   >
                     Full Name
-								</label>
+                  </label>
                   <input
                     id="name"
                     name="name"
@@ -90,7 +88,7 @@ export default function Signup() {
                     className="text-sm font-medium leading-none text-gray-800"
                   >
                     Email
-								</label>
+                  </label>
                   <input
                     id="email"
                     name="email"
@@ -105,12 +103,13 @@ export default function Signup() {
                     className="text-sm font-medium leading-none text-gray-800"
                   >
                     Password
-								</label>
+                  </label>
                   <div className="flex relative justify-center items-center">
                     <input
                       id="pass"
                       name="pass"
                       type={visible ? "password" : "text"}
+                      minLength="4"
                       className="py-3.5 px-4 mt-2 w-full text-xs placeholder-gray-400 rounded-lg border border-gray-400"
                       placeholder="Masukkan password anda"
                     />
@@ -165,16 +164,18 @@ export default function Signup() {
                     className="py-4 w-full text-sm font-semibold leading-none text-white bg-green-500 rounded-lg shadow-md transition duration-150 ease-in-out hover:bg-green-600 hover:shadow-lg focus:ring-2 focus:ring-green-700 focus:ring-offset-2 focus:outline-none active:shadow-none"
                   >
                     Sign Up
-								</button>
+                  </button>
                 </div>
                 <div className="mt-4 text-center">
                   <p className="text-sm font-light">
                     Sudah punya akun?
-							<Link href="/login">
-                      <a className="text-sm font-medium text-blue-500"> Masuk Sekarang</a>
+                    <Link href="/login">
+                      <a className="text-sm font-medium text-blue-500">
+                        {" "}
+                        Masuk Sekarang
+                      </a>
                     </Link>
                   </p>
-
                 </div>
               </form>
             </div>
