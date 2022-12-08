@@ -4,24 +4,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import HeaderImage from "../public/HeaderNews1.png";
 import AddIcon from "../public/AddIcon.png";
-import useSWR from "swr";
 
-const newsFetcher = (...args) => fetch(...args).then((res) => res.json());
-
-export default function NewsTabAdminDashboard() {
+export default function NewsTabAdminDashboard({ news }) {
   const [newsItem, setNewsItem] = useState("");
   const [isOpenNewsDetail, setIsOpenNewsDetail] = useState(false);
   const [isOpenDeleteNews, setIsOpenDeleteNews] = useState(false);
-
-  const { data: newsres, error: newserror } = useSWR(
-    `https://snapwork.herokuapp.com/api/news`,
-    newsFetcher
-  );
-
-  if (newserror) return <div>Failed to load</div>;
-  if (!newsres) return <div>Loading...</div>;
-
-  const news = newsres?.data.data;
 
   function closeNewsDetailModal() {
     setIsOpenNewsDetail(false);
@@ -126,7 +113,7 @@ export default function NewsTabAdminDashboard() {
 
   return (
     <>
-      <div className="">
+      <div className="space-y-8">
         <div className="grid grid-cols-1 p-8 bg-white rounded-2xl">
           <div className="flex justify-between items-center">
             <h1 className="text-xl font-semibold">Pengelolaan Berita</h1>

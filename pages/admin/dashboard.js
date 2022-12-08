@@ -1,6 +1,5 @@
 import Link from "next/link";
 import FootNav from "../../components/FootNav";
-import HeadNav from "../../components/HeadNav";
 import CompanyTabAdminDashboard from "../../components/CompanyTabAdminDashboard";
 import OrderTabAdminDashboard from "../../components/OrderTabAdminDashboard";
 import NewsTabAdminDashboard from "../../components/NewsTabAdminDashboard";
@@ -11,15 +10,15 @@ import LamaranIcon from "../../public/Lamaran.svg";
 import { Tab } from "@headlessui/react";
 import ProfileMenu from "../../components/ProfileMenu";
 import useUser from "../../lib/useUser";
-import {
-  DocumentTextIcon,
-  TicketIcon,
-  NewspaperIcon,
-} from "@heroicons/react/outline";
+import useSWR from "swr";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
+const companyFetcher = (...args) => fetch(...args).then((res) => res.json());
+const personFetcher = (...args) => fetch(...args).then((res) => res.json());
+const newsFetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function AdminDashboard() {
   const { user } = useUser();
@@ -46,6 +45,29 @@ export default function AdminDashboard() {
       icon: BeritaIcon,
     },
   ];
+
+  const { data: personres, error: personerror } = useSWR(
+    `https://snapwork.herokuapp.com/api/person`,
+    personFetcher
+  );
+
+  const { data: companyres, error: companyerror } = useSWR(
+    `https://snapwork.herokuapp.com/api/companies`,
+    companyFetcher
+  );
+
+  const { data: newsres, error: newserror } = useSWR(
+    `https://snapwork.herokuapp.com/api/news`,
+    newsFetcher
+  );
+
+  if (personerror || companyerror || newserror)
+    return <div>Failed to load</div>;
+  if (!personres || !companyres || !newsres) return <div>Loading...</div>;
+
+  const persons = personres?.data.data;
+  const companies = companyres?.data.data;
+  const news = newsres?.data.data;
 
   return (
     <>
@@ -104,18 +126,24 @@ export default function AdminDashboard() {
             </Tab.List>
             <Tab.Panels className="col-span-4 pl-8">
               <Tab.Panel className="space-y-8">
-                <CompanyTabAdminDashboard />
-                <OrderTabAdminDashboard />
-                <NewsTabAdminDashboard />
+                <CompanyTabAdminDashboard companies={companies} />
+                <OrderTabAdminDashboard
+                  persons={persons}
+                  companies={companies}
+                />
+                <NewsTabAdminDashboard news={news} />
               </Tab.Panel>
               <Tab.Panel>
-                <OrderTabAdminDashboard />
+                <OrderTabAdminDashboard
+                  persons={persons}
+                  companies={companies}
+                />
               </Tab.Panel>
               <Tab.Panel>
-                <CompanyTabAdminDashboard />
+                <CompanyTabAdminDashboard companies={companies} />
               </Tab.Panel>
               <Tab.Panel>
-                <NewsTabAdminDashboard />
+                <NewsTabAdminDashboard news={news} />
               </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>

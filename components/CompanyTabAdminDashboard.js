@@ -3,23 +3,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { ClipboardListIcon } from "@heroicons/react/outline";
 import DefaultPicture from "../public/default_picture.png";
-import useSWR from "swr";
+import toRupiah from "../lib/currency";
 
-const companyFetcher = (...args) => fetch(...args).then((res) => res.json());
-
-export default function CompanyTabAdminDashboard() {
+export default function CompanyTabAdminDashboard({ companies }) {
   const [companyItem, setCompanyItem] = useState("");
   const [isOpenCompanyDetail, setIsOpenCompanyDetail] = useState(false);
-
-  const { data: companyres, error: companyerror } = useSWR(
-    `https://snapwork.herokuapp.com/api/companies`,
-    companyFetcher
-  );
-
-  if (companyerror) return <div>Failed to load</div>;
-  if (!companyres) return <div>Loading...</div>;
-
-  const companies = companyres?.data.data;
 
   function closeCompanyDetailModal() {
     setIsOpenCompanyDetail(false);
