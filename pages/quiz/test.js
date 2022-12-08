@@ -8,7 +8,8 @@ import useSWR from "swr";
 const most = [0, 1, 2, 3];
 const least = [0, 1, 2, 3];
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const testFetcher = (...args) => fetch(...args).then((res) => res.json());
+const personFetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Assessment() {
   const { user } = useUser();
@@ -31,10 +32,37 @@ export default function Assessment() {
     router.push("/profile");
   }
 
+  function openFinish() {
+    setFinish(true);
+  }
+
   const submitAssessment = async () => {
-    setTimeout(() => {
-      setFinish(true);
-    }, 700);
+    handleSubmit();
+  };
+
+  const handleSubmit = async () => {
+    const response = await fetch(
+      "https://snapwork.herokuapp.com/api/person/selfdevelopment",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: person._id,
+          score: "100",
+          file: "file",
+        }),
+      }
+    );
+    const data = await response.json();
+
+    if (data === 200) {
+      openFinish();
+    } else {
+      alert("Error: " + data.message);
+      router.push("/");
+    }
   };
 
   const goToNext = async () => {
@@ -59,24 +87,32 @@ export default function Assessment() {
     }
   };
 
-  const { data, error } = useSWR(
+  const userId = user?.userData.id;
+
+  const { data: personres, error: personerror } = useSWR(
+    `https://snapwork.herokuapp.com/api/person/${userId}`,
+    personFetcher
+  );
+
+  const { data: assessmentres, error: assessmenterror } = useSWR(
     `https://snapwork.herokuapp.com/api/assessment`,
-    fetcher
+    testFetcher
   );
 
   if (!user || user.isLoggedIn === false) {
-    return <div>Login first</div>;
+    return <div>You need to login first</div>;
   }
 
-  if (error) {
+  if (assessmenterror || personerror) {
     return <div>Error</div>;
   }
 
-  if (!data) {
+  if (!assessmentres || !personres) {
     return <div>Loading...</div>;
   }
 
-  const assessment = data?.data.data;
+  const person = personres?.data.data;
+  const assessment = assessmentres?.data.data;
 
   return (
     <>
@@ -100,9 +136,6 @@ export default function Assessment() {
                 jawaban sesuai dengan kondisi keadaan diri anda (Most), dan satu
                 jawaban yang paling tidak menggambarkan diri anda (Least).
               </h1>
-              <div className="my-4 w-full h-2.5 bg-gray-100 rounded-full dark:bg-gray-700">
-                <div className="w-10 h-2.5 bg-blue-600 rounded-full"></div>
-              </div>
               <div className="grid grid-cols-12 gap-4 justify-center items-center py-8">
                 <div className="col-span-10">
                   <div className="space-y-4">

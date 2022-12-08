@@ -217,7 +217,9 @@ export default function Profile() {
                           <DatadiriTab person={person} />
                         </Tab.Panel>
                         <Tab.Panel>
-                          <PengembanganDiriTab />
+                          <PengembanganDiriTab
+                            person={person}
+                          />
                         </Tab.Panel>
                         <Tab.Panel>
                           <KarirTab applications={person?.applications} />
