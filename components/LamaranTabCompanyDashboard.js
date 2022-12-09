@@ -144,51 +144,53 @@ export default function LamaranTabCompanyDashboard({ applications }) {
             </div>
             {applications ? (
               <>
-                {applications.map((item, index) => (
-                  <div
-                    key={index}
-                    className="grid grid-cols-8 justify-center items-center py-2 space-x-4"
-                  >
-                    <div className="flex col-span-2 items-center space-x-4">
-                      <Image
-                        src={DefaultPicture}
-                        alt=""
-                        width={40}
-                        height={40}
-                        className="object-cover col-span-1 rounded-full"
-                      />
-                      <h1 className="font-semibold">{item.username}</h1>
-                    </div>
-                    <h1 className="flex col-span-2 justify-center text-sm text-gray-500">
-                      {item.created_at}
-                    </h1>
-                    <h1 className="flex col-span-2 justify-center text-sm font-semibold">
-                      {item.jobposition}
-                    </h1>
-                    <div className="flex col-span-1 justify-center">
-                      {item.status === "Accepted" ? (
-                        <div className="py-2 px-4 text-sm text-green-900 bg-green-100 rounded-2xl">
-                          <h1>{item.status}</h1>
-                        </div>
-                      ) : item.status === "Rejected" ? (
-                        <div className="py-2 px-4 text-sm text-red-900 bg-red-100 rounded-2xl">
-                          <h1>{item.status}</h1>
-                        </div>
-                      ) : (
-                        <div className="py-2 px-4 text-sm text-yellow-900 bg-yellow-100 rounded-2xl">
-                          <h1>{item.status}</h1>
-                        </div>
-                      )}
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => openApplicationDetailModal(item)}
-                      className="inline-flex col-span-1 justify-center py-2 px-6 text-sm font-medium text-blue-900 bg-blue-100 rounded-2xl border border-transparent transition duration-150 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                {applications
+                  .map((item, index) => (
+                    <div
+                      key={index}
+                      className="grid grid-cols-8 justify-center items-center py-2 space-x-4"
                     >
-                      Detail
-                    </button>
-                  </div>
-                ))}
+                      <div className="flex col-span-2 items-center space-x-4">
+                        <Image
+                          src={DefaultPicture}
+                          alt=""
+                          width={40}
+                          height={40}
+                          className="object-cover col-span-1 rounded-full"
+                        />
+                        <h1 className="font-semibold">{item.username}</h1>
+                      </div>
+                      <h1 className="flex col-span-2 justify-center text-sm text-gray-500">
+                        {item.created_at}
+                      </h1>
+                      <h1 className="flex col-span-2 justify-center text-sm font-semibold">
+                        {item.jobposition}
+                      </h1>
+                      <div className="flex col-span-1 justify-center">
+                        {item.status === "Accepted" ? (
+                          <div className="py-2 px-4 text-sm text-green-900 bg-green-100 rounded-2xl">
+                            <h1>{item.status}</h1>
+                          </div>
+                        ) : item.status === "Rejected" ? (
+                          <div className="py-2 px-4 text-sm text-red-900 bg-red-100 rounded-2xl">
+                            <h1>{item.status}</h1>
+                          </div>
+                        ) : (
+                          <div className="py-2 px-4 text-sm text-yellow-900 bg-yellow-100 rounded-2xl">
+                            <h1>{item.status}</h1>
+                          </div>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => openApplicationDetailModal(item)}
+                        className="inline-flex col-span-1 justify-center py-2 px-6 text-sm font-medium text-blue-900 bg-blue-100 rounded-2xl border border-transparent transition duration-150 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      >
+                        Detail
+                      </button>
+                    </div>
+                  ))
+                  .reverse()}
               </>
             ) : (
               <h1>Tidak ada lamaran</h1>

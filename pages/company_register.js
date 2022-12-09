@@ -83,6 +83,7 @@ export default function Company_Register() {
                           <div className="space-y-2">
                             <h1>Company Name</h1>
                             <input
+                              required
                               id="name"
                               type="text"
                               name="name"
@@ -93,6 +94,7 @@ export default function Company_Register() {
                           <div className="space-y-2">
                             <h1>Type of Industry</h1>
                             <input
+                              required
                               id="industry"
                               type="text"
                               name="industry"
@@ -103,6 +105,7 @@ export default function Company_Register() {
                           <div className="space-y-2">
                             <h1>Company Email</h1>
                             <input
+                              required
                               id="email"
                               type="email"
                               name="email"
@@ -113,6 +116,7 @@ export default function Company_Register() {
                           <div className="space-y-2">
                             <h1>Website</h1>
                             <input
+                              required
                               id="website"
                               type="text"
                               name="website"
@@ -123,6 +127,7 @@ export default function Company_Register() {
                           <div className="space-y-2">
                             <h1>Company Phone Number</h1>
                             <input
+                              required
                               id="phone"
                               type="text"
                               name="phone"
@@ -133,6 +138,7 @@ export default function Company_Register() {
                           <div className="space-y-2">
                             <h1>Company Description</h1>
                             <textarea
+                              required
                               id="description"
                               type="text"
                               name="description"
@@ -145,6 +151,7 @@ export default function Company_Register() {
                           <div className="space-y-2">
                             <h1>Company Country</h1>
                             <input
+                              required
                               id="country"
                               type="text"
                               name="country"
@@ -155,6 +162,7 @@ export default function Company_Register() {
                           <div className="space-y-2">
                             <h1>Company Province</h1>
                             <input
+                              required
                               id="province"
                               type="text"
                               name="province"
@@ -165,6 +173,7 @@ export default function Company_Register() {
                           <div className="space-y-2">
                             <h1>Company City</h1>
                             <input
+                              required
                               id="city"
                               type="text"
                               name="city"
@@ -175,6 +184,7 @@ export default function Company_Register() {
                           <div className="space-y-2">
                             <h1>Company Address</h1>
                             <input
+                              required
                               id="address"
                               type="text"
                               name="address"
@@ -185,6 +195,7 @@ export default function Company_Register() {
                           <div className="space-y-2">
                             <h1>Postal Code</h1>
                             <input
+                              required
                               id="postalcode"
                               type="text"
                               name="postalcode"
@@ -207,6 +218,7 @@ export default function Company_Register() {
                         <div className="space-y-2">
                           <h1>Officer Name</h1>
                           <input
+                            required
                             id="officername"
                             type="text"
                             name="officername"
@@ -217,6 +229,7 @@ export default function Company_Register() {
                         <div className="space-y-2">
                           <h1>Officer Email</h1>
                           <input
+                            required
                             id="officeremail"
                             type="email"
                             name="officeremail"
@@ -227,6 +240,7 @@ export default function Company_Register() {
                         <div className="space-y-2">
                           <h1>Officer Phone Number</h1>
                           <input
+                            required
                             id="officerphone"
                             type="text"
                             name="officerphone"
@@ -237,6 +251,7 @@ export default function Company_Register() {
                         <div className="space-y-2">
                           <h1>Officer Mobile Number</h1>
                           <input
+                            required
                             id="officermobile"
                             type="text"
                             name="officermobile"

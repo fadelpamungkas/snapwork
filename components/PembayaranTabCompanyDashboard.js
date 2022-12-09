@@ -12,26 +12,109 @@ import PhoneIcon from "../public/Phone.svg";
 import TwitterIcon from "../public/TwitterUser.svg";
 import LinkedinIcon from "../public/LinkedinUser.svg";
 import DocumentIcon from "../public/Document.svg";
+import ImageLogo from "../public/ImageLogo.svg";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import toRupiah from "../lib/currency";
 import countTime from "../lib/datetime";
 
 export default function PembayaranTabCompanyDashboard({ job }) {
-  const [isOpenApplicationDetail, setIsOpenApplicationDetail] = useState(false);
-  const [applicationItem, setApplicationItem] = useState("");
+  const [jobPaymentItem, setJobPaymentItem] = useState("");
+  const [isOpenJobPaymentDetail, setisOpenJobPaymentDetail] = useState(false);
 
-  function closeApplicationDetailModal() {
-    setIsOpenApplicationDetail(false);
+  function closeJobPaymentDetailModal() {
+    setisOpenJobPaymentDetail(false);
   }
 
-  function openApplicationDetailModal(item) {
-    setIsOpenApplicationDetail(true);
-    if (!item) {
-      setApplicationItem("");
-    } else {
-      setApplicationItem(item);
-    }
+  function openJobPaymentDetailModal(item) {
+    setisOpenJobPaymentDetail(true);
+    setJobPaymentItem(item);
+  }
+
+  function JobPaymentFormDialog({ item }) {
+    return (
+      <>
+        <body className="w-full text-gray-900">
+          <div className="flex justify-center items-center py-2 px-4 space-x-4">
+            <div>
+              <h1 className="text-2xl font-semibold text-red-500">
+                Detail Pembayaran
+              </h1>
+            </div>
+          </div>
+          <div className="mx-auto w-full">
+            <div className="py-4 px-8 space-y-4 rounded-xl">
+              <div className="space-y-2">
+                <h1>Status</h1>
+                {item.payment.status === "Done" ? (
+                  <input
+                    disabled
+                    id="status"
+                    type="text"
+                    name="status"
+                    value={item.payment.status}
+                    className="py-3.5 px-4 w-full text-sm font-medium leading-none text-green-600 bg-green-100 rounded-lg border shadow-sm"
+                  />
+                ) : (
+                  <input
+                    disabled
+                    id="status"
+                    type="text"
+                    name="status"
+                    value={item.payment.status}
+                    className="py-3.5 px-4 w-full text-sm font-medium leading-none text-yellow-600 bg-yellow-100 rounded-lg border shadow-sm"
+                  />
+                )}
+              </div>
+              <div className="space-y-2">
+                <h1>Nama Posisi</h1>
+                <input
+                  disabled
+                  id="name"
+                  type="text"
+                  name="name"
+                  value={item.name}
+                  className="py-3.5 px-4 w-full text-sm font-medium leading-none text-gray-800 rounded-lg border shadow-sm"
+                />
+              </div>
+              <div className="space-y-2">
+                <h1>Waktu Pembayaran</h1>
+                <input
+                  disabled
+                  id="datetime"
+                  type="text"
+                  name="datetime"
+                  value={item.payment.created_at}
+                  className="py-3.5 px-4 w-full text-sm font-medium leading-none text-gray-800 rounded-lg border shadow-sm"
+                />
+              </div>
+              <div className="space-y-2">
+                <h1>Jumlah</h1>
+                <input
+                  disabled
+                  id="amount"
+                  type="text"
+                  name="amount"
+                  value={toRupiah(item.payment.price)}
+                  className="py-3.5 px-4 w-full text-sm font-medium leading-none text-gray-800 rounded-lg border shadow-sm"
+                />
+              </div>
+              <div className="space-y-2">
+                <h1>Bukti Pembayaran</h1>
+                <a
+                  download
+                  className="flex items-center py-3.5 px-4 space-x-2 w-full text-sm font-medium leading-none text-gray-800 rounded-lg border shadow-sm transition duration-150 hover:bg-blue-50"
+                  href="../public/bukti-pembayaran.jpg"
+                >
+                  <ImageLogo className="w-6 h-6" />
+                  <span>{item.payment.fileproof}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </body>
+      </>
+    );
   }
 
   return (
@@ -120,7 +203,7 @@ export default function PembayaranTabCompanyDashboard({ job }) {
                     </div>
                     <button
                       type="button"
-                      onClick={() => openApplicationDetailModal(item)}
+                      onClick={() => openJobPaymentDetailModal(item)}
                       className="inline-flex col-span-1 justify-center py-2 px-6 text-sm font-medium text-blue-900 bg-blue-100 rounded-2xl border border-transparent transition duration-150 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                     >
                       Detail
@@ -129,16 +212,16 @@ export default function PembayaranTabCompanyDashboard({ job }) {
                 ))}
               </>
             ) : (
-              <h1>Tidak ada lamaran</h1>
+              <h1>Tidak ada lowongan</h1>
             )}
           </div>
         </div>
       </div>
-      <Transition appear show={isOpenApplicationDetail} as={Fragment}>
+      <Transition appear show={isOpenJobPaymentDetail} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={closeApplicationDetailModal}
+          onClose={closeJobPaymentDetailModal}
         >
           <Transition.Child
             as={Fragment}
@@ -163,300 +246,8 @@ export default function PembayaranTabCompanyDashboard({ job }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="overflow-hidden p-8 w-full max-w-6xl text-left align-middle bg-gray-100 rounded-2xl transition-all transform">
-                  <div className="p-8 space-y-8">
-                    <div className="p-8 bg-white rounded-lg">
-                      <div className="flex justify-between items-center">
-                        <div className="flex space-x-8">
-                          <Image
-                            src={DefaultPicture}
-                            alt=""
-                            width={80}
-                            height={80}
-                            className="object-cover col-span-1 rounded-full"
-                          />
-                          <div className="space-y-1">
-                            <h1 className="text-lg font-bold">
-                              {applicationItem.username}
-                            </h1>
-                            <p>{applicationItem.username}</p>
-                            <p>Melamar sebagai {applicationItem.jobposition}</p>
-                          </div>
-                        </div>
-                        <div className="mr-8">
-                          {applicationItem.status === "Accepted" ? (
-                            <div className="py-3 px-8 text-green-900 bg-green-100 rounded-xl">
-                              <h1>{applicationItem.status}</h1>
-                            </div>
-                          ) : applicationItem.status === "Rejected" ? (
-                            <div className="py-3 px-8 text-red-900 bg-red-100 rounded-xl">
-                              <h1>{applicationItem.status}</h1>
-                            </div>
-                          ) : (
-                            <div className="py-3 px-8 text-yellow-900 bg-yellow-100 rounded-xl">
-                              <h1>{applicationItem.status}</h1>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-8">
-                      <div className="col-span-2 space-y-8">
-                        <div className="p-8 space-y-4 bg-white rounded-lg">
-                          <h1 className="text-lg font-semibold">
-                            Informasi Personal
-                          </h1>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="flex col-span-1 justify-start items-center space-x-2">
-                              <div className="p-2 bg-gray-100 rounded-full">
-                                <MarriageIcon className="w-6 h-6" />
-                              </div>
-                              <div className="space-y-1">
-                                <h1>{applicationItem.usermarriage}</h1>
-                                <p className="text-sm text-gray-500">
-                                  Status Pernikahan
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex col-span-1 justify-start items-center space-x-2">
-                              <div className="p-2 bg-gray-100 rounded-full">
-                                <BirthIcon className="w-6 h-6" />
-                              </div>
-                              <div className="space-y-1">
-                                <h1>{applicationItem.userbirth}</h1>
-                                <p className="text-sm text-gray-500">
-                                  Tanggal Lahir
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex col-span-1 justify-start items-center space-x-2">
-                              <div className="p-2 bg-gray-100 rounded-full">
-                                <StateIcon className="w-6 h-6" />
-                              </div>
-                              <div className="space-y-1">
-                                <h1>{applicationItem.userstate}</h1>
-                                <p className="text-sm text-gray-500">Negara</p>
-                              </div>
-                            </div>
-                            <div className="flex col-span-1 justify-start items-center space-x-2">
-                              <div className="p-2 bg-gray-100 rounded-full">
-                                <GenderIcon className="w-6 h-6" />
-                              </div>
-                              <div className="space-y-1">
-                                <h1>{applicationItem.usergender}</h1>
-                                <p className="text-sm text-gray-500">
-                                  Jenis Kelamin
-                                </p>
-                              </div>
-                            </div>
-                            <hr className="col-span-2" />
-                            <div className="flex col-span-2 justify-start items-center space-x-2">
-                              <div className="p-2 bg-gray-100 rounded-full">
-                                <AddressIcon className="w-6 h-6" />
-                              </div>
-                              <div className="space-y-1">
-                                <h1>{applicationItem.useraddress}</h1>
-                                <p className="text-sm text-gray-500">Alamat</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="p-8 space-y-4 bg-white rounded-lg">
-                          <h1 className="text-lg font-semibold">
-                            Deskripsi Diri
-                          </h1>
-                          <h1>{applicationItem.userabout}</h1>
-                        </div>
-                        <div className="p-8 space-y-4 bg-white rounded-lg">
-                          <h1 className="text-lg font-semibold">Dokumen</h1>
-                          <div className="space-y-5">
-                            <div className="flex justify-between items-center">
-                              <div className="flex items-center space-x-4">
-                                <div className="p-2 bg-gray-100 rounded-full">
-                                  <DocumentIcon className="w-6 h-6" />
-                                </div>
-                                <h1>haydar-Foto KTP.png</h1>
-                              </div>
-                              <button
-                                type="button"
-                                className="py-2 px-6 font-medium text-white bg-blue-500 rounded-3xl transition duration-150 hover:bg-blue-600"
-                                onClick={closeApplicationDetailModal}
-                              >
-                                Download
-                              </button>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <div className="flex items-center space-x-4">
-                                <div className="p-2 bg-gray-100 rounded-full">
-                                  <DocumentIcon className="w-6 h-6" />
-                                </div>
-                                <h1>haydar-Foto KTP.png</h1>
-                              </div>
-                              <button
-                                type="button"
-                                className="py-2 px-6 font-medium text-white bg-blue-500 rounded-3xl transition duration-150 hover:bg-blue-600"
-                                onClick={closeApplicationDetailModal}
-                              >
-                                Download
-                              </button>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <div className="flex items-center space-x-4">
-                                <div className="p-2 bg-gray-100 rounded-full">
-                                  <DocumentIcon className="w-6 h-6" />
-                                </div>
-                                <h1>haydar-Foto KTP.png</h1>
-                              </div>
-                              <button
-                                type="button"
-                                className="py-2 px-6 font-medium text-white bg-blue-500 rounded-3xl transition duration-150 hover:bg-blue-600"
-                                onClick={closeApplicationDetailModal}
-                              >
-                                Download
-                              </button>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <div className="flex items-center space-x-4">
-                                <div className="p-2 bg-gray-100 rounded-full">
-                                  <DocumentIcon className="w-6 h-6" />
-                                </div>
-                                <h1>haydar-Foto KTP.png</h1>
-                              </div>
-                              <button
-                                type="button"
-                                className="py-2 px-6 font-medium text-white bg-blue-500 rounded-3xl transition duration-150 hover:bg-blue-600"
-                                onClick={closeApplicationDetailModal}
-                              >
-                                Download
-                              </button>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <div className="flex items-center space-x-4">
-                                <div className="p-2 bg-gray-100 rounded-full">
-                                  <DocumentIcon className="w-6 h-6" />
-                                </div>
-                                <h1>haydar-Foto KTP.png</h1>
-                              </div>
-                              <button
-                                type="button"
-                                className="py-2 px-6 font-medium text-white bg-blue-500 rounded-3xl transition duration-150 hover:bg-blue-600"
-                                onClick={closeApplicationDetailModal}
-                              >
-                                Download
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="p-8 space-y-4 bg-white rounded-lg">
-                          <h1 className="text-lg font-semibold">
-                            Riwayat Pendidikan
-                          </h1>
-                          <h1>{applicationItem.userabout}</h1>
-                        </div>
-                      </div>
-                      <div className="col-span-1 space-y-8">
-                        <div className="col-span-1 p-8 space-y-4 bg-white rounded-lg">
-                          <h1 className="text-lg font-semibold">
-                            Informasi Lamaran
-                          </h1>
-                          <div className="space-y-4">
-                            <div className="flex justify-start items-center space-x-2">
-                              <div className="p-2 bg-gray-100 rounded-full">
-                                <JobPositionIcon className="w-6 h-6" />
-                              </div>
-                              <div className="space-y-1">
-                                <h1>{applicationItem.jobposition}</h1>
-                                <p className="text-sm text-gray-500">
-                                  Nama Posisi
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex justify-start items-center space-x-2">
-                              <div className="p-2 bg-gray-100 rounded-full">
-                                <AddressIcon className="w-6 h-6" />
-                              </div>
-                              <div className="space-y-1">
-                                <h1>{applicationItem.jobplacement}</h1>
-                                <p className="text-sm text-gray-500">
-                                  Penempatan
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex justify-start items-center space-x-2">
-                              <div className="p-2 bg-gray-100 rounded-full">
-                                <JobTypeIcon className="w-6 h-6" />
-                              </div>
-                              <div className="space-y-1">
-                                <h1>{applicationItem.jobtype}</h1>
-                                <p className="text-sm text-gray-500">
-                                  Tipe Pekerjaan
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex justify-between pt-4 space-x-8 w-full">
-                              <button
-                                type="button"
-                                className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                                onClick={closeApplicationDetailModal}
-                              >
-                                Tolak
-                              </button>
-                              <button
-                                type="button"
-                                className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                                onClick={closeApplicationDetailModal}
-                              >
-                                Terima
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-span-1 p-8 space-y-4 bg-white rounded-lg">
-                          <h1 className="text-lg font-semibold">
-                            Informasi Kontak
-                          </h1>
-                          <div className="space-y-4">
-                            <div className="flex justify-start items-center space-x-2">
-                              <div className="p-2 bg-gray-100 rounded-full">
-                                <EmailIcon className="w-6 h-6" />
-                              </div>
-                              <div className="space-y-1">
-                                <h1>{applicationItem.useremail}</h1>
-                                <p className="text-sm text-gray-500">Email</p>
-                              </div>
-                            </div>
-                            <div className="flex justify-start items-center space-x-2">
-                              <div className="p-2 bg-gray-100 rounded-full">
-                                <PhoneIcon className="w-6 h-6" />
-                              </div>
-                              <div className="space-y-1">
-                                <h1>{applicationItem.usertelephone}</h1>
-                                <p className="text-sm text-gray-500">
-                                  Nomor Ponsel
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex justify-start items-center space-x-2">
-                              <LinkedinIcon className="w-10 h-10" />
-                              <div className="space-y-1">
-                                <h1>{applicationItem.userlinkedin}</h1>
-                                <p className="text-sm text-gray-500">
-                                  Linkedin
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex justify-start items-center space-x-2">
-                              <TwitterIcon className="w-10 h-10" />
-                              <div className="space-y-1">
-                                <h1>{applicationItem.usertwitter}</h1>
-                                <p className="text-sm text-gray-500">Twitter</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <Dialog.Panel className="overflow-hidden p-8 w-full max-w-lg text-left align-middle bg-white rounded-2xl transition-all transform">
+                  <JobPaymentFormDialog item={jobPaymentItem} />
                 </Dialog.Panel>
               </Transition.Child>
             </div>
