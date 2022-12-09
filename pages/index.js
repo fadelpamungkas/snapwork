@@ -338,10 +338,9 @@ export default function Index({ companies }) {
                 {companies.map((item, index) => (
                   <div key={index}>
                     <a className="flex">
-                      {item.status === "Verified" &&
-                        item.companyjob[0]?.payment?.status === "Done" && (
-                          <CareerCard item={item} />
-                        )}
+                      {item.status === "Verified" && (
+                        <>{item.companyjob && <CareerCard item={item} />}</>
+                      )}
                     </a>
                   </div>
                 ))}
