@@ -2,19 +2,21 @@ import { Tab } from "@headlessui/react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import EditButton from "../public/edit.svg";
+import UploadLogo from "../public/UploadLogo.svg";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 export default function DatadiriTab({ person }) {
   const [edit, setEdit] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenPortfolioDetail, setIsOpenPortfolioDetail] = useState(false);
+  const [isOpenDocumentDetail, setIsOpenDocumentDetail] = useState(false);
   const [isOpenBiodataDetail, setIsOpenBiodataDetail] = useState(false);
-  const [ktpFile, setKtpFile] = useState({ name: "-", size: "0" });
-  const [ijazahFile, setIjazahFile] = useState({ name: "-", size: "0" });
-  const [skckFile, setSKCKFile] = useState({ name: "-", size: "0" });
-  const [cvFile, setCVFile] = useState({ name: "-", size: "0" });
-  const [certFile, setCertFile] = useState({ name: "-", size: "0" });
+  const [ktpFile, setKtpFile] = useState({ name: "", size: "0" });
+  const [ijazahFile, setIjazahFile] = useState({ name: "", size: "0" });
+  const [skckFile, setSKCKFile] = useState({ name: "", size: "0" });
+  const [cvFile, setCVFile] = useState({ name: "", size: "0" });
+  const [certFile, setCertFile] = useState({ name: "", size: "0" });
 
   const tabItem = [
     {
@@ -31,18 +33,20 @@ export default function DatadiriTab({ person }) {
     },
   ];
 
-  function closeModal() {
-    setIsOpen(false);
-    setEdit(false);
+  function closePortfolioModal() {
+    setIsOpenPortfolioDetail(false);
   }
 
-  function closeModalAndSave() {
-    setIsOpen(false);
-    setEdit(false);
+  function openPortfolioModal() {
+    setIsOpenPortfolioDetail(true);
   }
 
-  function openModal() {
-    setIsOpen(true);
+  function closeDocumentModal() {
+    setIsOpenDocumentDetail(false);
+  }
+
+  function openDocumentModal() {
+    setIsOpenDocumentDetail(true);
   }
 
   function openBiodataModal() {
@@ -53,7 +57,7 @@ export default function DatadiriTab({ person }) {
     setIsOpenBiodataDetail(false);
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmitBiodata = async (event) => {
     event.preventDefault();
     const response = await fetch("https://snapwork.herokuapp.com/api/person", {
       method: "PUT",
@@ -100,6 +104,64 @@ export default function DatadiriTab({ person }) {
       closeBiodataModal();
     }
   };
+  const handleSubmitDocument = async (event) => {
+    event.preventDefault();
+    const response = await fetch(
+      "https://snapwork.herokuapp.com/api/person/document",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: person._id,
+          ktpname: event.target.ktpname.value,
+          ijazahname: event.target.ijazahname.value,
+          skckname: event.target.skckname.value,
+          cvname: event.target.cvname.value,
+          certificatename: event.target.certificatename.value,
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+
+    if (data === 200) {
+      alert("Berhasil diubah");
+      closeDocumentModal();
+    } else {
+      alert("Fail to edit, please contact for any problems");
+      closeDocumentModal();
+    }
+  };
+
+  const handleSubmitPortfolio = async (event) => {
+    event.preventDefault();
+    const response = await fetch(
+      "https://snapwork.herokuapp.com/api/person/portfolio",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: person._id,
+          link: event.target.link.value,
+          description: event.target.description.value,
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+
+    if (data === 200) {
+      alert("Berhasil diubah");
+      closePortfolioModal();
+    } else {
+      alert("Fail to edit, please contact for any problems");
+      closePortfolioModal();
+    }
+  };
 
   function BiodataFormDialog({ item }) {
     return (
@@ -109,7 +171,7 @@ export default function DatadiriTab({ person }) {
             <h1 className="text-2xl font-semibold text-red-500">Biodata</h1>
           </div>
           <div className="px-2 mx-auto w-full">
-            <form id="formEditDatadiri" onSubmit={handleSubmit}>
+            <form id="formEditDatadiri" onSubmit={handleSubmitBiodata}>
               <div className="py-4 px-8 space-y-4 rounded-xl">
                 <div className="py-2">
                   <div className="grid grid-cols-2 space-y-4 text-sm">
@@ -436,6 +498,7 @@ export default function DatadiriTab({ person }) {
                 <button
                   type="button"
                   className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                  onClick={() => closeBiodataModal()}
                 >
                   Batal
                 </button>
@@ -443,7 +506,392 @@ export default function DatadiriTab({ person }) {
                   type="submit"
                   className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
                 >
-                  Ubah
+                  Simpan
+                </button>
+              </div>
+            </form>
+          </div>
+        </body>
+      </>
+    );
+  }
+  function DocumentFormDialog({ document }) {
+    return (
+      <>
+        <body className="w-full text-gray-900">
+          <div className="flex justify-center items-center py-2 px-4 space-x-4">
+            <h1 className="text-2xl font-semibold text-red-500">Dokumen</h1>
+          </div>
+          <div className="px-2 mx-auto w-full">
+            <form id="formEditDocument" onSubmit={handleSubmitDocument}>
+              <div className="py-4 px-8 space-y-4 rounded-xl">
+                <div className="py-2">
+                  <div className="grid grid-cols-5 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="col-span-4">
+                      <div className="grid grid-cols-4 justify-start items-center mb-2">
+                        <h1 className="col-span-1 text-lg font-semibold">
+                          KTP
+                        </h1>
+                        <div className="col-span-3">
+                          <input
+                            required
+                            id="ktpname"
+                            name="ktpname"
+                            type="text"
+                            value={
+                              ktpFile.name
+                                ? ktpFile.name
+                                : person?.document?.ktpname
+                            }
+                            className="overflow-auto w-full text-sm font-semibold bg-white focus:outline-none"
+                          />
+                          <p>
+                            {ktpFile.size} Bytes
+                          </p>
+                        </div>
+                      </div>
+                      <ul className="text-xs list-disc list-inside">
+                        <li>
+                          Hanya file jpg, jpeg, png dan pdf yang diijinkan
+                        </li>
+                        <li>Ukuran maksimal file adalah 800kb</li>
+                      </ul>
+                    </div>
+                    <div className="flex col-span-1 justify-center items-center m-auto space-x-4">
+                      <label
+                        htmlFor="ktp"
+                        className="py-1.5 px-3 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
+                      >
+                        <div className="flex space-x-2">
+                          <UploadLogo />
+                          <h1>Unggah</h1>
+                        </div>
+                        <input
+                          id="ktp"
+                          name="ktp"
+                          type="file"
+                          onChange={() =>
+                            setKtpFile({
+                              name: document.getElementById("ktp").files[0]
+                                .name,
+                              size: document.getElementById("ktp").files[0]
+                                .size,
+                            })
+                          }
+                          accept="image/*"
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-2">
+                  <div className="grid grid-cols-5 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="col-span-4">
+                      <div className="grid grid-cols-4 justify-start items-center mb-2">
+                        <h1 className="col-span-1 text-lg font-semibold">
+                          Ijazah
+                        </h1>
+                        <div className="col-span-3">
+                          <input
+                            required
+                            id="ijazahname"
+                            name="ijazahname"
+                            type="text"
+                            value={
+                              ijazahFile.name
+                                ? ijazahFile.name
+                                : person?.document?.ijazahname
+                            }
+                            className="overflow-auto w-full text-sm font-semibold bg-white focus:outline-none"
+                          />
+                          <p>
+                            {ijazahFile.size} Bytes
+                          </p>
+                        </div>
+                      </div>
+                      <ul className="text-xs list-disc list-inside">
+                        <li>
+                          Hanya file jpg, jpeg, png dan pdf yang diijinkan
+                        </li>
+                        <li>Ukuran maksimal file adalah 800kb</li>
+                      </ul>
+                    </div>
+                    <div className="flex col-span-1 justify-center items-center m-auto space-x-4">
+                      <label
+                        htmlFor="ijazah"
+                        className="py-1.5 px-3 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
+                      >
+                        <div className="flex space-x-2">
+                          <UploadLogo />
+                          <h1>Unggah</h1>
+                        </div>
+                        <input
+                          id="ijazah"
+                          name="ijazah"
+                          type="file"
+                          onChange={() =>
+                            setIjazahFile({
+                              name: document.getElementById("ijazah").files[0]
+                                .name,
+                              size: document.getElementById("ijazah").files[0]
+                                .size,
+                            })
+                          }
+                          accept="image/*"
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-2">
+                  <div className="grid grid-cols-5 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="col-span-4">
+                      <div className="grid grid-cols-4 justify-start items-center mb-2">
+                        <h1 className="col-span-1 text-lg font-semibold">
+                          SKCK
+                        </h1>
+                        <div className="col-span-3">
+                          <input
+                            required
+                            id="skckname"
+                            name="skckname"
+                            type="text"
+                            value={
+                              skckFile.name
+                                ? skckFile.name
+                                : person?.document?.skckname
+                            }
+                            className="overflow-auto w-full text-sm font-semibold bg-white focus:outline-none"
+                          />
+                          <p>
+                            {skckFile.size} Bytes
+                          </p>
+                        </div>
+                      </div>
+                      <ul className="text-xs list-disc list-inside">
+                        <li>
+                          Hanya file jpg, jpeg, png dan pdf yang diijinkan
+                        </li>
+                        <li>Ukuran maksimal file adalah 800kb</li>
+                      </ul>
+                    </div>
+                    <div className="flex col-span-1 justify-center items-center m-auto space-x-4">
+                      <label
+                        htmlFor="skck"
+                        className="py-1.5 px-3 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
+                      >
+                        <div className="flex space-x-2">
+                          <UploadLogo />
+                          <h1>Unggah</h1>
+                        </div>
+                        <input
+                          id="skck"
+                          name="skck"
+                          type="file"
+                          onChange={() =>
+                            setSKCKFile({
+                              name: document.getElementById("skck").files[0]
+                                .name,
+                              size: document.getElementById("skck").files[0]
+                                .size,
+                            })
+                          }
+                          accept="image/*"
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-2">
+                  <div className="grid grid-cols-5 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="col-span-4">
+                      <div className="grid grid-cols-4 justify-start items-center mb-2">
+                        <h1 className="col-span-1 text-lg font-semibold">CV</h1>
+                        <div className="col-span-3">
+                          <input
+                            required
+                            id="cvname"
+                            name="cvname"
+                            type="text"
+                            value={
+                              cvFile.name
+                                ? cvFile.name
+                                : person?.document?.cvname
+                            }
+                            className="overflow-auto w-full text-sm font-semibold bg-white focus:outline-none"
+                          />
+                          <p>
+                            {cvFile.size} Bytes
+                          </p>
+                        </div>
+                      </div>
+                      <ul className="text-xs list-disc list-inside">
+                        <li>
+                          Hanya file jpg, jpeg, png dan pdf yang diijinkan
+                        </li>
+                        <li>Ukuran maksimal file adalah 800kb</li>
+                      </ul>
+                    </div>
+                    <div className="flex col-span-1 justify-center items-center m-auto space-x-4">
+                      <label
+                        htmlFor="cv"
+                        className="py-1.5 px-3 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
+                      >
+                        <div className="flex space-x-2">
+                          <UploadLogo />
+                          <h1>Unggah</h1>
+                        </div>
+                        <input
+                          id="cv"
+                          name="cv"
+                          type="file"
+                          onChange={() =>
+                            setCVFile({
+                              name: document.getElementById("cv").files[0].name,
+                              size: document.getElementById("cv").files[0].size,
+                            })
+                          }
+                          accept="image/*"
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-2">
+                  <div className="grid grid-cols-5 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="col-span-4">
+                      <div className="grid grid-cols-4 justify-start items-center mb-2">
+                        <h1 className="col-span-1 text-lg font-semibold">
+                          Sertifikat
+                        </h1>
+                        <div className="col-span-3">
+                          <input
+                            required
+                            id="certificatename"
+                            name="certificatename"
+                            type="text"
+                            value={
+                              certFile.name
+                                ? certFile.name
+                                : person?.document?.certificatename
+                            }
+                            className="overflow-auto w-full text-sm font-semibold bg-white focus:outline-none"
+                          />
+                          <p>
+                            {certFile.size} Bytes
+                          </p>
+                        </div>
+                      </div>
+                      <ul className="text-xs list-disc list-inside">
+                        <li>
+                          Hanya file jpg, jpeg, png dan pdf yang diijinkan
+                        </li>
+                        <li>Ukuran maksimal file adalah 800kb</li>
+                      </ul>
+                    </div>
+                    <div className="flex col-span-1 justify-center items-center m-auto space-x-4">
+                      <label
+                        htmlFor="cert"
+                        className="py-1.5 px-3 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
+                      >
+                        <div className="flex space-x-2">
+                          <UploadLogo />
+                          <h1>Unggah</h1>
+                        </div>
+                        <input
+                          id="cert"
+                          name="cert"
+                          type="file"
+                          onChange={() =>
+                            setCertFile({
+                              name: document.getElementById("cert").files[0]
+                                .name,
+                              size: document.getElementById("cert").files[0]
+                                .size,
+                            })
+                          }
+                          accept="image/*"
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-end mt-4 space-x-8">
+                <button
+                  type="button"
+                  className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                  onClick={() => closeDocumentModal()}
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                >
+                  Simpan
+                </button>
+              </div>
+            </form>
+          </div>
+        </body>
+      </>
+    );
+  }
+
+  function PortfolioFormDialog({ portfolio }) {
+    return (
+      <>
+        <body className="w-full text-gray-900">
+          <div className="flex justify-center items-center py-2 px-4 space-x-4">
+            <h1 className="text-2xl font-semibold text-red-500">Portofolio</h1>
+          </div>
+          <div className="px-2 mx-auto w-full">
+            <form id="formEditPortfolio" onSubmit={handleSubmitPortfolio}>
+              <div className="py-4 px-8 space-y-4 rounded-xl">
+                <div className="space-y-2">
+                  <h1>Link</h1>
+                  <input
+                    required
+                    id="link"
+                    type="text"
+                    name="link"
+                    defaultValue={portfolio?.link}
+                    className="py-3.5 px-4 w-full text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                    placeholder="Masukkan link portofolio"
+                  />
+                </div>
+                <div className="space-y-2 text-sm">
+                  <h1>Deskripsi Diri</h1>
+                  <textarea
+                    required
+                    id="description"
+                    type="text"
+                    name="description"
+                    defaultValue={portfolio?.description}
+                    className="py-3.5 px-4 w-full h-40 text-sm font-medium leading-none placeholder-gray-400 text-gray-800 rounded-lg border shadow-sm transition duration-150"
+                    placeholder="Deskripsi portofolio"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end mt-4 space-x-8">
+                <button
+                  type="button"
+                  className="inline-flex justify-center py-2 px-8 font-medium text-white bg-red-500 rounded-md border border-transparent transition duration-150 hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                  onClick={() => closePortfolioModal()}
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  className="inline-flex justify-center py-2 px-8 font-medium text-white bg-green-500 rounded-md border border-transparent transition duration-150 hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                >
+                  Simpan
                 </button>
               </div>
             </form>
@@ -480,26 +928,9 @@ export default function DatadiriTab({ person }) {
               <div className="grid grid-cols-1 divide-y divide-gray-300">
                 <div className="flex justify-between items-center py-2">
                   <h1 className="text-xl font-semibold">Biodata</h1>
-                  {edit ? (
-                    <div className="flex justify-end items-center space-x-4">
-                      <div onClick={() => setEdit(false)}>
-                        <h1 className="text-base font-medium text-red-500 cursor-pointer hover:text-red-600">
-                          Batal
-                        </h1>
-                      </div>
-                      <button
-                        form="formEditDatadiri"
-                        type="submit"
-                        className="text-base font-medium text-blue-500 hover:text-blue-600"
-                      >
-                        Simpan
-                      </button>
-                    </div>
-                  ) : (
-                    <div onClick={() => openBiodataModal()}>
-                      <EditButton className="cursor-pointer hover:stroke-blue-500" />
-                    </div>
-                  )}
+                  <div onClick={() => openBiodataModal()}>
+                    <EditButton className="cursor-pointer hover:stroke-blue-500" />
+                  </div>
                 </div>
                 <div className="py-2">
                   <div className="grid grid-cols-3 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
@@ -736,216 +1167,148 @@ export default function DatadiriTab({ person }) {
           <Tab.Panel>
             <div>
               <div className="grid grid-cols-1 divide-y divide-gray-300">
-                <div className="py-2">
-                  <h1 className="pb-2 text-xl font-semibold">Dokumen</h1>
-                  <p className="pb-2 text-sm">
-                    Informasi berikut ini bersifat opsional, silakan diisi untuk
-                    kepentingan lamar online yang mewajibkan syarat-syarat
-                    dokumen harus diunggah.
-                  </p>
+                <div className="flex justify-between items-center py-2">
+                  <h1 className="text-xl font-semibold">Dokumen</h1>
+                  <div onClick={() => openDocumentModal()}>
+                    <EditButton className="cursor-pointer hover:stroke-blue-500" />
+                  </div>
                 </div>
                 <div className="py-2">
-                  <div className="grid grid-cols-5 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                    <div className="col-span-3">
-                      <div className="grid grid-cols-4 justify-start items-start mb-2">
+                  <div className="justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="w-full">
+                      <div className="grid grid-cols-5 justify-start items-start mb-2">
                         <h1 className="col-span-1 text-lg font-semibold">
                           KTP
                         </h1>
-                        <div className="col-span-3">
+                        <div className="col-span-4 space-y-2">
                           <h1 className="overflow-auto text-sm font-semibold">
-                            {ktpFile.name}
+                            {person?.document?.ktpname}
                           </h1>
-                          <p className="text-sm">{ktpFile.size} Bytes</p>
+                          <ul className="text-xs list-disc list-inside">
+                            <li>
+                              Hanya file jpg, jpeg, png dan pdf yang diijinkan
+                            </li>
+                            <li>Ukuran maksimal file adalah 800kb</li>
+                          </ul>
                         </div>
                       </div>
-                      <ul className="text-xs list-disc list-inside">
-                        <li>
-                          Hanya file jpg, jpeg, png dan pdf yang diijinkan
-                        </li>
-                        <li>Ukuran maksimal file adalah 800kb</li>
-                      </ul>
                     </div>
-                    <div className="flex col-span-2 justify-center items-center m-auto space-x-4">
-                      <button
-                        onClick={() => setKtpFile({ name: "-", size: "0" })}
-                        className="py-1 px-5 text-sm text-white bg-red-500 rounded hover:bg-red-600"
-                      >
-                        Hapus
-                      </button>
-                      <label
-                        htmlFor="ktp"
-                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
-                      >
-                        <h1>Unggah</h1>
-                        <input
-                          id="ktp"
-                          name="ktp"
-                          type="file"
-                          onChange={() =>
-                            setKtpFile({
-                              name: document.getElementById("ktp").files[0]
-                                .name,
-                              size: document.getElementById("ktp").files[0]
-                                .size,
-                            })
-                          }
-                          accept="image/*"
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
+                    <input
+                      id="ktp"
+                      name="ktp"
+                      type="file"
+                      onChange={() =>
+                        setKtpFile({
+                          name: document.getElementById("ktp").files[0].name,
+                          size: document.getElementById("ktp").files[0].size,
+                        })
+                      }
+                      accept="image/*"
+                      className="hidden"
+                    />
                   </div>
                 </div>
                 <div className="py-2">
-                  <div className="grid grid-cols-5 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                    <div className="col-span-3">
-                      <div className="grid grid-cols-4 justify-start items-start mb-2">
+                  <div className="justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="w-full">
+                      <div className="grid grid-cols-5 justify-start items-start mb-2">
                         <h1 className="col-span-1 text-lg font-semibold">
                           Ijazah
                         </h1>
-                        <div className="col-span-3">
+                        <div className="col-span-4 space-y-2">
                           <h1 className="overflow-auto text-sm font-semibold">
-                            {ijazahFile.name}
+                            {person?.document?.ijazahname}
                           </h1>
-                          <p className="text-sm">{ijazahFile.size} Bytes</p>
+                          <ul className="text-xs list-disc list-inside">
+                            <li>
+                              Hanya file jpg, jpeg, png dan pdf yang diijinkan
+                            </li>
+                            <li>Ukuran maksimal file adalah 800kb</li>
+                          </ul>
                         </div>
                       </div>
-                      <ul className="text-xs list-disc list-inside">
-                        <li>
-                          Hanya file jpg, jpeg, png dan pdf yang diijinkan
-                        </li>
-                        <li>Ukuran maksimal file adalah 800kb</li>
-                      </ul>
                     </div>
-                    <div className="flex col-span-2 justify-center items-center m-auto space-x-4">
-                      <button
-                        onClick={() => setIjazahFile({ name: "-", size: "0" })}
-                        className="py-1 px-5 text-sm text-white bg-red-500 rounded"
-                      >
-                        Hapus
-                      </button>
-                      <label
-                        htmlFor="ijazah"
-                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
-                      >
-                        <h1>Unggah</h1>
-                        <input
-                          id="ijazah"
-                          name="ijazah"
-                          type="file"
-                          onChange={() =>
-                            setIjazahFile({
-                              name: document.getElementById("ijazah").files[0]
-                                .name,
-                              size: document.getElementById("ijazah").files[0]
-                                .size,
-                            })
-                          }
-                          accept="image/*"
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
+                    <input
+                      id="ijazah"
+                      name="ijazah"
+                      type="file"
+                      onChange={() =>
+                        setIjazahFile({
+                          name: document.getElementById("ijazah").files[0].name,
+                          size: document.getElementById("ijazah").files[0].size,
+                        })
+                      }
+                      accept="image/*"
+                      className="hidden"
+                    />
                   </div>
                 </div>
                 <div className="py-2">
-                  <div className="grid grid-cols-5 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                    <div className="col-span-3">
-                      <div className="grid grid-cols-4 justify-start items-start mb-2">
+                  <div className="justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="w-full">
+                      <div className="grid grid-cols-5 justify-start items-start mb-2">
                         <h1 className="col-span-1 text-lg font-semibold">
                           SKCK
                         </h1>
-                        <div className="col-span-3">
+                        <div className="col-span-4 space-y-2">
                           <h1 className="overflow-auto text-sm font-semibold">
-                            {skckFile.name}
+                            {person?.document?.skckname}
                           </h1>
-                          <p className="text-sm">{skckFile.size} Bytes</p>
+                          <ul className="text-xs list-disc list-inside">
+                            <li>
+                              Hanya file jpg, jpeg, png dan pdf yang diijinkan
+                            </li>
+                            <li>Ukuran maksimal file adalah 800kb</li>
+                          </ul>
                         </div>
                       </div>
-                      <ul className="text-xs list-disc list-inside">
-                        <li>
-                          Hanya file jpg, jpeg, png dan pdf yang diijinkan
-                        </li>
-                        <li>Ukuran maksimal file adalah 800kb</li>
-                      </ul>
                     </div>
-                    <div className="flex col-span-2 justify-center items-center m-auto space-x-4">
-                      <button
-                        onClick={() => setSKCKFile({ name: "-", size: "0" })}
-                        className="py-1 px-5 text-sm text-white bg-red-500 rounded"
-                      >
-                        Hapus
-                      </button>
-                      <label
-                        htmlFor="skck"
-                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
-                      >
-                        <h1>Unggah</h1>
-                        <input
-                          id="skck"
-                          name="skck"
-                          type="file"
-                          onChange={() =>
-                            setSKCKFile({
-                              name: document.getElementById("skck").files[0]
-                                .name,
-                              size: document.getElementById("skck").files[0]
-                                .size,
-                            })
-                          }
-                          accept="image/*"
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
+                    <input
+                      id="skck"
+                      name="skck"
+                      type="file"
+                      onChange={() =>
+                        setSKCKFile({
+                          name: document.getElementById("skck").files[0].name,
+                          size: document.getElementById("skck").files[0].size,
+                        })
+                      }
+                      accept="image/*"
+                      className="hidden"
+                    />
                   </div>
                 </div>
                 <div className="py-2">
-                  <div className="grid grid-cols-5 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                    <div className="col-span-3">
-                      <div className="grid grid-cols-4 justify-start items-start mb-2">
+                  <div className="justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="w-full">
+                      <div className="grid grid-cols-5 justify-start items-start mb-2">
                         <h1 className="col-span-1 text-lg font-semibold">CV</h1>
-                        <div className="col-span-3">
+                        <div className="col-span-4 space-y-2">
                           <h1 className="overflow-auto text-sm font-semibold">
-                            {cvFile.name}
+                            {person?.document?.cvname}
                           </h1>
-                          <p className="text-sm">{cvFile.size} Bytes</p>
+                          <ul className="text-xs list-disc list-inside">
+                            <li>
+                              Hanya file jpg, jpeg, png dan pdf yang diijinkan
+                            </li>
+                            <li>Ukuran maksimal file adalah 800kb</li>
+                          </ul>
                         </div>
                       </div>
-                      <ul className="text-xs list-disc list-inside">
-                        <li>
-                          Hanya file jpg, jpeg, png dan pdf yang diijinkan
-                        </li>
-                        <li>Ukuran maksimal file adalah 800kb</li>
-                      </ul>
                     </div>
-                    <div className="flex col-span-2 justify-center items-center m-auto space-x-4">
-                      <button
-                        onClick={() => setCVFile({ name: "-", size: "0" })}
-                        className="py-1 px-5 text-sm text-white bg-red-500 rounded"
-                      >
-                        Hapus
-                      </button>
-                      <label
-                        htmlFor="cv"
-                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
-                      >
-                        <h1>Unggah</h1>
-                        <input
-                          id="cv"
-                          name="cv"
-                          type="file"
-                          onChange={() =>
-                            setCVFile({
-                              name: document.getElementById("cv").files[0].name,
-                              size: document.getElementById("cv").files[0].size,
-                            })
-                          }
-                          accept="image/*"
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
+                    <input
+                      id="cv"
+                      name="cv"
+                      type="file"
+                      onChange={() =>
+                        setCVFile({
+                          name: document.getElementById("cv").files[0].name,
+                          size: document.getElementById("cv").files[0].size,
+                        })
+                      }
+                      accept="image/*"
+                      className="hidden"
+                    />
                   </div>
                 </div>
               </div>
@@ -961,55 +1324,38 @@ export default function DatadiriTab({ person }) {
                   </p>
                 </div>
                 <div className="py-2">
-                  <div className="grid grid-cols-5 justify-start items-start my-4 space-x-2 text-sm text-gray-700">
-                    <div className="col-span-3">
-                      <div className="grid grid-cols-4 justify-start items-start mb-2">
+                  <div className="justify-start items-start my-4 space-x-2 text-sm text-gray-700">
+                    <div className="w-full">
+                      <div className="grid grid-cols-5 justify-start items-start mb-2">
                         <h1 className="col-span-1 text-lg font-semibold">
                           Sertifikat
                         </h1>
-                        <div className="col-span-3">
+                        <div className="col-span-4 space-y-2">
                           <h1 className="overflow-auto text-sm font-semibold">
-                            {certFile.name}
+                            {person?.document?.certificatename}
                           </h1>
-                          <p className="text-sm">{certFile.size} Bytes</p>
+                          <ul className="text-xs list-disc list-inside">
+                            <li>
+                              Hanya file jpg, jpeg, png dan pdf yang diijinkan
+                            </li>
+                            <li>Ukuran maksimal file adalah 800kb</li>
+                          </ul>
                         </div>
                       </div>
-                      <ul className="text-xs list-disc list-inside">
-                        <li>
-                          Hanya file jpg, jpeg, png dan pdf yang diijinkan
-                        </li>
-                        <li>Ukuran maksimal file adalah 800kb</li>
-                      </ul>
                     </div>
-                    <div className="flex col-span-2 justify-center items-center m-auto space-x-4">
-                      <button
-                        onClick={() => setCertFile({ name: "-", size: "0" })}
-                        className="py-1 px-5 text-sm text-white bg-red-500 rounded transtiion dura"
-                      >
-                        Hapus
-                      </button>
-                      <label
-                        htmlFor="cert"
-                        className="py-1 px-5 text-sm text-white bg-blue-500 rounded transition duration-150 cursor-pointer hover:bg-blue-600"
-                      >
-                        <h1>Unggah</h1>
-                        <input
-                          id="cert"
-                          name="cert"
-                          type="file"
-                          onChange={() =>
-                            setCertFile({
-                              name: document.getElementById("cert").files[0]
-                                .name,
-                              size: document.getElementById("cert").files[0]
-                                .size,
-                            })
-                          }
-                          accept="image/*"
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
+                    <input
+                      id="cert"
+                      name="cert"
+                      type="file"
+                      onChange={() =>
+                        setCertFile({
+                          name: document.getElementById("cert").files[0].name,
+                          size: document.getElementById("cert").files[0].size,
+                        })
+                      }
+                      accept="image/*"
+                      className="hidden"
+                    />
                   </div>
                 </div>
               </div>
@@ -1018,21 +1364,63 @@ export default function DatadiriTab({ person }) {
           <Tab.Panel>
             <div>
               <div className="grid grid-cols-1 divide-y divide-gray-300">
+                <div className="flex justify-between items-center py-2">
+                  <h1 className="text-xl font-semibold">Portofolio</h1>
+                  <div onClick={() => openPortfolioModal()}>
+                    <EditButton className="cursor-pointer hover:stroke-blue-500" />
+                  </div>
+                </div>
                 <div className="py-2">
-                  <h1 className="pb-2 text-xl font-semibold">Portofolio</h1>
-                  <p className="pb-2 text-sm">
-                    Informasi berikut ini bersifat opsional, silakan diisi untuk
-                    kepentingan lamar online yang mewajibkan syarat-syarat
-                    dokumen harus diunggah.
-                  </p>
+                  {person?.portfolio?.link ? (
+                    <>
+                      <div className="grid grid-cols-5 gap-2 pt-4">
+                        <div className="col-span-1">
+                          <p className="flex justify-between pb-2 text-sm">
+                            <span>Link</span>
+                            <span>:</span>
+                          </p>
+                          <p className="flex justify-between pb-2 text-sm">
+                            <span>Deskripsi</span>
+                            <span>:</span>
+                          </p>
+                        </div>
+                        <div className="col-span-4">
+                          <p className="pb-2 text-sm">
+                            {person?.portfolio?.link}
+                          </p>
+                          <p className="pb-2 text-sm">
+                            {person?.portfolio?.description}
+                          </p>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p className="pb-2 text-sm">
+                        Anda belum mengisi portofolio. Silahkan tambah
+                        portofolio dengan klik tombol dibawah
+                      </p>
+                      <button
+                        type="button"
+                        className="inline-flex justify-center py-2 px-4 text-sm font-medium text-blue-900 bg-blue-100 rounded-md border border-transparent hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={() => openPortfolioModal()}
+                      >
+                        Tambah
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Transition appear show={isOpenPortfolioDetail} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={closePortfolioModal}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -1056,35 +1444,41 @@ export default function DatadiriTab({ person }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="overflow-hidden p-8 w-full max-w-lg text-left align-middle bg-white rounded-2xl transition-all transform">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    Simpan
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500 whitespace-pre-line">
-                      Semua Perubahan akan disimpan dan tidak dapat
-                      dikembalikan.
-                    </p>
-                  </div>
-                  <div className="mt-4 space-x-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center py-2 px-4 text-sm font-medium text-blue-900 bg-blue-100 rounded-md border border-transparent hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModalAndSave}
-                    >
-                      Simpan
-                    </button>
-                    <button
-                      type="button"
-                      className="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-md border border-transparent hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Batal
-                    </button>
-                  </div>
+                <Dialog.Panel className="overflow-hidden p-8 w-full max-w-screen-md text-left align-middle bg-white rounded-2xl transition-all transform">
+                  <PortfolioFormDialog portfolio={person?.portfolio} />
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+      <Transition appear show={isOpenDocumentDetail} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeDocumentModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="overflow-y-auto fixed inset-0">
+            <div className="flex justify-center items-center p-4 min-h-full text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="overflow-hidden p-8 w-full max-w-screen-md text-left align-middle bg-white rounded-2xl transition-all transform">
+                  <DocumentFormDialog document={person?.document} />
                 </Dialog.Panel>
               </Transition.Child>
             </div>
