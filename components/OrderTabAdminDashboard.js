@@ -95,6 +95,7 @@ export default function OrderTabAdminDashboard({ persons, companies }) {
     if (data === 200) {
       alert("Berhasil update");
       closeTestPaymentDetailModal();
+      addNotification(item.userid);
     } else {
       alert("Error: " + data.message);
       closeTestPaymentDetailModal();
@@ -154,6 +155,29 @@ export default function OrderTabAdminDashboard({ persons, companies }) {
     } else {
       alert("Error: " + data.message);
       closeJobPaymentDetailModal();
+    }
+  };
+
+  const addNotification = async (id) => {
+    const res = await fetch(
+      "https://snapwork.herokuapp.com/api/person/notification",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: id,
+          status: "PaymentVerified",
+          title: "Pembayaran Terverifikasi",
+          description: `Pembayaran Anda telah terverifikasi. Hasil tes kepribadian dapat dilihat di halaman Profil > Pengembangan Diri`,
+        }),
+      }
+    );
+    const data = await res.json();
+
+    if (data !== 200) {
+      alert("failed");
     }
   };
 

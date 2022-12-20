@@ -39,7 +39,7 @@ export default function Profile() {
     },
   ];
 
-  const userId = user?.userData.id;
+  const userId = user?.userData?.id;
 
   const { data: personres, error: personerror } = useSWR(
     `https://snapwork.herokuapp.com/api/person/${userId}`,

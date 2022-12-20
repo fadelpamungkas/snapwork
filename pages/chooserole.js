@@ -49,20 +49,17 @@ export default function Choose_Role() {
       }
     );
     const roleData = await roleRes.json();
-    const personRes = await fetch(
-      "https://snapwork.herokuapp.com/api/person",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userid: user.userData.id,
-          name: user.userData.name,
-          email: user.userData.email,
-        }),
-      }
-    );
+    const personRes = await fetch("https://snapwork.herokuapp.com/api/person", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: user.userData.id,
+        name: user.userData.name,
+        email: user.userData.email,
+      }),
+    });
     const personData = await personRes.json();
     console.log(roleData);
     console.log(personData);
@@ -133,10 +130,8 @@ export default function Choose_Role() {
                     />
                   </div>
                   <h1 className="text-xl font-bold">PERSONAL</h1>
-                  <p className="text-sm text-center">
-                    Daftar sebagai personal untuk melamar pekerjaan, tes
-                    psikologi dan lobortis sed sed quam. Purus vel convallis
-                    platea fusce diam sem.
+                  <p className="text-sm text-center whitespace-pre-line.">
+                    Daftar sebagai personal untuk melamar pekerjaan.
                   </p>
                   <button
                     className="py-2.5 px-20 text-white bg-green-500 rounded-lg transition duration-150 hover:bg-green-600"
@@ -157,9 +152,7 @@ export default function Choose_Role() {
                   </div>
                   <h1 className="text-xl font-bold">PERUSAHAAN</h1>
                   <p className="text-sm text-center">
-                    Daftar sebagai perusahaan untuk membuka lowongan pekerjaan
-                    dan lobortis sed sed quam. Purus vel convallis platea fusce
-                    diam sem.
+                    Daftar sebagai perusahaan untuk membuka lowongan pekerjaan.
                   </p>
                   <button
                     className="py-2.5 px-20 text-white bg-green-500 rounded-lg transition duration-150 hover:bg-green-600"

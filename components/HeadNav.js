@@ -80,7 +80,7 @@ export default function HeadNav() {
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 translate-y-1"
                       >
-                        <Popover.Panel className="absolute left-1/2 z-10 px-4 mt-3 w-screen max-w-lg transform -translate-x-1/2">
+                        <Popover.Panel className="absolute left-1/2 z-10 px-4 mt-3 w-screen max-w-xl transform -translate-x-1/2">
                           <div className="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5 shadow-lg">
                             <NotificationHeadNav id={user?.userData.id} />
                           </div>

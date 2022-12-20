@@ -179,7 +179,7 @@ export default function DatadiriTab({ person }) {
                       <div className="space-y-2">
                         <h1>Nama Lengkap</h1>
                         <input
-                          required
+                          disabled
                           id="name"
                           type="text"
                           name="name"
@@ -271,7 +271,7 @@ export default function DatadiriTab({ person }) {
                       <div className="space-y-2">
                         <h1>Email</h1>
                         <input
-                          required
+                          disabled
                           id="email"
                           type="email"
                           name="email"
@@ -545,9 +545,7 @@ export default function DatadiriTab({ person }) {
                             }
                             className="overflow-auto w-full text-sm font-semibold bg-white focus:outline-none"
                           />
-                          <p>
-                            {ktpFile.size} Bytes
-                          </p>
+                          <p>{ktpFile.size} Bytes</p>
                         </div>
                       </div>
                       <ul className="text-xs list-disc list-inside">
@@ -605,9 +603,7 @@ export default function DatadiriTab({ person }) {
                             }
                             className="overflow-auto w-full text-sm font-semibold bg-white focus:outline-none"
                           />
-                          <p>
-                            {ijazahFile.size} Bytes
-                          </p>
+                          <p>{ijazahFile.size} Bytes</p>
                         </div>
                       </div>
                       <ul className="text-xs list-disc list-inside">
@@ -665,9 +661,7 @@ export default function DatadiriTab({ person }) {
                             }
                             className="overflow-auto w-full text-sm font-semibold bg-white focus:outline-none"
                           />
-                          <p>
-                            {skckFile.size} Bytes
-                          </p>
+                          <p>{skckFile.size} Bytes</p>
                         </div>
                       </div>
                       <ul className="text-xs list-disc list-inside">
@@ -723,9 +717,7 @@ export default function DatadiriTab({ person }) {
                             }
                             className="overflow-auto w-full text-sm font-semibold bg-white focus:outline-none"
                           />
-                          <p>
-                            {cvFile.size} Bytes
-                          </p>
+                          <p>{cvFile.size} Bytes</p>
                         </div>
                       </div>
                       <ul className="text-xs list-disc list-inside">
@@ -781,9 +773,7 @@ export default function DatadiriTab({ person }) {
                             }
                             className="overflow-auto w-full text-sm font-semibold bg-white focus:outline-none"
                           />
-                          <p>
-                            {certFile.size} Bytes
-                          </p>
+                          <p>{certFile.size} Bytes</p>
                         </div>
                       </div>
                       <ul className="text-xs list-disc list-inside">
@@ -867,7 +857,7 @@ export default function DatadiriTab({ person }) {
                   />
                 </div>
                 <div className="space-y-2 text-sm">
-                  <h1>Deskripsi Diri</h1>
+                  <h1>Deskripsi Portofolio</h1>
                   <textarea
                     required
                     id="description"

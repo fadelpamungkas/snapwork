@@ -43,6 +43,7 @@ export default function PengembanganDiriTab({ person }) {
   }
 
   function openModalFinal() {
+    addNotification();
     setIsOpen(false);
     setIsOpenFinal(true);
   }
@@ -74,6 +75,29 @@ export default function PengembanganDiriTab({ person }) {
     } else {
       alert("Error: " + data.message);
       closeModal();
+    }
+  };
+
+  const addNotification = async () => {
+    const res = await fetch(
+      "https://snapwork.herokuapp.com/api/person/notification",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: person.userid,
+          status: "PaymentSuccess",
+          title: "Pembayaran Diterima",
+          description: `Terima kasih Anda telah melakukan pembayaran tes kepribadian. Silahkan menunggu verifikasi dari admin untuk melihat hasil tes.`,
+        }),
+      }
+    );
+    const data = await res.json();
+
+    if (data !== 200) {
+      alert("failed");
     }
   };
 
