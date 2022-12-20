@@ -53,60 +53,62 @@ export default function KarirTab({ applications }) {
               <div className="my-8 space-y-4">
                 {applications ? (
                   <>
-                    {applications.map((item, index) => (
-                      <div
-                        key={index}
-                        className="py-4 px-12 rounded-lg border border-gray-300"
-                      >
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center space-x-4">
-                            <Image
-                              src={TokopediaAvatar}
-                              alt=""
-                              width={70}
-                              height={70}
-                              className="rounded-full"
-                            />
-                            <div>
-                              <h1 className="font-semibold">
-                                {item.companyname}
-                              </h1>
-                              <div className="flex justify-start items-center space-x-1">
-                                <p className="text-xs text-gray-500">
-                                  {item.jobposition}
-                                </p>
-                                <p className="text-xs text-gray-500">•</p>
-                                <p className="text-xs text-gray-500">
-                                  {item.jobtype}
-                                </p>
-                              </div>
-                              <div className="flex justify-start items-center space-x-1">
-                                <p className="text-xs text-gray-500">
-                                  Tanggal Melamar
-                                </p>
-                                <p className="text-xs text-gray-500">:</p>
-                                <p className="text-xs text-gray-500">
-                                  {item.created_at}
-                                </p>
+                    {applications
+                      .map((item, index) => (
+                        <div
+                          key={index}
+                          className="py-4 px-12 rounded-lg border border-gray-300"
+                        >
+                          <div className="flex justify-between items-center">
+                            <div className="flex items-center space-x-4">
+                              <Image
+                                src={TokopediaAvatar}
+                                alt=""
+                                width={70}
+                                height={70}
+                                className="rounded-full"
+                              />
+                              <div>
+                                <h1 className="font-semibold">
+                                  {item.companyname}
+                                </h1>
+                                <div className="flex justify-start items-center space-x-1">
+                                  <p className="text-xs text-gray-500">
+                                    {item.jobposition}
+                                  </p>
+                                  <p className="text-xs text-gray-500">•</p>
+                                  <p className="text-xs text-gray-500">
+                                    {item.jobtype}
+                                  </p>
+                                </div>
+                                <div className="flex justify-start items-center space-x-1">
+                                  <p className="text-xs text-gray-500">
+                                    Tanggal Melamar
+                                  </p>
+                                  <p className="text-xs text-gray-500">:</p>
+                                  <p className="text-xs text-gray-500">
+                                    {item.created_at}
+                                  </p>
+                                </div>
                               </div>
                             </div>
+                            {item.status === "Accepted" ? (
+                              <div className="py-2 px-4 text-sm text-green-900 bg-green-100 rounded-lg">
+                                <h1>{item.status}</h1>
+                              </div>
+                            ) : item.status === "Rejected" ? (
+                              <div className="py-2 px-4 text-sm text-red-900 bg-red-100 rounded-lg">
+                                <h1>{item.status}</h1>
+                              </div>
+                            ) : (
+                              <div className="py-2 px-4 text-sm text-yellow-900 bg-yellow-100 rounded-lg">
+                                <h1>{item.status}</h1>
+                              </div>
+                            )}
                           </div>
-                          {item.status === "Accepted" ? (
-                            <div className="py-2 px-4 text-sm text-green-900 bg-green-100 rounded-lg">
-                              <h1>{item.status}</h1>
-                            </div>
-                          ) : item.status === "Rejected" ? (
-                            <div className="py-2 px-4 text-sm text-red-900 bg-red-100 rounded-lg">
-                              <h1>{item.status}</h1>
-                            </div>
-                          ) : (
-                            <div className="py-2 px-4 text-sm text-yellow-900 bg-yellow-100 rounded-lg">
-                              <h1>{item.status}</h1>
-                            </div>
-                          )}
                         </div>
-                      </div>
-                    ))}
+                      ))
+                      .reverse()}
                   </>
                 ) : (
                   <h1>Tidak ada Lamaran</h1>

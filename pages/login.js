@@ -4,7 +4,7 @@ import useUser from "../lib/useUser";
 import { useState } from "react";
 import fetchJson, { FetchError } from "../lib/fetchJson";
 import Vector25 from "../public/Vector25.png";
-import SnapWorkLogo from "../public/SnapWork.png";
+import SnapWorkLogo from "../public/SnapWorkWhite.svg";
 
 export default function Login() {
   const [visible, setVisible] = useState(true);
@@ -64,8 +64,8 @@ export default function Login() {
   return (
     <body>
       <div className="relative p-16 min-h-screen bg-indigo-500">
-        <div>
-          <Image src={SnapWorkLogo} width={100} height={20} alt="SnapWork" />
+        <div className="px-8">
+          <SnapWorkLogo />
         </div>
         <div className="flex grid-cols-2 justify-center items-center p-8">
           <div className="flex-col col-span-1 justify-center items-center space-y-4 w-full">

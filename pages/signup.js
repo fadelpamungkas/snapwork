@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import SnapWorkLogo from "../public/SnapWork.png";
+import SnapWorkLogo from "../public/SnapWorkWhite.svg";
 
 export default function Signup() {
   const [visible, setVisible] = useState(true);
@@ -46,8 +46,8 @@ export default function Signup() {
   return (
     <body>
       <div className="p-16 min-h-screen bg-indigo-500">
-        <div>
-          <Image src={SnapWorkLogo} width={100} height={20} alt="SnapWork" />
+        <div className="px-8">
+          <SnapWorkLogo />
         </div>
         <div className="flex grid-cols-2 justify-center items-center p-8">
           <div className="flex-col col-span-1 justify-center items-center space-y-4 w-full">

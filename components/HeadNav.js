@@ -14,6 +14,7 @@ import TesIcon from "../public/Tes.svg";
 import NotifiIcon from "../public/Notifikasi.svg";
 import ProfileMenu from "./ProfileMenu";
 import NotificationHeadNav from "./NotificationHeadNav";
+import SnapWorkLogo from "../public/SnapWorkBlack.svg";
 
 export default function HeadNav() {
   const { user } = useUser();
@@ -23,7 +24,9 @@ export default function HeadNav() {
     <nav className="fixed top-0 z-10 w-full bg-gray-50 shadow-sm">
       <div className="flex justify-between items-center py-4 px-8 mx-auto max-w-screen-xl">
         <Link href="/">
-          <a className="text-xl font-medium tracking-wide">SnapWork</a>
+          <a>
+            <SnapWorkLogo />
+          </a>
         </Link>
         <ul className="flex justify-between items-center space-x-4">
           <li className="flex gap-x-2 items-center group">

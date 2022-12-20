@@ -161,30 +161,32 @@ export default function Profile() {
                     </div>
                     {person.applications && (
                       <>
-                        {person.applications.map((item, index) => (
-                          <>
-                            {item.status !== "Accepted" &&
-                              item.status !== "Rejected" && (
-                                <div
-                                  key={index}
-                                  className="flex flex-col justify-center items-start py-4 space-y-1"
-                                >
-                                  <h1 className="text-base font-medium text-gray-900">
-                                    {item.jobposition} • {item.jobtype}
-                                  </h1>
-                                  <h1 className="text-sm text-gray-500">
-                                    {item.companyname}
-                                  </h1>
-                                  <h1 className="text-sm text-gray-500">
-                                    {`Status: `}
-                                    <span className="font-semibold text-red-400">
-                                      {item.status}
-                                    </span>
-                                  </h1>
-                                </div>
-                              )}
-                          </>
-                        ))}
+                        {person.applications
+                          .map((item, index) => (
+                            <>
+                              {item.status !== "Accepted" &&
+                                item.status !== "Rejected" && (
+                                  <div
+                                    key={index}
+                                    className="flex flex-col justify-center items-start py-4 space-y-1"
+                                  >
+                                    <h1 className="text-base font-medium text-gray-900">
+                                      {item.jobposition} • {item.jobtype}
+                                    </h1>
+                                    <h1 className="text-sm text-gray-500">
+                                      {item.companyname}
+                                    </h1>
+                                    <h1 className="text-sm text-gray-500">
+                                      {`Status: `}
+                                      <span className="font-semibold text-red-400">
+                                        {item.status}
+                                      </span>
+                                    </h1>
+                                  </div>
+                                )}
+                            </>
+                          ))
+                          .reverse()}
                       </>
                     )}
                   </div>
@@ -217,9 +219,7 @@ export default function Profile() {
                           <DatadiriTab person={person} />
                         </Tab.Panel>
                         <Tab.Panel>
-                          <PengembanganDiriTab
-                            person={person}
-                          />
+                          <PengembanganDiriTab person={person} />
                         </Tab.Panel>
                         <Tab.Panel>
                           <KarirTab applications={person?.applications} />

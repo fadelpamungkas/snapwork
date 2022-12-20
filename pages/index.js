@@ -339,7 +339,11 @@ export default function Index({ companies }) {
                   <div key={index}>
                     <a className="flex">
                       {item.status === "Verified" && (
-                        <>{item.companyjob && <CareerCard item={item} />}</>
+                        <>
+                          {item.companyjob[0]?.name && (
+                            <CareerCard item={item} />
+                          )}
+                        </>
                       )}
                     </a>
                   </div>
